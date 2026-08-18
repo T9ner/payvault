@@ -1,9 +1,9 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { PayVault } from './client';
-import { PayVaultError } from './errors';
+import { Quirk } from './client';
+import { QuirkError } from './errors';
 import type {
   Provider,
-  PayVaultConfig,
+  QuirkConfig,
   TransactionResult,
   VerificationResult,
   ChargeResult,
@@ -13,7 +13,7 @@ import type {
 
 // ── Mock Provider ────────────────────────────────────────────────
 // A fake provider that records calls and returns canned responses.
-// This lets us test PayVault's delegation logic without HTTP calls.
+// This lets us test Quirk's delegation logic without HTTP calls.
 
 function createMockProvider(): Provider {
   return {
@@ -87,7 +87,7 @@ function createMockProvider(): Provider {
 
 // ── Setup ────────────────────────────────────────────────────────
 
-// Register the mock provider before tests so PayVault can find it
+// Register the mock provider before tests so Quirk can find it
 beforeEach(() => {
   const MockClass = class implements Provider {
     name = 'mock' as const;
@@ -101,31 +101,31 @@ beforeEach(() => {
     parseWebhook = this.mock.parseWebhook;
     // Intentionally NOT implementing createSubscription / cancelSubscription
     // so we can test the "not supported" path.
-    constructor(_config: PayVaultConfig) {}
+    constructor(_config: QuirkConfig) {}
   };
 
-  PayVault.registerProvider('mock', MockClass);
+  Quirk.registerProvider('mock', MockClass);
 });
 
 // ── Factory Methods ──────────────────────────────────────────────
 
-describe('PayVault factory methods', () => {
-  it('PayVault.paystack() creates a paystack instance', () => {
-    const vault = PayVault.paystack('sk_test_xxx');
+describe('Quirk factory methods', () => {
+  it('Quirk.paystack() creates a paystack instance', () => {
+    const vault = Quirk.paystack('sk_test_xxx');
     expect(vault.providerName).toBe('paystack');
   });
 
-  it('PayVault.flutterwave() creates a flutterwave instance', () => {
-    const vault = PayVault.flutterwave('FLWSECK_TEST-xxx');
+  it('Quirk.flutterwave() creates a flutterwave instance', () => {
+    const vault = Quirk.flutterwave('FLWSECK_TEST-xxx');
     expect(vault.providerName).toBe('flutterwave');
   });
 
-  it('throws PayVaultError for unknown provider', () => {
-    expect(() => new PayVault({ provider: 'stripe', secretKey: 'xxx' }))
-      .toThrow(PayVaultError);
+  it('throws QuirkError for unknown provider', () => {
+    expect(() => new Quirk({ provider: 'stripe', secretKey: 'xxx' }))
+      .toThrow(QuirkError);
 
     try {
-      new PayVault({ provider: 'stripe', secretKey: 'xxx' });
+      new Quirk({ provider: 'stripe', secretKey: 'xxx' });
     } catch (e: any) {
       expect(e.code).toBe('INVALID_PROVIDER');
       expect(e.message).toContain('stripe');
@@ -137,18 +137,18 @@ describe('PayVault factory methods', () => {
 
 describe('registerProvider', () => {
   it('allows using a custom registered provider', () => {
-    const vault = new PayVault({ provider: 'mock', secretKey: 'test' });
+    const vault = new Quirk({ provider: 'mock', secretKey: 'test' });
     expect(vault.providerName).toBe('mock');
   });
 });
 
 // ── Transaction Delegation ───────────────────────────────────────
 
-describe('PayVault transaction methods', () => {
-  let vault: PayVault;
+describe('Quirk transaction methods', () => {
+  let vault: Quirk;
 
   beforeEach(() => {
-    vault = new PayVault({ provider: 'mock', secretKey: 'test' });
+    vault = new Quirk({ provider: 'mock', secretKey: 'test' });
   });
 
   it('initializeTransaction delegates to the provider', async () => {
@@ -185,17 +185,17 @@ describe('PayVault transaction methods', () => {
 
 // ── Subscription (not supported by mock) ─────────────────────────
 
-describe('PayVault subscriptions (unsupported provider)', () => {
-  let vault: PayVault;
+describe('Quirk subscriptions (unsupported provider)', () => {
+  let vault: Quirk;
 
   beforeEach(() => {
-    vault = new PayVault({ provider: 'mock', secretKey: 'test' });
+    vault = new Quirk({ provider: 'mock', secretKey: 'test' });
   });
 
   it('createSubscription throws NOT_SUPPORTED', async () => {
     await expect(
       vault.createSubscription({ planCode: 'PLN_123', email: 'test@example.com' })
-    ).rejects.toThrow(PayVaultError);
+    ).rejects.toThrow(QuirkError);
 
     try {
       await vault.createSubscription({ planCode: 'PLN_123', email: 'test@example.com' });
@@ -207,7 +207,7 @@ describe('PayVault subscriptions (unsupported provider)', () => {
   it('cancelSubscription throws NOT_SUPPORTED', async () => {
     await expect(
       vault.cancelSubscription('SUB_123')
-    ).rejects.toThrow(PayVaultError);
+    ).rejects.toThrow(QuirkError);
 
     try {
       await vault.cancelSubscription('SUB_123');
@@ -219,11 +219,11 @@ describe('PayVault subscriptions (unsupported provider)', () => {
 
 // ── Webhook Handling ─────────────────────────────────────────────
 
-describe('PayVault webhook handling', () => {
-  let vault: PayVault;
+describe('Quirk webhook handling', () => {
+  let vault: Quirk;
 
   beforeEach(() => {
-    vault = new PayVault({ provider: 'mock', secretKey: 'test' });
+    vault = new Quirk({ provider: 'mock', secretKey: 'test' });
   });
 
   it('on() registers handlers and handleWebhook() dispatches to them', async () => {
@@ -257,7 +257,7 @@ describe('PayVault webhook handling', () => {
 
   it('throws when webhook signature is invalid', async () => {
     // Make verifyWebhook return false
-    const vault2 = new PayVault({ provider: 'mock', secretKey: 'test' });
+    const vault2 = new Quirk({ provider: 'mock', secretKey: 'test' });
     // We need to reach the provider's verifyWebhook, which is mocked to return true.
     // Let's register a provider that returns false:
     const RejectingProvider = class implements Provider {
@@ -269,11 +269,11 @@ describe('PayVault webhook handling', () => {
       refund = vi.fn();
       verifyWebhook = vi.fn().mockReturnValue(false);
       parseWebhook = vi.fn();
-      constructor(_config: PayVaultConfig) {}
+      constructor(_config: QuirkConfig) {}
     };
-    PayVault.registerProvider('rejector', RejectingProvider);
+    Quirk.registerProvider('rejector', RejectingProvider);
 
-    const rejectVault = new PayVault({ provider: 'rejector', secretKey: 'test' });
+    const rejectVault = new Quirk({ provider: 'rejector', secretKey: 'test' });
 
     await expect(
       rejectVault.handleWebhook('{}', 'bad-sig')
@@ -292,11 +292,11 @@ describe('PayVault webhook handling', () => {
 
 // ── pollVerification ─────────────────────────────────────────────
 
-describe('PayVault.pollVerification', () => {
-  let vault: PayVault;
+describe('Quirk.pollVerification', () => {
+  let vault: Quirk;
 
   beforeEach(() => {
-    vault = new PayVault({ provider: 'mock', secretKey: 'test' });
+    vault = new Quirk({ provider: 'mock', secretKey: 'test' });
     // Use fake timers to avoid real waits during tests
     vi.useFakeTimers();
   });
@@ -365,7 +365,7 @@ describe('PayVault.pollVerification', () => {
     expect(onPoll).toHaveBeenNthCalledWith(2, 2, 'success');
   });
 
-  it('throws PayVaultError with POLLING_TIMEOUT when maxWaitMs is exceeded', async () => {
+  it('throws QuirkError with POLLING_TIMEOUT when maxWaitMs is exceeded', async () => {
     const provider = (vault as any).provider;
     const startTime = Date.now();
 

@@ -10,8 +10,8 @@ export type Currency = 'NGN' | 'GHS' | 'KES' | 'ZAR' | 'USD' | 'GBP' | 'EUR' | s
 // Provider identifier
 export type ProviderName = 'paystack' | 'flutterwave' | string;
 
-// Core config for initializing PayVault
-export interface PayVaultConfig {
+// Core config for initializing Quirk
+export interface QuirkConfig {
   provider: ProviderName;
   secretKey: string;
   publicKey?: string;

@@ -6,8 +6,8 @@ import (
 
 	"github.com/go-chi/chi/v5"
 
-	"payvault-api/internal/middleware"
-	"payvault-api/internal/services"
+	"quirk-api/internal/middleware"
+	"quirk-api/internal/services"
 )
 
 // ==================== Dashboard Plans API ====================

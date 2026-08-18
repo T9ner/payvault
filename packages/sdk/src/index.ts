@@ -1,10 +1,10 @@
-export { PayVault } from './client';
+export { Quirk } from './client';
 export { PaystackProvider } from './providers/paystack';
 export { FlutterwaveProvider } from './providers/flutterwave';
 export { MonnifyProvider } from './providers/monnify';
 export { SquadProvider } from './providers/squad';
 export type {
-  PayVaultConfig,
+  QuirkConfig,
   Provider,
   TransactionConfig,
   TransactionResult,
@@ -32,7 +32,7 @@ export type {
   MultiSplitConfig,
 } from './types';
 export {
-  PayVaultError,
+  QuirkError,
   AuthenticationError,
   ValidationError,
   ProviderError,

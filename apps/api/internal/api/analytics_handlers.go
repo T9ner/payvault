@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"payvault-api/internal/middleware"
+	"quirk-api/internal/middleware"
 )
 
 // ==================== Analytics Handlers ====================

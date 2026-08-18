@@ -1,4 +1,4 @@
-export class PayVaultError extends Error {
+export class QuirkError extends Error {
   public code: string;
   public provider: string;
   public statusCode?: number;
@@ -11,7 +11,7 @@ export class PayVaultError extends Error {
     raw?: any;
   }) {
     super(message);
-    this.name = 'PayVaultError';
+    this.name = 'QuirkError';
     this.code = options.code;
     this.provider = options.provider;
     this.statusCode = options.statusCode;
@@ -20,7 +20,7 @@ export class PayVaultError extends Error {
 }
 
 // Authentication errors (invalid API key, expired token)
-export class AuthenticationError extends PayVaultError {
+export class AuthenticationError extends QuirkError {
   constructor(provider: string, raw?: any) {
     super(`Authentication failed for ${provider}. Check your API keys.`, {
       code: 'AUTHENTICATION_ERROR',
@@ -33,7 +33,7 @@ export class AuthenticationError extends PayVaultError {
 }
 
 // Validation errors (bad input)
-export class ValidationError extends PayVaultError {
+export class ValidationError extends QuirkError {
   public field?: string;
 
   constructor(message: string, provider: string, field?: string) {
@@ -48,7 +48,7 @@ export class ValidationError extends PayVaultError {
 }
 
 // Provider API errors (rate limits, server errors)
-export class ProviderError extends PayVaultError {
+export class ProviderError extends QuirkError {
   constructor(message: string, provider: string, statusCode: number, raw?: any) {
     super(message, {
       code: 'PROVIDER_ERROR',
@@ -61,7 +61,7 @@ export class ProviderError extends PayVaultError {
 }
 
 // Network/timeout errors
-export class NetworkError extends PayVaultError {
+export class NetworkError extends QuirkError {
   constructor(provider: string, originalError?: Error) {
     super(`Network error communicating with ${provider}: ${originalError?.message || 'Connection failed'}`, {
       code: 'NETWORK_ERROR',
@@ -73,7 +73,7 @@ export class NetworkError extends PayVaultError {
 }
 
 // Transaction-specific errors
-export class TransactionError extends PayVaultError {
+export class TransactionError extends QuirkError {
   public reference?: string;
 
   constructor(message: string, provider: string, reference?: string, raw?: any) {

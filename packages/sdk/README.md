@@ -1,16 +1,16 @@
 <div align="center">
 
-# PayVault
+# Quirk
 
 ### One API. Every African payment provider.
 
-[![npm version](https://img.shields.io/npm/v/payvault-sdk.svg?style=flat-square)](https://www.npmjs.com/package/payvault-sdk)
+[![npm version](https://img.shields.io/npm/v/quirk-sdk.svg?style=flat-square)](https://www.npmjs.com/package/quirk-sdk)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3+-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](CONTRIBUTING.md)
 
 **Stop rewriting payment code when you switch providers.**
-PayVault gives you a single, type-safe API that works with Paystack, Flutterwave, and any provider you add.
+Quirk gives you a single, type-safe API that works with Paystack, Flutterwave, and any provider you add.
 
 [Quick Start](#quick-start) &bull; [API Reference](#api-reference) &bull; [Webhooks](#webhooks) &bull; [Provider Switching](#provider-switching) &bull; [Custom Providers](#custom-providers)
 
@@ -18,9 +18,9 @@ PayVault gives you a single, type-safe API that works with Paystack, Flutterwave
 
 ---
 
-## Why PayVault?
+## Why Quirk?
 
-| Problem | PayVault Solution |
+| Problem | Quirk Solution |
 |---|---|
 | Every provider has a different API shape | One unified interface for all providers |
 | Switching providers means rewriting code | Change one line to switch providers |
@@ -34,16 +34,16 @@ PayVault gives you a single, type-safe API that works with Paystack, Flutterwave
 ### Installation
 
 ```bash
-npm install payvault-sdk
+npm install quirk-sdk
 ```
 
 ### Initialize a Payment (Paystack)
 
 ```typescript
-import { PayVault } from 'payvault-sdk';
+import { Quirk } from 'quirk-sdk';
 
-// Create a PayVault instance for Paystack
-const vault = PayVault.paystack('sk_test_xxxxx');
+// Create a Quirk instance for Paystack
+const vault = Quirk.paystack('sk_test_xxxxx');
 
 // Initialize a transaction -- returns a checkout URL
 const tx = await vault.initializeTransaction({
@@ -80,8 +80,8 @@ if (result.success) {
 The killer feature -- change **one line** to switch providers:
 
 ```diff
-- const vault = PayVault.paystack('sk_test_xxxxx');
-+ const vault = PayVault.flutterwave('FLWSECK_TEST-xxxxx');
+- const vault = Quirk.paystack('sk_test_xxxxx');
++ const vault = Quirk.flutterwave('FLWSECK_TEST-xxxxx');
 ```
 
 Everything else stays the same. Same method names, same response shapes, same types.
@@ -91,7 +91,7 @@ Everything else stays the same. Same method names, same response shapes, same ty
 ## Configuration
 
 ```typescript
-const vault = new PayVault({
+const vault = new Quirk({
   provider: 'paystack',            // or 'flutterwave'
   secretKey: 'sk_test_xxxxx',
   publicKey: 'pk_test_xxxxx',      // optional
@@ -116,7 +116,7 @@ const vault = new PayVault({
 });
 
 // Or use the convenience factory methods:
-const paystackVault = PayVault.paystack('sk_test_xxxxx', {
+const paystackVault = Quirk.paystack('sk_test_xxxxx', {
   currency: 'NGN',
   webhookSecret: 'whsec_xxxxx',
 });
@@ -166,25 +166,25 @@ const paystackVault = PayVault.paystack('sk_test_xxxxx', {
 
 | Method | Description |
 |---|---|
-| `PayVault.paystack(secretKey, opts?)` | Factory for Paystack |
-| `PayVault.flutterwave(secretKey, opts?)` | Factory for Flutterwave |
-| `PayVault.registerProvider(name, class)` | Register a custom provider |
+| `Quirk.paystack(secretKey, opts?)` | Factory for Paystack |
+| `Quirk.flutterwave(secretKey, opts?)` | Factory for Flutterwave |
+| `Quirk.registerProvider(name, class)` | Register a custom provider |
 | `vault.providerName` | Get current provider name |
 
 ---
 
 ## Webhooks
 
-PayVault normalizes webhook payloads across providers into a single `WebhookEvent` shape.
+Quirk normalizes webhook payloads across providers into a single `WebhookEvent` shape.
 
 ### Express Example
 
 ```typescript
 import express from 'express';
-import { PayVault } from 'payvault-sdk';
+import { Quirk } from 'quirk-sdk';
 
 const app = express();
-const vault = PayVault.paystack('sk_live_xxxxx', {
+const vault = Quirk.paystack('sk_live_xxxxx', {
   webhookSecret: 'whsec_xxxxx',
 });
 
@@ -336,12 +336,12 @@ if (charge.requiresAuth) {
 
 ## Provider Switching
 
-PayVault's architecture makes provider migration painless. Your business logic never changes.
+Quirk's architecture makes provider migration painless. Your business logic never changes.
 
 ### Environment-Based Switching
 
 ```typescript
-const vault = new PayVault({
+const vault = new Quirk({
   provider: process.env.PAYMENT_PROVIDER!,     // 'paystack' or 'flutterwave'
   secretKey: process.env.PAYMENT_SECRET_KEY!,
   currency: 'NGN',
@@ -357,13 +357,13 @@ const tx = await vault.initializeTransaction({
 ### A/B Testing Providers
 
 ```typescript
-function getPaymentVault(userId: string): PayVault {
+function getPaymentVault(userId: string): Quirk {
   // Route 20% of users to Flutterwave
   const useFlutterwave = hashUserId(userId) % 5 === 0;
 
   return useFlutterwave
-    ? PayVault.flutterwave(process.env.FLW_SECRET!)
-    : PayVault.paystack(process.env.PS_SECRET!);
+    ? Quirk.flutterwave(process.env.FLW_SECRET!)
+    : Quirk.paystack(process.env.PS_SECRET!);
 }
 ```
 
@@ -372,11 +372,11 @@ function getPaymentVault(userId: string): PayVault {
 ```typescript
 async function processPayment(config: TransactionConfig) {
   try {
-    const primary = PayVault.paystack(process.env.PS_SECRET!);
+    const primary = Quirk.paystack(process.env.PS_SECRET!);
     return await primary.initializeTransaction(config);
   } catch (err) {
     console.warn('Paystack failed, falling back to Flutterwave');
-    const fallback = PayVault.flutterwave(process.env.FLW_SECRET!);
+    const fallback = Quirk.flutterwave(process.env.FLW_SECRET!);
     return await fallback.initializeTransaction(config);
   }
 }
@@ -386,7 +386,7 @@ async function processPayment(config: TransactionConfig) {
 
 ## Smart Retry
 
-PayVault automatically retries failed requests with exponential backoff and jitter. No configuration needed -- it works out of the box.
+Quirk automatically retries failed requests with exponential backoff and jitter. No configuration needed -- it works out of the box.
 
 **What gets retried:**
 - HTTP 408 (Request Timeout)
@@ -403,7 +403,7 @@ PayVault automatically retries failed requests with exponential backoff and jitt
 
 ```typescript
 // Custom retry config
-const vault = PayVault.paystack('sk_test_xxxxx', {
+const vault = Quirk.paystack('sk_test_xxxxx', {
   retry: {
     maxAttempts: 5,             // try up to 5 times
     backoffMs: 2000,            // start at 2s, then 4s, 8s, 16s
@@ -413,7 +413,7 @@ const vault = PayVault.paystack('sk_test_xxxxx', {
 });
 
 // Disable retry entirely
-const noRetryVault = PayVault.paystack('sk_test_xxxxx', {
+const noRetryVault = Quirk.paystack('sk_test_xxxxx', {
   retry: { enabled: false },
 });
 ```
@@ -422,17 +422,17 @@ const noRetryVault = PayVault.paystack('sk_test_xxxxx', {
 
 ## Error Handling
 
-PayVault provides structured, catchable errors with provider context.
+Quirk provides structured, catchable errors with provider context.
 
 ```typescript
 import {
-  PayVaultError,
+  QuirkError,
   AuthenticationError,
   ValidationError,
   ProviderError,
   NetworkError,
   TransactionError,
-} from 'payvault-sdk';
+} from 'quirk-sdk';
 
 try {
   await vault.initializeTransaction({ amount: 5000, email: '' });
@@ -457,8 +457,8 @@ try {
     console.log(err.provider);
   }
 
-  // All errors extend PayVaultError
-  if (err instanceof PayVaultError) {
+  // All errors extend QuirkError
+  if (err instanceof QuirkError) {
     console.log(err.code);        // 'VALIDATION_ERROR', 'PROVIDER_ERROR', etc.
     console.log(err.provider);    // which provider threw
   }
@@ -472,9 +472,9 @@ try {
 Add support for any payment provider by implementing the `Provider` interface.
 
 ```typescript
-import { PayVault } from 'payvault-sdk';
+import { Quirk } from 'quirk-sdk';
 import type {
-  PayVaultConfig,
+  QuirkConfig,
   Provider,
   TransactionConfig,
   TransactionResult,
@@ -484,12 +484,12 @@ import type {
   RefundConfig,
   RefundResult,
   WebhookEvent,
-} from 'payvault-sdk';
+} from 'quirk-sdk';
 
 class MyCustomProvider implements Provider {
   name = 'my_provider';
 
-  constructor(private config: PayVaultConfig) {
+  constructor(private config: QuirkConfig) {
     // Initialize your provider with config.secretKey, etc.
   }
 
@@ -539,10 +539,10 @@ class MyCustomProvider implements Provider {
 }
 
 // Register your provider
-PayVault.registerProvider('my_provider', MyCustomProvider);
+Quirk.registerProvider('my_provider', MyCustomProvider);
 
 // Use it like any built-in provider
-const vault = new PayVault({
+const vault = new Quirk({
   provider: 'my_provider',
   secretKey: 'my_secret_key',
 });
@@ -552,7 +552,7 @@ const vault = new PayVault({
 
 ## Unified Status Mapping
 
-PayVault normalizes provider-specific statuses into 4 universal states:
+Quirk normalizes provider-specific statuses into 4 universal states:
 
 | Unified Status | Paystack | Flutterwave |
 |---|---|---|
@@ -565,13 +565,13 @@ PayVault normalizes provider-specific statuses into 4 universal states:
 
 ## Amount Handling
 
-PayVault always works in **major currency units** (the number your customer sees).
+Quirk always works in **major currency units** (the number your customer sees).
 
 ```typescript
 // You write this:
 await vault.initializeTransaction({ amount: 5000, email: '...' });
-// PayVault sends 500000 (kobo) to Paystack
-// PayVault sends 5000 (naira) to Flutterwave
+// Quirk sends 500000 (kobo) to Paystack
+// Quirk sends 5000 (naira) to Flutterwave
 // You never think about conversion
 ```
 
@@ -581,7 +581,7 @@ Zero-decimal currencies (JPY, KRW, VND) are handled automatically.
 
 ## TypeScript Support
 
-PayVault is written in TypeScript and exports full type definitions. Every method, config object, and response is strongly typed.
+Quirk is written in TypeScript and exports full type definitions. Every method, config object, and response is strongly typed.
 
 ```typescript
 import type {
@@ -591,7 +591,7 @@ import type {
   ChargeResult,
   WebhookEvent,
   Provider,
-} from 'payvault-sdk';
+} from 'quirk-sdk';
 ```
 
 ---
@@ -599,10 +599,10 @@ import type {
 ## Project Structure
 
 ```
-payvault/
+quirk/
   src/
     index.ts              # Public API exports
-    client.ts             # PayVault main client class
+    client.ts             # Quirk main client class
     types.ts              # All TypeScript interfaces and types
     errors.ts             # Structured error classes
     http.ts               # HTTP client with retry logic

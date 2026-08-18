@@ -8,7 +8,7 @@ import type {
   RefundConfig,
   RefundResult,
   WebhookEvent,
-  PayVaultConfig,
+  QuirkConfig,
   BulkTransferConfig,
   BulkTransferItem,
   BulkTransferResult,
@@ -36,7 +36,7 @@ export class FlutterwaveProvider implements Provider {
   private defaultCurrency: string;
   private defaultMetadata: Record<string, any>;
 
-  constructor(config: PayVaultConfig) {
+  constructor(config: QuirkConfig) {
     this.secretKey = config.secretKey;
     this.webhookSecret = config.webhookSecret;
     this.baseUrl = config.baseUrl || FLUTTERWAVE_BASE_URL;
@@ -318,14 +318,14 @@ export class FlutterwaveProvider implements Provider {
       account_number: recipient.accountNumber,
       amount: recipient.amount,
       currency: recipient.currency ?? currency,
-      narration: recipient.narration ?? config.title ?? 'PayVault bulk transfer',
+      narration: recipient.narration ?? config.title ?? 'Quirk bulk transfer',
       reference: recipient.reference ?? generateReference(),
     }));
 
     const response = await this.http.post(
       `${this.baseUrl}/bulk-transfers`,
       {
-        title: config.title ?? 'PayVault bulk transfer',
+        title: config.title ?? 'Quirk bulk transfer',
         bulk_data,
       },
       this.headers()

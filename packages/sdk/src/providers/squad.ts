@@ -8,7 +8,7 @@ import type {
   RefundConfig,
   RefundResult,
   WebhookEvent,
-  PayVaultConfig,
+  QuirkConfig,
 } from '../types';
 import { HttpClient } from '../http';
 import {
@@ -17,7 +17,7 @@ import {
   normalizeChannel,
   hmacSha512,
 } from '../utils';
-import { ValidationError, TransactionError, PayVaultError } from '../errors';
+import { ValidationError, TransactionError, QuirkError } from '../errors';
 
 const SQUAD_SANDBOX_URL = 'https://sandbox-api-d.squadco.com';
 const SQUAD_LIVE_URL = 'https://api-d.squadco.com';
@@ -47,7 +47,7 @@ export class SquadProvider implements Provider {
   private defaultCurrency: string;
   private defaultMetadata: Record<string, any>;
 
-  constructor(config: PayVaultConfig) {
+  constructor(config: QuirkConfig) {
     this.secretKey = config.secretKey;
     this.webhookSecret = config.webhookSecret;
     this.defaultCurrency = config.currency || 'NGN';
@@ -148,7 +148,7 @@ export class SquadProvider implements Provider {
 
   async charge(config: ChargeConfig): Promise<ChargeResult> {
     // Squad doesn't support direct card charges via API — uses checkout redirect
-    throw new PayVaultError(
+    throw new QuirkError(
       'Squad does not support direct charges. Use initializeTransaction() for the checkout redirect flow.',
       { code: 'UNSUPPORTED_OPERATION', provider: 'squad' }
     );
@@ -158,7 +158,7 @@ export class SquadProvider implements Provider {
     _reference: string,
     _auth: { type: string; value: string }
   ): Promise<ChargeResult> {
-    throw new PayVaultError(
+    throw new QuirkError(
       'Squad does not support OTP/PIN authorization. All auth is handled via checkout redirect.',
       { code: 'UNSUPPORTED_OPERATION', provider: 'squad' }
     );

@@ -64,7 +64,7 @@ export function SignUpForm({
       auth.setAccessToken(response.token)
       apiAuth.setToken(response.token)
 
-      toast.success(`Welcome to PayVault, ${response.merchant.business_name}!`)
+      toast.success(`Welcome to Quirk, ${response.merchant.business_name}!`)
 
       // Redirect to dashboard
       navigate({ to: '/', replace: true })

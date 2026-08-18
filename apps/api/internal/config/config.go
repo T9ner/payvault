@@ -29,7 +29,7 @@ type Config struct {
 	WebhookTimeoutSec int
 
 	// Payment Links
-	CheckoutBaseURL string // e.g., "https://pay.payvault.co" or "http://localhost:8080/api/v1/checkout"
+	CheckoutBaseURL string // e.g., "https://pay.quirk.co" or "http://localhost:8080/api/v1/checkout"
 }
 
 func Load() *Config {
@@ -37,7 +37,7 @@ func Load() *Config {
 		Port:        getEnv("PORT", "8080"),
 		Environment: getEnv("ENVIRONMENT", "development"),
 
-		DatabaseURL: getEnv("DATABASE_URL", "postgres://payvault:payvault@localhost:5432/payvault?sslmode=disable"),
+		DatabaseURL: getEnv("DATABASE_URL", "postgres://quirk:quirk@localhost:5432/quirk?sslmode=disable"),
 		RedisURL:    getEnv("REDIS_URL", "redis://localhost:6379/0"),
 
 		JWTSecret:          getEnv("JWT_SECRET", "change-me-in-production"),

@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PayVault Checkout Demo</title>
+  <title>Quirk Checkout Demo</title>
 
-  <!-- PayVault Checkout assets -->
-  <link rel="stylesheet" href="payvault-checkout.css" />
+  <!-- Quirk Checkout assets -->
+  <link rel="stylesheet" href="quirk-checkout.css" />
 
   <style>
     /* ====================================================================
@@ -468,7 +468,7 @@
   <div class="demo-badge">Live Demo</div>
 
   <!-- Title -->
-  <h1 class="demo-title">PayVault Checkout</h1>
+  <h1 class="demo-title">Quirk Checkout</h1>
   <p class="demo-subtitle">
     A beautiful, embeddable payment widget for African payments.
     Paystack + Flutterwave. Zero dependencies.
@@ -523,7 +523,7 @@
   <!-- Integration Code -->
   <div class="code-section">
     <h3 class="code-section-title">Integration</h3>
-    <p class="code-section-subtitle">Add PayVault Checkout to your site in under 5 minutes</p>
+    <p class="code-section-subtitle">Add Quirk Checkout to your site in under 5 minutes</p>
 
     <div class="code-block">
       <div class="code-header">
@@ -534,15 +534,15 @@
         <button class="code-copy" onclick="copyCode()">Copy</button>
       </div>
       <pre id="integration-code"><span class="hl-comment">&lt;!-- 1. Include the checkout script --&gt;</span>
-<span class="hl-punctuation">&lt;</span><span class="hl-tag">script</span> <span class="hl-attr">src</span><span class="hl-punctuation">=</span><span class="hl-value">"https://cdn.payvault.co/checkout/v1/payvault-checkout.js"</span><span class="hl-punctuation">&gt;&lt;/</span><span class="hl-tag">script</span><span class="hl-punctuation">&gt;</span>
+<span class="hl-punctuation">&lt;</span><span class="hl-tag">script</span> <span class="hl-attr">src</span><span class="hl-punctuation">=</span><span class="hl-value">"https://cdn.quirk.co/checkout/v1/quirk-checkout.js"</span><span class="hl-punctuation">&gt;&lt;/</span><span class="hl-tag">script</span><span class="hl-punctuation">&gt;</span>
 
 <span class="hl-comment">&lt;!-- 2. Add a pay button --&gt;</span>
-<span class="hl-punctuation">&lt;</span><span class="hl-tag">button</span> <span class="hl-attr">onclick</span><span class="hl-punctuation">=</span><span class="hl-value">"payWithPayVault()"</span><span class="hl-punctuation">&gt;</span>Pay Now<span class="hl-punctuation">&lt;/</span><span class="hl-tag">button</span><span class="hl-punctuation">&gt;</span>
+<span class="hl-punctuation">&lt;</span><span class="hl-tag">button</span> <span class="hl-attr">onclick</span><span class="hl-punctuation">=</span><span class="hl-value">"payWithQuirk()"</span><span class="hl-punctuation">&gt;</span>Pay Now<span class="hl-punctuation">&lt;/</span><span class="hl-tag">button</span><span class="hl-punctuation">&gt;</span>
 
 <span class="hl-comment">&lt;!-- 3. Configure and open --&gt;</span>
 <span class="hl-punctuation">&lt;</span><span class="hl-tag">script</span><span class="hl-punctuation">&gt;</span>
-<span class="hl-keyword">function</span> <span class="hl-function">payWithPayVault</span>() {
-  PayVaultCheckout.<span class="hl-function">open</span>({
+<span class="hl-keyword">function</span> <span class="hl-function">payWithQuirk</span>() {
+  QuirkCheckout.<span class="hl-function">open</span>({
     <span class="hl-property">publicKey</span>: <span class="hl-string">'pk_live_your_key_here'</span>,
     <span class="hl-property">amount</span>:    <span class="hl-number">5000</span>,
     <span class="hl-property">currency</span>:  <span class="hl-string">'NGN'</span>,
@@ -570,17 +570,17 @@
 
   <!-- Footer -->
   <footer class="demo-footer">
-    <p>PayVault Checkout v1.0.0 &middot; Built for African payments</p>
+    <p>Quirk Checkout v1.0.0 &middot; Built for African payments</p>
   </footer>
 
-  <!-- PayVault Checkout Script -->
-  <script src="payvault-checkout.js"></script>
+  <!-- Quirk Checkout Script -->
+  <script src="quirk-checkout.js"></script>
 
   <script>
     // =========================================================================
     // MOCK API ENDPOINT
     // In production, this would be your server endpoint that calls
-    // Paystack/Flutterwave APIs via the PayVault SDK.
+    // Paystack/Flutterwave APIs via the Quirk SDK.
     // Here we intercept fetch to simulate a 2-second server response.
     // =========================================================================
 
@@ -636,7 +636,7 @@
      * This is the default configuration most merchants would use.
      */
     function openCheckoutFull() {
-      PayVaultCheckout.open({
+      QuirkCheckout.open({
         publicKey: 'pk_test_demo_key_12345',
         amount: 5000,
         currency: 'NGN',
@@ -675,7 +675,7 @@
      * Some merchants prefer to restrict payment methods.
      */
     function openCheckoutCardOnly() {
-      PayVaultCheckout.open({
+      QuirkCheckout.open({
         publicKey: 'pk_test_demo_key_12345',
         amount: 5000,
         currency: 'NGN',

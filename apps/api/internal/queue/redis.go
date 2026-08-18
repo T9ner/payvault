@@ -35,8 +35,8 @@ func NewRedisClient(redisURL string) *redis.Client {
 
 // ── Queue Keys ───────────────────────────────────────────────────
 const (
-	QueueWebhookForward = "payvault:queue:webhook_forward"
-	QueueWebhookRetry   = "payvault:queue:webhook_retry"
+	QueueWebhookForward = "quirk:queue:webhook_forward"
+	QueueWebhookRetry   = "quirk:queue:webhook_retry"
 )
 
 // ── Queue Adapter ────────────────────────────────────────────────
@@ -55,7 +55,7 @@ func NewQueueAdapter(client *redis.Client) *QueueAdapter {
 // Enqueue pushes a job payload onto the appropriate Redis queue based on jobType.
 // Job types map to queue keys: "webhook_forward" -> QueueWebhookForward, etc.
 func (qa *QueueAdapter) Enqueue(jobType string, payload []byte) error {
-	queueKey := "payvault:queue:" + jobType
+	queueKey := "quirk:queue:" + jobType
 	return qa.client.LPush(context.Background(), queueKey, payload).Err()
 }
 

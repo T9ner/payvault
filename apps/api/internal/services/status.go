@@ -94,7 +94,7 @@ func (s *StatusService) WaitForStatus(ctx context.Context, merchantID uuid.UUID,
 	}
 
 	// Subscribe to status changes via Redis pub/sub
-	channel := fmt.Sprintf("payvault:txn_status:%s", reference)
+	channel := fmt.Sprintf("quirk:txn_status:%s", reference)
 	sub := s.redis.Subscribe(ctx, channel)
 	defer sub.Close()
 
@@ -125,7 +125,7 @@ func (s *StatusService) WaitForStatus(ctx context.Context, merchantID uuid.UUID,
 // NotifyStatusChange publishes a status change event to Redis pub/sub.
 // Called by TransactionService when a transaction status changes.
 func (s *StatusService) NotifyStatusChange(ctx context.Context, reference string) error {
-	channel := fmt.Sprintf("payvault:txn_status:%s", reference)
+	channel := fmt.Sprintf("quirk:txn_status:%s", reference)
 	return s.redis.Publish(ctx, channel, "changed").Err()
 }
 

@@ -3,7 +3,7 @@ package api
 import (
 	"net/http"
 
-	"payvault-api/internal/middleware"
+	"quirk-api/internal/middleware"
 	"github.com/go-chi/cors"
 	"github.com/go-chi/chi/v5"
 	chimw "github.com/go-chi/chi/v5/middleware"

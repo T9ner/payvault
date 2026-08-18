@@ -233,8 +233,8 @@ func TestHealthCheck_ReturnsHealthy(t *testing.T) {
 	}
 
 	// Should contain service name
-	if !contains(body, "payvault-api") {
-		t.Errorf("HealthCheck body should contain 'payvault-api', got: %s", body)
+	if !contains(body, "quirk-api") {
+		t.Errorf("HealthCheck body should contain 'quirk-api', got: %s", body)
 	}
 }
 

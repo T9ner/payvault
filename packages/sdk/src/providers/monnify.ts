@@ -8,7 +8,7 @@ import type {
   RefundConfig,
   RefundResult,
   WebhookEvent,
-  PayVaultConfig,
+  QuirkConfig,
 } from '../types';
 import { HttpClient } from '../http';
 import {
@@ -17,7 +17,7 @@ import {
   normalizeChannel,
   hmacSha512,
 } from '../utils';
-import { ValidationError, TransactionError, PayVaultError, ProviderError } from '../errors';
+import { ValidationError, TransactionError, QuirkError, ProviderError } from '../errors';
 
 const MONNIFY_SANDBOX_URL = 'https://sandbox.monnify.com/api';
 const MONNIFY_LIVE_URL = 'https://api.monnify.com/api';
@@ -33,14 +33,14 @@ function parseMonnifyCredentials(secret: string): {
 } {
   const parts = secret.split('|');
   if (parts.length !== 3) {
-    throw new PayVaultError(
+    throw new QuirkError(
       'Monnify credentials must be in the format: apiKey|secretKey|contractCode',
       { code: 'VALIDATION_ERROR', provider: 'monnify' }
     );
   }
   const [apiKey, secretKey, contractCode] = parts.map(p => p.trim());
   if (!apiKey || !secretKey || !contractCode) {
-    throw new PayVaultError(
+    throw new QuirkError(
       'Monnify credentials must include apiKey, secretKey, and contractCode',
       { code: 'VALIDATION_ERROR', provider: 'monnify' }
     );
@@ -74,7 +74,7 @@ export class MonnifyProvider implements Provider {
   private defaultCurrency: string;
   private defaultMetadata: Record<string, any>;
 
-  constructor(config: PayVaultConfig) {
+  constructor(config: QuirkConfig) {
     this.rawSecret = config.secretKey;
     this.webhookSecret = config.webhookSecret;
     this.defaultCurrency = config.currency || 'NGN';
@@ -202,7 +202,7 @@ export class MonnifyProvider implements Provider {
   async charge(config: ChargeConfig): Promise<ChargeResult> {
     // Monnify doesn't support direct charges (no card tokenization via API)
     // All payments go through the redirect/checkout flow
-    throw new PayVaultError(
+    throw new QuirkError(
       'Monnify does not support direct charges. Use initializeTransaction() for the checkout redirect flow.',
       { code: 'UNSUPPORTED_OPERATION', provider: 'monnify' }
     );
@@ -212,14 +212,14 @@ export class MonnifyProvider implements Provider {
     _reference: string,
     _auth: { type: string; value: string }
   ): Promise<ChargeResult> {
-    throw new PayVaultError(
+    throw new QuirkError(
       'Monnify does not support OTP/PIN authorization. All auth is handled via checkout redirect.',
       { code: 'UNSUPPORTED_OPERATION', provider: 'monnify' }
     );
   }
 
   async refund(_config: RefundConfig): Promise<RefundResult> {
-    throw new PayVaultError(
+    throw new QuirkError(
       'Monnify refunds must be processed manually via the Monnify merchant dashboard.',
       { code: 'UNSUPPORTED_OPERATION', provider: 'monnify' }
     );

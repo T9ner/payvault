@@ -73,7 +73,7 @@ function Settings() {
                    </CardHeader>
                    <CardContent className="pt-6 space-y-6">
                         <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20 text-sm text-blue-600 dark:text-blue-400">
-                            API keys authorize your application to access the Payvault infrastructure. 
+                            API keys authorize your application to access the Quirk infrastructure. 
                             Treat these as sensitive credentials: never commit them to source control.
                         </div>
 
@@ -112,7 +112,7 @@ function Settings() {
                             <div className="py-12 flex flex-col items-center justify-center border-2 border-dashed border-border rounded-lg text-center">
                                 <Lock className="size-8 text-muted-foreground mb-4 opacity-50" />
                                 <h4 className="text-sm font-semibold mb-2">No API Key</h4>
-                                <p className="text-xs text-muted-foreground max-w-sm">You haven't generated an API key yet. Create one to start integrating with PayVault.</p>
+                                <p className="text-xs text-muted-foreground max-w-sm">You haven't generated an API key yet. Create one to start integrating with Quirk.</p>
                             </div>
                         )}
 

@@ -11,7 +11,7 @@ import (
 	"net/url"
 	"time"
 
-	"payvault-api/internal/middleware"
+	"quirk-api/internal/middleware"
 )
 
 type githubTokenResponse struct {

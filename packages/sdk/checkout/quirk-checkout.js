@@ -1,10 +1,10 @@
 /**
- * PayVault Checkout v1.0.0
+ * Quirk Checkout v1.0.0
  * Embeddable payment checkout widget for African payments (Paystack + Flutterwave)
  * Zero dependencies, vanilla JS, production-grade.
  *
  * Usage:
- *   PayVaultCheckout.open({
+ *   QuirkCheckout.open({
  *     publicKey: 'pk_test_xxx',
  *     amount: 5000,
  *     currency: 'NGN',
@@ -15,7 +15,7 @@
  *     onError: (err) => console.error(err),
  *   });
  *
- * (c) 2026 PayVault. All rights reserved.
+ * (c) 2026 Quirk. All rights reserved.
  */
 ;(function (global) {
   'use strict';
@@ -153,20 +153,20 @@
     var scripts = document.querySelectorAll('script[src]');
     var selfScript = null;
     for (var i = 0; i < scripts.length; i++) {
-      if (scripts[i].src && scripts[i].src.indexOf('payvault-checkout') !== -1) {
+      if (scripts[i].src && scripts[i].src.indexOf('quirk-checkout') !== -1) {
         selfScript = scripts[i];
         break;
       }
     }
 
-    var cssUrl = 'payvault-checkout.css';
+    var cssUrl = 'quirk-checkout.css';
     if (selfScript) {
       var base = selfScript.src.substring(0, selfScript.src.lastIndexOf('/') + 1);
-      cssUrl = base + 'payvault-checkout.css';
+      cssUrl = base + 'quirk-checkout.css';
     }
 
     // Don't inject twice
-    if (document.querySelector('link[href*="payvault-checkout.css"]')) return;
+    if (document.querySelector('link[href*="quirk-checkout.css"]')) return;
 
     var link = document.createElement('link');
     link.rel = 'stylesheet';
@@ -209,7 +209,7 @@
    */
   Checkout.prototype.open = function (config) {
     if (this._isOpen) {
-      console.warn('[PayVault] Checkout is already open.');
+      console.warn('[Quirk] Checkout is already open.');
       return;
     }
 
@@ -232,11 +232,11 @@
 
     // Validate required fields
     if (!this._config.amount || this._config.amount <= 0) {
-      console.error('[PayVault] amount is required and must be > 0');
+      console.error('[Quirk] amount is required and must be > 0');
       return;
     }
     if (!this._config.email) {
-      console.error('[PayVault] email is required');
+      console.error('[Quirk] email is required');
       return;
     }
 
@@ -516,7 +516,7 @@
     html += '<div class="pv-footer">';
     html += '  <div class="pv-secured">';
     html += '    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>';
-    html += '    <span>Secured by <strong>PayVault</strong></span>';
+    html += '    <span>Secured by <strong>Quirk</strong></span>';
     html += '  </div>';
     html += '</div>';
 
@@ -1181,7 +1181,7 @@
 
   // Expose singleton
   var instance = new Checkout();
-  global.PayVaultCheckout = {
+  global.QuirkCheckout = {
     version: VERSION,
     open: function (config) { return instance.open(config); },
     close: function () { return instance.close(); },

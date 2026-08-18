@@ -7,7 +7,7 @@ export function PrivacyPolicy() {
         <section className='space-y-4'>
           <h2 className='text-2xl font-semibold'>1. Information We Collect</h2>
           <p>
-            At PayVault, we collect information to provide better services to all our merchants. We collect data in the following ways:
+            At Quirk, we collect information to provide better services to all our merchants. We collect data in the following ways:
           </p>
           <ul className='list-disc pl-6 space-y-2'>
             <li><strong>Information you give us:</strong> Since we use GitHub OAuth, we receive your GitHub profile information (such as username, name, and email) to create and identify your merchant account.</li>
@@ -19,7 +19,7 @@ export function PrivacyPolicy() {
         <section className='space-y-4'>
           <h2 className='text-2xl font-semibold'>2. How We Use Information</h2>
           <p>
-            We use the information we collect to provide, maintain, protect and improve our services, to develop new ones, and to protect PayVault and our users. This includes:
+            We use the information we collect to provide, maintain, protect and improve our services, to develop new ones, and to protect Quirk and our users. This includes:
           </p>
           <ul className='list-disc pl-6 space-y-2'>
             <li>Processing your transactions and managing your merchant dashboard.</li>
@@ -31,7 +31,7 @@ export function PrivacyPolicy() {
         <section className='space-y-4'>
           <h2 className='text-2xl font-semibold'>3. Information We Share</h2>
           <p>
-            We do not share personal information with companies, organizations, or individuals outside of PayVault unless one of the following circumstances applies:
+            We do not share personal information with companies, organizations, or individuals outside of Quirk unless one of the following circumstances applies:
           </p>
           <ul className='list-disc pl-6 space-y-2'>
             <li><strong>With your consent:</strong> We will share information with third parties when we have your explicit permission.</li>
@@ -43,18 +43,18 @@ export function PrivacyPolicy() {
         <section className='space-y-4'>
           <h2 className='text-2xl font-semibold'>4. Data Security</h2>
           <p>
-            We work hard to protect PayVault and our users from unauthorized access to or unauthorized alteration, disclosure or destruction of information we hold. In particular:
+            We work hard to protect Quirk and our users from unauthorized access to or unauthorized alteration, disclosure or destruction of information we hold. In particular:
           </p>
           <ul className='list-disc pl-6 space-y-2'>
             <li>We encrypt many of our services using SSL/TLS.</li>
             <li>We review our information collection, storage and processing practices, including physical security measures.</li>
-            <li>We restrict access to personal information to PayVault employees and contractors who need that information in order to process it for us.</li>
+            <li>We restrict access to personal information to Quirk employees and contractors who need that information in order to process it for us.</li>
           </ul>
         </section>
 
         <section className='space-y-4 border-t pt-8'>
           <p className='text-muted-foreground italic text-sm'>
-            If you have any questions about this Privacy Policy, please contact privacy@payvault.com.
+            If you have any questions about this Privacy Policy, please contact privacy@quirk.com.
           </p>
         </section>
       </div>

@@ -1,4 +1,4 @@
--- PayVault Infrastructure Schema v0.1.0
+-- Quirk Infrastructure Schema v0.1.0
 -- Full platform: merchants, transactions, webhooks, payment links, subscriptions, fraud, audit
 
 -- ════════════════════════════════════════════════════════════════
@@ -93,12 +93,12 @@ CREATE TABLE merchant_settings (
 
 -- ════════════════════════════════════════════════════════════════
 -- TRANSACTIONS
--- Every payment that flows through PayVault
+-- Every payment that flows through Quirk
 -- ════════════════════════════════════════════════════════════════
 CREATE TABLE transactions (
     id              UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     merchant_id     UUID NOT NULL REFERENCES merchants(id),
-    reference       VARCHAR(100) NOT NULL UNIQUE, -- PayVault reference (pvt_xxx)
+    reference       VARCHAR(100) NOT NULL UNIQUE, -- Quirk reference (pvt_xxx)
     provider        provider_name NOT NULL,
     provider_ref    VARCHAR(255),                 -- Provider's own reference
     environment     environment_type NOT NULL,
@@ -156,7 +156,7 @@ CREATE TABLE webhooks (
     event_type      VARCHAR(100) NOT NULL,        -- e.g., "charge.success"
     idempotency_key VARCHAR(255) NOT NULL UNIQUE,  -- For deduplication
     raw_payload     JSONB NOT NULL,               -- Exact payload from provider
-    normalized_event JSONB,                       -- PayVault-normalized event
+    normalized_event JSONB,                       -- Quirk-normalized event
     forward_status  webhook_status NOT NULL DEFAULT 'pending',
     forward_attempts INT NOT NULL DEFAULT 0,
     last_forward_at TIMESTAMPTZ,

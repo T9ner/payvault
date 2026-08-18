@@ -1,17 +1,17 @@
 <div align="center">
 
-# PayVault
+# Quirk
 
 ### One API. Every African payment provider.
 
-[![Build](https://github.com/T9ner/payvault/actions/workflows/ci.yml/badge.svg)](https://github.com/T9ner/payvault/actions/workflows/ci.yml)
+[![Build](https://github.com/T9ner/quirk/actions/workflows/ci.yml/badge.svg)](https://github.com/T9ner/quirk/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3+-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![Go](https://img.shields.io/badge/Go-1.22+-00ADD8?style=flat-square&logo=go&logoColor=white)](https://go.dev)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/T9ner/payvault/pulls)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/T9ner/quirk/pulls)
 
 **Stop rewriting payment code when you switch providers.**
-PayVault gives you a single, type-safe API that works with Paystack, Flutterwave, and any provider you add.
+Quirk gives you a single, type-safe API that works with Paystack, Flutterwave, and any provider you add.
 
 [Quick Start](#quick-start) &bull; [Architecture](#architecture) &bull; [SDK Usage](#sdk-usage) &bull; [API](#api) &bull; [Dashboard](#dashboard) &bull; [Contributing](#contributing)
 
@@ -19,9 +19,9 @@ PayVault gives you a single, type-safe API that works with Paystack, Flutterwave
 
 ---
 
-## Why PayVault?
+## Why Quirk?
 
-| Problem | PayVault Solution |
+| Problem | Quirk Solution |
 |---|---|
 | Every provider has a different API shape | One unified interface for all providers |
 | Switching providers means rewriting code | Change one line to switch providers |
@@ -43,16 +43,16 @@ PayVault gives you a single, type-safe API that works with Paystack, Flutterwave
 ### 1. Install the SDK
 
 ```bash
-npm install payvault-sdk
+npm install quirk-sdk
 ```
 
-### 2. Use PayVault in Your App
+### 2. Use Quirk in Your App
 
 ```typescript
-import { PayVault } from 'payvault-sdk';
+import { Quirk } from 'quirk-sdk';
 
-// Create a PayVault instance for Paystack
-const vault = PayVault.paystack('sk_test_xxxxx');
+// Create a Quirk instance for Paystack
+const vault = Quirk.paystack('sk_test_xxxxx');
 
 // Initialize a transaction — returns a checkout URL
 const tx = await vault.initializeTransaction({
@@ -101,14 +101,14 @@ The dashboard starts on `http://localhost:3000`. In development, Vite proxies `/
 
 ## Architecture
 
-PayVault is a complete payment platform with three components:
+Quirk is a complete payment platform with three components:
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                     Your Application                        │
 │                                                             │
-│  import { PayVault } from 'payvault-sdk'                    │
-│  const vault = PayVault.paystack('sk_test_xxxxx')          │
+│  import { Quirk } from 'quirk-sdk'                    │
+│  const vault = Quirk.paystack('sk_test_xxxxx')          │
 └─────────────────┬───────────────────────────────────────────┘
                   │
                   │ TypeScript SDK
@@ -147,11 +147,11 @@ PayVault is a complete payment platform with three components:
 ## Repository Structure
 
 ```
-payvault/
+quirk/
 ├── packages/
-│   └── sdk/                # TypeScript SDK — npm package `payvault-sdk`
+│   └── sdk/                # TypeScript SDK — npm package `quirk-sdk`
 │       ├── src/
-│       │   ├── client.ts           # PayVault main client class
+│       │   ├── client.ts           # Quirk main client class
 │       │   ├── types.ts            # All TypeScript interfaces
 │       │   ├── errors.ts           # Structured error classes
 │       │   ├── http.ts             # HTTP client with retry logic
@@ -197,14 +197,14 @@ payvault/
 
 ## SDK Usage
 
-The SDK is the core of PayVault — a TypeScript client that abstracts payment provider differences.
+The SDK is the core of Quirk — a TypeScript client that abstracts payment provider differences.
 
 ### Initialize a Transaction
 
 ```typescript
-import { PayVault } from 'payvault-sdk';
+import { Quirk } from 'quirk-sdk';
 
-const vault = PayVault.paystack('sk_test_xxxxx');
+const vault = Quirk.paystack('sk_test_xxxxx');
 
 const tx = await vault.initializeTransaction({
   amount: 5000,
@@ -238,8 +238,8 @@ if (result.success) {
 The killer feature — change **one line** to switch providers:
 
 ```diff
-- const vault = PayVault.paystack('sk_test_xxxxx');
-+ const vault = PayVault.flutterwave('FLWSECK_TEST-xxxxx');
+- const vault = Quirk.paystack('sk_test_xxxxx');
++ const vault = Quirk.flutterwave('FLWSECK_TEST-xxxxx');
 ```
 
 Everything else stays the same. Same method names, same response shapes, same types.
@@ -248,10 +248,10 @@ Everything else stays the same. Same method names, same response shapes, same ty
 
 ```typescript
 import express from 'express';
-import { PayVault } from 'payvault-sdk';
+import { Quirk } from 'quirk-sdk';
 
 const app = express();
-const vault = PayVault.paystack('sk_live_xxxxx', {
+const vault = Quirk.paystack('sk_live_xxxxx', {
   webhookSecret: 'whsec_xxxxx',
 });
 
@@ -282,7 +282,7 @@ app.post('/webhooks/payments', express.raw({ type: 'application/json' }), async 
 
 ### Payment Links
 
-PayVault lets you create shareable payment pages without writing any frontend code. This is handled by the API, so no SDK is required.
+Quirk lets you create shareable payment pages without writing any frontend code. This is handled by the API, so no SDK is required.
 
 ### Create a link
 ```bash
@@ -339,11 +339,11 @@ const charge = await vault.charge({
 
 ```typescript
 import {
-  PayVaultError,
+  QuirkError,
   AuthenticationError,
   ValidationError,
   ProviderError,
-} from 'payvault-sdk';
+} from 'quirk-sdk';
 
 try {
   await vault.initializeTransaction({ amount: 5000, email: '' });
@@ -415,7 +415,7 @@ cd apps/api
 cp env.example .env
 
 # Required env vars:
-# - DATABASE_URL=postgres://payvault:payvault@localhost:5432/payvault
+# - DATABASE_URL=postgres://quirk:quirk@localhost:5432/quirk
 # - REDIS_URL=redis://localhost:6379
 # - JWT_SECRET=your-secret-key
 # - PAYSTACK_SECRET_KEY=sk_test_xxxxx
@@ -491,7 +491,7 @@ npm run build
 ### SDK Configuration
 
 ```typescript
-const vault = new PayVault({
+const vault = new Quirk({
   provider: 'paystack',            // or 'flutterwave'
   secretKey: 'sk_test_xxxxx',
   publicKey: 'pk_test_xxxxx',      // optional
@@ -522,7 +522,7 @@ Environment variables in `apps/api/.env`:
 
 ```bash
 # Database
-DATABASE_URL=postgres://payvault:payvault@localhost:5432/payvault
+DATABASE_URL=postgres://quirk:quirk@localhost:5432/quirk
 
 # Redis
 REDIS_URL=redis://localhost:6379
@@ -555,12 +555,12 @@ VITE_API_URL=http://localhost:8081
 
 ## Provider Switching
 
-PayVault's architecture makes provider migration painless. Your business logic never changes.
+Quirk's architecture makes provider migration painless. Your business logic never changes.
 
 ### Environment-Based Switching
 
 ```typescript
-const vault = new PayVault({
+const vault = new Quirk({
   provider: process.env.PAYMENT_PROVIDER!,     // 'paystack' or 'flutterwave'
   secretKey: process.env.PAYMENT_SECRET_KEY!,
   currency: 'NGN',
@@ -576,13 +576,13 @@ const tx = await vault.initializeTransaction({
 ### A/B Testing Providers
 
 ```typescript
-function getPaymentVault(userId: string): PayVault {
+function getPaymentVault(userId: string): Quirk {
   // Route 20% of users to Flutterwave
   const useFlutterwave = hashUserId(userId) % 5 === 0;
 
   return useFlutterwave
-    ? PayVault.flutterwave(process.env.FLW_SECRET!)
-    : PayVault.paystack(process.env.PS_SECRET!);
+    ? Quirk.flutterwave(process.env.FLW_SECRET!)
+    : Quirk.paystack(process.env.PS_SECRET!);
 }
 ```
 
@@ -591,11 +591,11 @@ function getPaymentVault(userId: string): PayVault {
 ```typescript
 async function processPayment(config: TransactionConfig) {
   try {
-    const primary = PayVault.paystack(process.env.PS_SECRET!);
+    const primary = Quirk.paystack(process.env.PS_SECRET!);
     return await primary.initializeTransaction(config);
   } catch (err) {
     console.warn('Paystack failed, falling back to Flutterwave');
-    const fallback = PayVault.flutterwave(process.env.FLW_SECRET!);
+    const fallback = Quirk.flutterwave(process.env.FLW_SECRET!);
     return await fallback.initializeTransaction(config);
   }
 }
@@ -605,7 +605,7 @@ async function processPayment(config: TransactionConfig) {
 
 ## Unified Status Mapping
 
-PayVault normalizes provider-specific statuses into 4 universal states:
+Quirk normalizes provider-specific statuses into 4 universal states:
 
 | Unified Status | Paystack | Flutterwave |
 |---|---|---|
@@ -618,13 +618,13 @@ PayVault normalizes provider-specific statuses into 4 universal states:
 
 ## Amount Handling
 
-PayVault always works in **major currency units** (the number your customer sees).
+Quirk always works in **major currency units** (the number your customer sees).
 
 ```typescript
 // You write this:
 await vault.initializeTransaction({ amount: 5000, email: '...' });
-// PayVault sends 500000 (kobo) to Paystack
-// PayVault sends 5000 (naira) to Flutterwave
+// Quirk sends 500000 (kobo) to Paystack
+// Quirk sends 5000 (naira) to Flutterwave
 // You never think about conversion
 ```
 
@@ -683,7 +683,7 @@ docker compose up -d postgres-test
 # Run integration tests
 (
   cd apps/api
-  TEST_DATABASE_URL="postgres://payvault:payvault@localhost:5433/payvault_test?sslmode=disable" \
+  TEST_DATABASE_URL="postgres://quirk:quirk@localhost:5433/quirk_test?sslmode=disable" \
     go test -tags integration -v ./internal/services/...
 )
 

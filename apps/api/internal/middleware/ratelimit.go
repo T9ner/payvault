@@ -30,7 +30,7 @@ func (rl *RateLimiter) Limit(next http.Handler) http.Handler {
 			return
 		}
 
-		key := fmt.Sprintf("payvault:ratelimit:%s", merchantID)
+		key := fmt.Sprintf("quirk:ratelimit:%s", merchantID)
 		allowed, err := checkRateLimit(r.Context(), rl.redis, key, rl.rps, rl.burst)
 		if err != nil {
 			// If Redis is down, allow the request (fail open)

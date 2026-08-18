@@ -15,7 +15,7 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-// WebhookDeliveryService forwards PayVault events to merchant webhook URLs.
+// WebhookDeliveryService forwards Quirk events to merchant webhook URLs.
 type WebhookDeliveryService struct {
 	db         *pgxpool.Pool
 	crypto     *CryptoService
@@ -97,7 +97,7 @@ func (s *WebhookDeliveryService) deliverWebhookLog(ctx context.Context, logID, w
 	req.Header.Set("Content-Type", "application/json")
 	if webhookSecret != "" {
 		signature := computeHMAC(payloadBytes, webhookSecret)
-		req.Header.Set("PayVault-Signature", signature)
+		req.Header.Set("Quirk-Signature", signature)
 	}
 
 	resp, err := s.httpClient.Do(req)
