@@ -17,7 +17,7 @@ export function LegalLayout({ children, title, lastUpdated }: LegalLayoutProps) 
           <div className='flex items-center gap-2'>
             <Link to='/sign-in' className='flex items-center gap-2 transition-opacity hover:opacity-80'>
               <Logo className='size-6' />
-              <span className='text-lg font-bold tracking-tight'>PayVault</span>
+              <span className='text-lg font-bold tracking-tight'>Quirk</span>
             </Link>
           </div>
           <Button variant='ghost' size='sm' asChild>
@@ -49,7 +49,7 @@ export function LegalLayout({ children, title, lastUpdated }: LegalLayoutProps) 
         <div className='container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row md:py-0'>
           <div className='flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0'>
             <p className='text-center text-sm leading-loose text-muted-foreground md:text-left'>
-              &copy; {new Date().getFullYear()} PayVault Inc. All rights reserved.
+              &copy; {new Date().getFullYear()} Quirk Inc. All rights reserved.
             </p>
           </div>
         </div>

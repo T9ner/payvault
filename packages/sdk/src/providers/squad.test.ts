@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { SquadProvider } from './squad';
-import { ValidationError, PayVaultError } from '../errors';
+import { ValidationError, QuirkError } from '../errors';
 import { HttpClient } from '../http';
 
 // ── Setup ────────────────────────────────────────────────────────
@@ -189,7 +189,7 @@ describe('SquadProvider — unsupported operations', () => {
   it('charge throws UNSUPPORTED_OPERATION', async () => {
     await expect(
       provider.charge({ amount: 5000, email: 'u@e.com', channel: 'card' })
-    ).rejects.toThrow(PayVaultError);
+    ).rejects.toThrow(QuirkError);
 
     try {
       await provider.charge({ amount: 5000, email: 'u@e.com', channel: 'card' });
@@ -201,7 +201,7 @@ describe('SquadProvider — unsupported operations', () => {
   it('submitAuthorization throws UNSUPPORTED_OPERATION', async () => {
     await expect(
       provider.submitAuthorization('ref', { type: 'otp', value: '123' })
-    ).rejects.toThrow(PayVaultError);
+    ).rejects.toThrow(QuirkError);
   });
 });
 

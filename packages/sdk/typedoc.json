@@ -2,7 +2,7 @@
   "$schema": "https://typedoc.org/schema.json",
   "entryPoints": ["src/index.ts"],
   "out": "docs",
-  "name": "PayVault SDK",
+  "name": "Quirk SDK",
   "readme": "README.md",
   "excludePrivate": true,
   "excludeInternal": true,
@@ -11,7 +11,7 @@
   "plugin": [],
   "categorizeByGroup": true,
   "navigationLinks": {
-    "GitHub": "https://github.com/T9ner/payvault-sdk",
-    "npm": "https://www.npmjs.com/package/payvault-sdk"
+    "GitHub": "https://github.com/T9ner/quirk-sdk",
+    "npm": "https://www.npmjs.com/package/quirk-sdk"
   }
 }

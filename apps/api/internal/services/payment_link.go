@@ -13,7 +13,7 @@ import (
 type PaymentLinkService struct {
 	db       *pgxpool.Pool
 	txnSvc   *TransactionService
-	baseURL  string // e.g., "https://pay.payvault.co"
+	baseURL  string // e.g., "https://pay.quirk.co"
 }
 
 func NewPaymentLinkService(db *pgxpool.Pool, txnSvc *TransactionService, baseURL string) *PaymentLinkService {

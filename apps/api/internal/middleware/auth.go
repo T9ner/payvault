@@ -10,7 +10,7 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 
-	"payvault-api/internal/services"
+	"quirk-api/internal/services"
 )
 
 // AuthMiddleware provides JWT and API-key authentication handlers.
@@ -72,7 +72,7 @@ func (am *AuthMiddleware) RequireJWT(next http.Handler) http.Handler {
 	})
 }
 
-// RequireAPIKey is a chi middleware that authenticates requests using PayVault API keys.
+// RequireAPIKey is a chi middleware that authenticates requests using Quirk API keys.
 // Used for SDK-facing endpoints. Accepts sk_* keys.
 func (am *AuthMiddleware) RequireAPIKey(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {

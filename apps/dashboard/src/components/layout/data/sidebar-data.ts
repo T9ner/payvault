@@ -11,12 +11,12 @@ import { type SidebarData } from '../types'
 export const sidebarData: SidebarData = {
   user: {
     name: 'Admin',
-    email: 'admin@payvault.com',
+    email: 'admin@quirk.com',
     avatar: '',
   },
   teams: [
     {
-      name: 'PayVault',
+      name: 'Quirk',
       logo: Command,
       plan: 'Live Platform',
     },

@@ -10,12 +10,12 @@ import (
 	"syscall"
 	"time"
 
-	"payvault-api/internal/api"
-	"payvault-api/internal/config"
-	"payvault-api/internal/database"
-	"payvault-api/internal/middleware"
-	"payvault-api/internal/queue"
-	"payvault-api/internal/services"
+	"quirk-api/internal/api"
+	"quirk-api/internal/config"
+	"quirk-api/internal/database"
+	"quirk-api/internal/middleware"
+	"quirk-api/internal/queue"
+	"quirk-api/internal/services"
 
 	"github.com/joho/godotenv"
 )
@@ -135,7 +135,7 @@ func main() {
 
 	// ── Graceful Shutdown ────────────────────────────────────────
 	go func() {
-		log.Printf("PayVault API v0.1.0 starting on port %s", cfg.Port)
+		log.Printf("Quirk API v0.1.0 starting on port %s", cfg.Port)
 		log.Printf("Providers: %v", providers.List())
 		log.Printf("Checkout base URL: %s", cfg.CheckoutBaseURL)
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {

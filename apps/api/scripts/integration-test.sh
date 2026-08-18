@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
 API_DIR="$ROOT_DIR/apps/api"
 COMPOSE_FILE="$ROOT_DIR/docker-compose.yml"
-export TEST_DATABASE_URL="${TEST_DATABASE_URL:-postgres://payvault:payvault@localhost:5433/payvault_test?sslmode=disable}"
+export TEST_DATABASE_URL="${TEST_DATABASE_URL:-postgres://quirk:quirk@localhost:5433/quirk_test?sslmode=disable}"
 
 cleanup() {
   docker compose -f "$COMPOSE_FILE" stop postgres-test >/dev/null 2>&1 || true

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import {
-  PayVaultError,
+  QuirkError,
   AuthenticationError,
   ValidationError,
   ProviderError,
@@ -8,24 +8,24 @@ import {
   TransactionError,
 } from './errors';
 
-// ── PayVaultError (base class) ───────────────────────────────────
+// ── QuirkError (base class) ───────────────────────────────────
 
-describe('PayVaultError', () => {
+describe('QuirkError', () => {
   it('sets message, code, provider, and name', () => {
-    const err = new PayVaultError('something broke', {
+    const err = new QuirkError('something broke', {
       code: 'TEST_CODE',
       provider: 'paystack',
     });
 
     expect(err.message).toBe('something broke');
-    expect(err.name).toBe('PayVaultError');
+    expect(err.name).toBe('QuirkError');
     expect(err.code).toBe('TEST_CODE');
     expect(err.provider).toBe('paystack');
   });
 
   it('optionally sets statusCode and raw', () => {
     const raw = { detail: 'api response' };
-    const err = new PayVaultError('fail', {
+    const err = new QuirkError('fail', {
       code: 'X',
       provider: 'p',
       statusCode: 422,
@@ -37,7 +37,7 @@ describe('PayVaultError', () => {
   });
 
   it('is an instance of Error', () => {
-    const err = new PayVaultError('fail', { code: 'X', provider: 'p' });
+    const err = new QuirkError('fail', { code: 'X', provider: 'p' });
     expect(err).toBeInstanceOf(Error);
   });
 });
@@ -59,9 +59,9 @@ describe('AuthenticationError', () => {
     expect(err.raw).toEqual({ raw: true });
   });
 
-  it('is an instance of PayVaultError and Error', () => {
+  it('is an instance of QuirkError and Error', () => {
     const err = new AuthenticationError('paystack');
-    expect(err).toBeInstanceOf(PayVaultError);
+    expect(err).toBeInstanceOf(QuirkError);
     expect(err).toBeInstanceOf(Error);
   });
 });
@@ -83,9 +83,9 @@ describe('ValidationError', () => {
     expect(err.field).toBeUndefined();
   });
 
-  it('is an instance of PayVaultError', () => {
+  it('is an instance of QuirkError', () => {
     const err = new ValidationError('x', 'p');
-    expect(err).toBeInstanceOf(PayVaultError);
+    expect(err).toBeInstanceOf(QuirkError);
   });
 });
 
@@ -103,9 +103,9 @@ describe('ProviderError', () => {
     expect(err.name).toBe('ProviderError');
   });
 
-  it('is an instance of PayVaultError', () => {
+  it('is an instance of QuirkError', () => {
     const err = new ProviderError('fail', 'p', 500);
-    expect(err).toBeInstanceOf(PayVaultError);
+    expect(err).toBeInstanceOf(QuirkError);
   });
 });
 
@@ -127,9 +127,9 @@ describe('NetworkError', () => {
     expect(err.message).toContain('Connection failed');
   });
 
-  it('is an instance of PayVaultError', () => {
+  it('is an instance of QuirkError', () => {
     const err = new NetworkError('p');
-    expect(err).toBeInstanceOf(PayVaultError);
+    expect(err).toBeInstanceOf(QuirkError);
   });
 });
 
@@ -148,8 +148,8 @@ describe('TransactionError', () => {
     expect(err.reference).toBeUndefined();
   });
 
-  it('is an instance of PayVaultError', () => {
+  it('is an instance of QuirkError', () => {
     const err = new TransactionError('x', 'p');
-    expect(err).toBeInstanceOf(PayVaultError);
+    expect(err).toBeInstanceOf(QuirkError);
   });
 });

@@ -10,7 +10,7 @@ import type {
   WebhookEvent,
   SubscriptionConfig,
   SubscriptionResult,
-  PayVaultConfig,
+  QuirkConfig,
   BulkTransferConfig,
   BulkTransferItem,
   BulkTransferResult,
@@ -39,7 +39,7 @@ export class PaystackProvider implements Provider {
   private defaultCurrency: string;
   private defaultMetadata: Record<string, any>;
 
-  constructor(config: PayVaultConfig) {
+  constructor(config: QuirkConfig) {
     this.secretKey = config.secretKey;
     this.webhookSecret = config.webhookSecret;
     this.baseUrl = config.baseUrl || PAYSTACK_BASE_URL;
@@ -330,7 +330,7 @@ export class PaystackProvider implements Provider {
     const transfers = config.recipients.map((recipient, index) => ({
       amount: toMinorUnits(recipient.amount, recipient.currency ?? currency),
       recipient: recipientsWithCodes[index].recipientCode,
-      reason: recipient.narration ?? config.title ?? 'PayVault bulk transfer',
+      reason: recipient.narration ?? config.title ?? 'Quirk bulk transfer',
       reference: recipient.reference ?? generateReference(),
     }));
 

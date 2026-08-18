@@ -8,7 +8,7 @@ services:
     env_file:
       - ./apps/api/.env
     environment:
-      - DATABASE_URL=postgres://payvault:payvault@postgres:5432/payvault?sslmode=disable
+      - DATABASE_URL=postgres://quirk:quirk@postgres:5432/quirk?sslmode=disable
       - REDIS_URL=redis://redis:6379/0
       - PORT=8080
     depends_on:
@@ -23,13 +23,13 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_USER: payvault
-      POSTGRES_PASSWORD: payvault
-      POSTGRES_DB: payvault
+      POSTGRES_USER: quirk
+      POSTGRES_PASSWORD: quirk
+      POSTGRES_DB: quirk
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U payvault"]
+      test: ["CMD-SHELL", "pg_isready -U quirk"]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -37,15 +37,15 @@ services:
   postgres-test:
     image: postgres:16-alpine
     environment:
-      POSTGRES_DB: payvault_test
-      POSTGRES_USER: payvault
-      POSTGRES_PASSWORD: payvault
+      POSTGRES_DB: quirk_test
+      POSTGRES_USER: quirk
+      POSTGRES_PASSWORD: quirk
     ports:
       - "5433:5432"
     tmpfs:
       - /var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U payvault -d payvault_test"]
+      test: ["CMD-SHELL", "pg_isready -U quirk -d quirk_test"]
       interval: 5s
       timeout: 5s
       retries: 5

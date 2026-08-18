@@ -1,4 +1,4 @@
-module payvault-api
+module quirk-api
 
 go 1.22
 

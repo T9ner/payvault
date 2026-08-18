@@ -1,4 +1,4 @@
-# PayVault API
+# Quirk API
 
 A unified payment processing API for African merchants. Integrate Paystack, Flutterwave, and more through a single API.
 

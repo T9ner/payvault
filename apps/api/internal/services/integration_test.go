@@ -28,7 +28,7 @@ var (
 func TestMain(m *testing.M) {
 	dbURL := os.Getenv("TEST_DATABASE_URL")
 	if dbURL == "" {
-		dbURL = "postgres://payvault:payvault@localhost:5433/payvault_test?sslmode=disable"
+		dbURL = "postgres://quirk:quirk@localhost:5433/quirk_test?sslmode=disable"
 	}
 
 	ctx := context.Background()

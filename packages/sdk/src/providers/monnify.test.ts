@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { MonnifyProvider } from './monnify';
-import { ValidationError, PayVaultError } from '../errors';
+import { ValidationError, QuirkError } from '../errors';
 import { HttpClient } from '../http';
 
 // ── Setup ────────────────────────────────────────────────────────
@@ -169,7 +169,7 @@ describe('MonnifyProvider — unsupported operations', () => {
   it('charge throws UNSUPPORTED_OPERATION', async () => {
     await expect(
       provider.charge({ amount: 5000, email: 'u@e.com', channel: 'card' })
-    ).rejects.toThrow(PayVaultError);
+    ).rejects.toThrow(QuirkError);
 
     try {
       await provider.charge({ amount: 5000, email: 'u@e.com', channel: 'card' });
@@ -181,13 +181,13 @@ describe('MonnifyProvider — unsupported operations', () => {
   it('submitAuthorization throws UNSUPPORTED_OPERATION', async () => {
     await expect(
       provider.submitAuthorization('ref', { type: 'otp', value: '123456' })
-    ).rejects.toThrow(PayVaultError);
+    ).rejects.toThrow(QuirkError);
   });
 
   it('refund throws UNSUPPORTED_OPERATION', async () => {
     await expect(
       provider.refund({ reference: 'ref', amount: 100 })
-    ).rejects.toThrow(PayVaultError);
+    ).rejects.toThrow(QuirkError);
   });
 });
 
@@ -266,17 +266,17 @@ describe('MonnifyProvider.parseWebhook', () => {
 // ── credential parsing ───────────────────────────────────────────
 
 describe('MonnifyProvider — credential validation', () => {
-  it('throws PayVaultError for invalid credential format', () => {
+  it('throws QuirkError for invalid credential format', () => {
     expect(() => new MonnifyProvider({
       provider: 'monnify',
       secretKey: 'only_one_part',
-    })).toThrow(PayVaultError);
+    })).toThrow(QuirkError);
   });
 
-  it('throws PayVaultError for incomplete credentials', () => {
+  it('throws QuirkError for incomplete credentials', () => {
     expect(() => new MonnifyProvider({
       provider: 'monnify',
       secretKey: 'key1|key2', // missing contractCode
-    })).toThrow(PayVaultError);
+    })).toThrow(QuirkError);
   });
 });

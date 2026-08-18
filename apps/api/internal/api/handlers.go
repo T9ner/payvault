@@ -15,9 +15,9 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/jackc/pgx/v5/pgxpool"
-	"payvault-api/internal/config"
-	"payvault-api/internal/middleware"
-	"payvault-api/internal/services"
+	"quirk-api/internal/config"
+	"quirk-api/internal/middleware"
+	"quirk-api/internal/services"
 )
 
 // Handlers holds all HTTP handler dependencies.
@@ -52,7 +52,7 @@ var checkoutTmpl = template.Must(template.New("checkout").Parse(`<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{.Name}} · PayVault</title>
+    <title>{{.Name}} · Quirk</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -306,7 +306,7 @@ var checkoutTmpl = template.Must(template.New("checkout").Parse(`<!DOCTYPE html>
         <div class="footer">
             <p>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                Secured by <strong>PayVault</strong>
+                Secured by <strong>Quirk</strong>
             </p>
         </div>
     </main>
@@ -366,7 +366,7 @@ var checkoutErrorTmpl = template.Must(template.New("checkout-error").Parse(`<!DO
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout unavailable · PayVault</title>
+    <title>Checkout unavailable · Quirk</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
@@ -1150,7 +1150,7 @@ func (h *Handlers) RecentActivity(w http.ResponseWriter, r *http.Request) {
 func (h *Handlers) HealthCheck(w http.ResponseWriter, r *http.Request) {
 	health := map[string]interface{}{
 		"status":  "healthy",
-		"service": "payvault-api",
+		"service": "quirk-api",
 		"version": "0.2.0",
 	}
 
