@@ -1,0 +1,226 @@
+{
+  "branding": {
+    "colorScheme": "light",
+    "fonts": [
+      {
+        "family": "Google Sans",
+        "role": "body"
+      },
+      {
+        "family": "Roboto",
+        "role": "body"
+      },
+      {
+        "family": "Segoe UI",
+        "role": "body"
+      },
+      {
+        "family": "Helvetica",
+        "role": "body"
+      },
+      {
+        "family": "Arial",
+        "role": "body"
+      }
+    ],
+    "colors": {
+      "primary": "#9CA3AF",
+      "secondary": "#BDDEFF",
+      "accent": "#85AEFA",
+      "background": "#FFFFFF",
+      "textPrimary": "#0A0A0A",
+      "link": "#85AEFA"
+    },
+    "typography": {
+      "fontFamilies": {
+        "primary": "Google Sans",
+        "heading": "Google Sans"
+      },
+      "fontStacks": {
+        "heading": [
+          "Google Sans",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "Roboto",
+          "Helvetica",
+          "Arial",
+          "sans-serif"
+        ],
+        "body": [
+          "Google Sans",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "Roboto",
+          "Helvetica",
+          "Arial",
+          "sans-serif"
+        ],
+        "paragraph": [
+          "Google Sans",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "Roboto",
+          "Helvetica",
+          "Arial",
+          "sans-serif"
+        ]
+      },
+      "fontSizes": {
+        "h1": "68px",
+        "h2": "52px",
+        "body": "15px"
+      }
+    },
+    "spacing": {
+      "baseUnit": 4,
+      "borderRadius": "8px"
+    },
+    "components": {
+      "buttonPrimary": {
+        "background": "#FFFFFF",
+        "textColor": "#0A0A0A",
+        "borderRadius": "9999px",
+        "borderRadiusCorners": {
+          "topLeft": "9999px",
+          "topRight": "9999px",
+          "bottomRight": "9999px",
+          "bottomLeft": "9999px"
+        },
+        "shadow": "none"
+      },
+      "buttonSecondary": {
+        "background": "#0A0A0A",
+        "textColor": "#FFFFFF",
+        "borderRadius": "9999px",
+        "borderRadiusCorners": {
+          "topLeft": "9999px",
+          "topRight": "9999px",
+          "bottomRight": "9999px",
+          "bottomLeft": "9999px"
+        },
+        "shadow": "none"
+      }
+    },
+    "images": {
+      "logo": "https://spacefs.com/static/space-app-icon-dark-1341f6e43a0c6788d1bf8b42b8c6a83c.png",
+      "favicon": "https://spacefs.com/favicon.ico",
+      "ogImage": "https://spacefs.com/og-image.png",
+      "logoHref": "/#top",
+      "logoAlt": "Space home"
+    },
+    "__llm_logo_reasoning": {
+      "selectedIndex": 0,
+      "reasoning": "Selected #0 because it is visible, located in the header, and links to the homepage, matching the brand 'Space'.",
+      "confidence": 0.9,
+      "source": "llm"
+    },
+    "__llm_button_reasoning": {
+      "primary": {
+        "index": 2,
+        "text": "Get started",
+        "reasoning": "Button #2 with text 'Get started' is likely the primary CTA due to its action-oriented text and distinct background color (#FFFFFF) compared to other buttons."
+      },
+      "secondary": {
+        "index": 0,
+        "text": "Book a demo",
+        "reasoning": "Button #0 with text 'Book a demo' is selected as secondary due to its different background color (#0A0A0A) and supportive action."
+      },
+      "confidence": 0.9
+    },
+    "personality": {
+      "tone": "modern",
+      "energy": "medium",
+      "targetAudience": "tech-savvy individuals and businesses"
+    },
+    "designSystem": {
+      "framework": "tailwind",
+      "componentLibrary": ""
+    },
+    "confidence": {
+      "buttons": 0.9,
+      "colors": 0.9,
+      "overall": 0.9
+    },
+    "__llm_metadata": {
+      "logoSelection": {
+        "llmCalled": true,
+        "llmSucceeded": true,
+        "finalSource": "llm",
+        "rawLogoSelection": {
+          "selectedLogoIndex": 0,
+          "selectedLogoReasoning": "Selected #0 because it is visible, located in the header, and links to the homepage, matching the brand 'Space'.",
+          "confidence": 0.9
+        }
+      },
+      "buttonClassification": {
+        "llmCalled": true,
+        "llmSucceeded": true
+      }
+    },
+    "brandName": "Space",
+    "logo": "https://spacefs.com/static/space-app-icon-dark-1341f6e43a0c6788d1bf8b42b8c6a83c.png"
+  },
+  "metadata": {
+    "ogTitle": "Space | Infinite space on your computer.",
+    "generator": "Gatsby 5.16.1",
+    "og:image:width": "1200",
+    "og:image": "https://spacefs.com/og-image.png",
+    "og:site_name": "Space",
+    "title": "Space | Infinite space on your computer.",
+    "ogDescription": "Keep every project on your Mac without filling your disk. Open huge files instantly in the apps you already use, synced across all your machines.",
+    "og:title": "Space | Infinite space on your computer.",
+    "og:description": "Keep every project on your Mac without filling your disk. Open huge files instantly in the apps you already use, synced across all your machines.",
+    "twitter:title": "Space | Infinite space on your computer.",
+    "twitter:image": "https://spacefs.com/og-image.png",
+    "viewport": "width=device-width, initial-scale=1, shrink-to-fit=no",
+    "og:url": "https://spacefs.com",
+    "ogSiteName": "Space",
+    "ogImage": "https://spacefs.com/og-image.png",
+    "og:image:height": "630",
+    "twitter:card": "summary_large_image",
+    "twitter:description": "Keep every project on your Mac without filling your disk. Open huge files instantly in the apps you already use, synced across all your machines.",
+    "description": "Keep every project on your Mac without filling your disk. Open huge files instantly in the apps you already use, synced across all your machines.",
+    "og:type": "website",
+    "ogUrl": "https://spacefs.com",
+    "favicon": "https://spacefs.com/favicon.ico",
+    "scrapeId": "01a017b7-c6ba-7359-80b3-f1adb154799e",
+    "sourceURL": "https://spacefs.com/",
+    "url": "https://spacefs.com/",
+    "statusCode": 200,
+    "contentType": "text/html; charset=UTF-8",
+    "timezone": "America/New_York",
+    "proxyUsed": "basic",
+    "indexId": "ecc0918e-ef32-4af3-831f-585b5243b4cc",
+    "creditsUsed": 1,
+    "concurrencyLimited": false
+  },
+  "images": [
+    "https://assets.spacefs.com/public/clips/posters/nyc-taxis.jpg",
+    "https://spacefs.com/static/print-pacific-dusk-88abb33e6cff7e072abebb83c85f63f3.jpg",
+    "https://spacefs.com/static/print-pizza-window-fdae8268a17d5d0ed1b6f4d2be8919a5.jpg",
+    "https://spacefs.com/static/print-waterfront-esplanade-03200c73dbac0864d19136b7edb884ba.jpg",
+    "https://assets.spacefs.com/public/clips/posters/village-corner.jpg",
+    "https://assets.spacefs.com/public/clips/posters/wtc-waterfront.jpg",
+    "https://assets.spacefs.com/public/clips/posters/sunset-studio.jpg",
+    "https://assets.spacefs.com/public/clips/posters/harbour-tower-dusk.jpg",
+    "https://assets.spacefs.com/public/clips/posters/lens-macro.jpg",
+    "https://assets.spacefs.com/public/clips/posters/city-dusk-panorama.jpg",
+    "https://spacefs.com/static/print-nyc-brownstones-cf7f279c0481f1e8593e2704b05a09e7.jpg",
+    "https://spacefs.com/static/print-night-intersection-496c359e5c72fd3dfeb50c26718bc27b.jpg",
+    "https://assets.spacefs.com/public/clips/posters/chinatown-crossing.jpg",
+    "https://assets.spacefs.com/public/clips/posters/steel-bridge-ride.jpg",
+    "https://assets.spacefs.com/public/clips/posters/library-study.jpg",
+    "https://assets.spacefs.com/public/clips/posters/startup-loft.jpg",
+    "https://spacefs.com/static/space-app-icon-light-a661b6f4cf573c2833fe62e03626016a.png",
+    "https://assets.spacefs.com/public/clips/posters/night-plaza.jpg",
+    "https://assets.spacefs.com/public/clips/posters/nyc-brownstones.jpg",
+    "https://assets.spacefs.com/public/clips/posters/night-intersection.jpg",
+    "https://spacefs.com/static/space-app-icon-dark-1341f6e43a0c6788d1bf8b42b8c6a83c.png",
+    "https://assets.spacefs.com/public/clips/posters/pizza-window.jpg",
+    "https://assets.spacefs.com/public/clips/posters/waterfront-esplanade.jpg",
+    "https://assets.spacefs.com/public/city-dusk-skyline.png"
+  ]
+}

@@ -410,46 +410,43 @@ print(f"Routed via {charge.routed_rail} ({charge.latency_ms}ms)")`,
       )}
 
       {/* ========================================================================= */}
-      {/* FLOATING PILL NAVBAR (Primora Spacious Flow) */}
+      {/* FLOATING PILL NAVBAR (Spacious, Minimal Flow) */}
       {/* ========================================================================= */}
       <header className="fixed top-5 inset-x-0 z-40 px-4 sm:px-6 pointer-events-none">
         <nav
           aria-label="Main navigation"
-          className="max-w-4xl mx-auto flex items-center justify-between px-4 sm:px-6 py-2.5 rounded-full bg-[#11161D]/85 backdrop-blur-xl border border-[#22303A] shadow-[0_8px_32px_rgba(0,0,0,0.45)] pointer-events-auto transition-all"
+          className="max-w-3xl mx-auto flex items-center justify-between px-5 sm:px-7 py-2.5 rounded-full bg-[#11161D]/90 backdrop-blur-xl border border-[#22303A] shadow-[0_8px_32px_rgba(0,0,0,0.5)] pointer-events-auto transition-all"
         >
           {/* Logo on Left */}
           <Link
             to="/"
-            className="cursor-pointer flex items-center gap-2.5 pl-1 pr-2 py-1 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ABFF2A] transition-opacity hover:opacity-90"
+            className="cursor-pointer flex items-center gap-2 pl-1 pr-3 py-1 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ABFF2A] transition-opacity hover:opacity-90"
             aria-label="Quirk Home"
           >
             <QuirkLogo size={22} lightMode={false} />
           </Link>
 
-          {/* Clean 4 Core Links in Center */}
-          <div className="hidden md:flex items-center gap-2 text-xs font-medium text-[#A9B0BB]">
+          {/* Clean 3 Core Links in Center with Spacious Breathing Room */}
+          <div className="hidden sm:flex items-center gap-6 text-xs font-medium text-[#A9B0BB]">
             {[
-              { id: 'framework', label: 'Framework' },
-              { id: 'impact', label: 'Impact' },
               { id: 'architecture', label: 'Architecture' },
               { id: 'rails', label: 'Rails' },
               { id: 'developer', label: 'Developers' },
-              { id: 'pricing', label: 'Pricing' },
             ].map((item) => {
               const isActive = activeSection === item.id
               return (
                 <a
                   key={item.id}
                   href={`#${item.id}`}
-                  className={`px-3.5 py-1.5 rounded-full transition-all duration-150 relative ${
+                  className={`py-1.5 transition-colors duration-150 relative ${
                     isActive
-                      ? 'text-[#F5F7FA] bg-[#171D26] border border-[#22303A] font-semibold'
-                      : 'hover:text-[#F5F7FA] hover:bg-[#171D26]/50'
+                      ? 'text-[#F5F7FA] font-semibold'
+                      : 'hover:text-[#F5F7FA]'
                   }`}
                 >
                   <span>{item.label}</span>
                   {isActive && (
-                    <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-3 h-0.5 rounded-full bg-[#ABFF2A]" />
+                    <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-4 h-0.5 rounded-full bg-[#ABFF2A]" />
                   )}
                 </a>
               )
@@ -457,16 +454,7 @@ print(f"Routed via {charge.routed_rail} ({charge.latency_ms}ms)")`,
           </div>
 
           {/* Right Action Buttons */}
-          <div className="flex items-center gap-2.5">
-            <button
-              onClick={() => setCommandPaletteOpen(true)}
-              className="hidden lg:flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#171D26] border border-[#22303A] text-[11px] font-['JetBrains_Mono'] text-[#A9B0BB] hover:text-[#F5F7FA] hover:border-[#ABFF2A]/30 transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ABFF2A]"
-              aria-label="Open command search"
-            >
-              <Search className="size-3 text-[#A9B0BB]" />
-              <kbd className="px-1.5 py-0.2 rounded bg-[#080B10] text-[10px] text-[#A9B0BB] border border-[#22303A]">⌘K</kbd>
-            </button>
-
+          <div className="flex items-center gap-3">
             {isAuthenticated ? (
               <Link
                 to="/dashboard"
@@ -476,41 +464,31 @@ print(f"Routed via {charge.routed_rail} ({charge.latency_ms}ms)")`,
                 <ArrowRight className="size-3.5" />
               </Link>
             ) : (
-              <div className="flex items-center gap-2">
-                <Link
-                  to="/sign-in"
-                  className="text-xs font-medium text-[#A9B0BB] hover:text-[#F5F7FA] px-3 py-1.5 rounded-full transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#ABFF2A]"
-                >
-                  Sign in
-                </Link>
-                <Link
-                  to="/sign-up"
-                  className="inline-flex items-center gap-1.5 bg-[#ABFF2A] hover:bg-[#ABFF2A]/90 text-[#080B10] font-semibold text-xs px-4 py-2 rounded-full transition-all active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ABFF2A] shadow-sm"
-                >
-                  <span>Start building</span>
-                  <ArrowRight className="size-3" />
-                </Link>
-              </div>
+              <Link
+                to="/sign-up"
+                className="inline-flex items-center gap-1.5 bg-[#ABFF2A] hover:bg-[#ABFF2A]/90 text-[#080B10] font-semibold text-xs px-4 py-2 rounded-full transition-all active:scale-[0.97] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ABFF2A] shadow-sm"
+              >
+                <span>Start building</span>
+                <ArrowRight className="size-3" />
+              </Link>
             )}
 
             {/* Mobile Menu Trigger */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 text-[#A9B0BB] hover:text-[#F5F7FA] min-h-[40px] min-w-[40px] flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ABFF2A] rounded-full hover:bg-[#171D26]"
+              className="sm:hidden p-1.5 text-[#A9B0BB] hover:text-[#F5F7FA] min-h-[36px] min-w-[36px] flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ABFF2A] rounded-full hover:bg-[#171D26]"
               aria-label="Toggle navigation menu"
               aria-expanded={mobileMenuOpen}
             >
-              {mobileMenuOpen ? <X className="size-5" /> : <Menu className="size-5" />}
+              {mobileMenuOpen ? <X className="size-4" /> : <Menu className="size-4" />}
             </button>
           </div>
         </nav>
 
         {/* Mobile Dropdown Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden max-w-4xl mx-auto mt-2 p-5 rounded-2xl bg-[#11161D] border border-[#22303A] shadow-2xl space-y-1.5 pointer-events-auto animate-in slide-in-from-top-2 duration-150">
+          <div className="sm:hidden max-w-3xl mx-auto mt-2 p-5 rounded-2xl bg-[#11161D] border border-[#22303A] shadow-2xl space-y-1.5 pointer-events-auto animate-in slide-in-from-top-2 duration-150">
             {[
-              { id: 'framework', label: 'Framework' },
-              { id: 'impact', label: 'Impact' },
               { id: 'architecture', label: 'Architecture' },
               { id: 'rails', label: 'Payment Rails' },
               { id: 'developer', label: 'Developers' },
@@ -1233,30 +1211,35 @@ print(f"Routed via {charge.routed_rail} ({charge.latency_ms}ms)")`,
       </section>
 
       {/* ========================================================================= */}
-      {/* VIBRANT AURORA CTA (Primora "Enter Through Aiden" Style) */}
+      {/* CLEAN BRAND-ALIGNED CTA */}
       {/* ========================================================================= */}
       <section className="py-24 px-4 sm:px-6 max-w-5xl mx-auto border-t border-[#22303A]">
-        <div className="relative rounded-[32px] overflow-hidden p-10 sm:p-20 text-center border border-[#00D4FF]/20 shadow-[0_20px_80px_rgba(0,212,255,0.15)] bg-gradient-to-b from-[#0B1E38] via-[#051329] to-[#080B10]">
-          {/* Atmospheric ambient glow layers */}
-          <div className="absolute -top-32 left-1/4 w-[380px] h-[380px] bg-[#00D4FF]/25 blur-[120px] rounded-full pointer-events-none" />
-          <div className="absolute -top-24 right-1/4 w-[400px] h-[400px] bg-[#6366F1]/30 blur-[130px] rounded-full pointer-events-none" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[520px] h-[260px] bg-[#ABFF2A]/10 blur-[140px] rounded-full pointer-events-none" />
+        <div className="relative rounded-3xl overflow-hidden p-10 sm:p-16 text-center border border-[#22303A] bg-[#11161D] shadow-[0_20px_60px_rgba(0,0,0,0.6)]">
+          {/* Subtle brand ambient glow */}
+          <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-[#00D4FF]/[0.08] blur-[120px] rounded-full pointer-events-none" />
+          <div className="absolute bottom-0 right-1/4 w-[350px] h-[200px] bg-[#ABFF2A]/[0.04] blur-[100px] rounded-full pointer-events-none" />
           
           <div className="relative z-10 max-w-2xl mx-auto space-y-6">
-            <h2 className="font-['Satoshi'] text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-[#F5F7FA] leading-[1.1]">
-              Enter through Quirk.
+            <h2 className="font-['Satoshi'] text-3xl sm:text-5xl font-bold tracking-tight text-[#F5F7FA] leading-[1.1]">
+              Connect your payment rails in minutes.
             </h2>
             <p className="text-sm sm:text-base text-[#A9B0BB] max-w-xl mx-auto leading-relaxed font-normal">
-              Quirk works with high-volume merchants and builders across Africa. Connect your payment rails in minutes and scale everywhere.
+              Get production API keys, explore our SDK playground, and deploy failover-ready payment infrastructure today.
             </p>
             
-            <div className="pt-4 flex items-center justify-center gap-3">
+            <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link
                 to="/sign-up"
-                className="inline-flex items-center justify-center gap-2 bg-[#F3D1A5] hover:bg-[#FCE3C3] text-[#080B10] font-semibold text-sm sm:text-base px-8 py-3.5 rounded-full transition-all active:scale-[0.97] shadow-[0_8px_30px_rgba(243,209,165,0.25)] hover:shadow-[0_8px_35px_rgba(243,209,165,0.4)]"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#ABFF2A] hover:bg-[#ABFF2A]/90 text-[#080B10] font-semibold text-sm px-8 py-3.5 rounded-full transition-all active:scale-[0.97] shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ABFF2A]"
               >
                 <span>Start building</span>
-                <ChevronRight className="size-4" />
+                <ArrowRight className="size-4" />
+              </Link>
+              <Link
+                to="/sign-in"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#171D26] hover:bg-[#22303A] border border-[#22303A] text-[#F5F7FA] font-medium text-sm px-7 py-3.5 rounded-full transition-all active:scale-[0.97]"
+              >
+                <span>Sign in</span>
               </Link>
             </div>
           </div>
