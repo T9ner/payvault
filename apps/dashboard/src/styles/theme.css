@@ -35,40 +35,40 @@
 }
 
 .dark {
-  /* Quirk Brand — Dark Mode */
-  /* Background: #080B10, Surface: #11161D, Elevated: #171D26 */
-  --background: #080B10;
-  --foreground: #F5F7FA;
-  --card: #11161D;
-  --card-foreground: #F5F7FA;
-  --popover: #171D26;
-  --popover-foreground: #F5F7FA;
+  /* Quirk Developer Infrastructure — Minimal Black, White, Neutral Grays */
+  --background: #000000;
+  --foreground: #FFFFFF;
+  --card: #101010;
+  --card-foreground: #FFFFFF;
+  --popover: #141414;
+  --popover-foreground: #FFFFFF;
 
-  /* Primary: Lime #ABFF2A, Secondary: Cyan #00D4FF */
-  --primary: #ABFF2A;
-  --primary-foreground: #080B10;
-  --secondary: #00D4FF;
-  --secondary-foreground: #080B10;
+  /* Primary: Crisp White, Secondary: Neutral Gray / Dark Elevated */
+  --primary: #FFFFFF;
+  --primary-foreground: #000000;
+  --secondary: #161616;
+  --secondary-foreground: #FFFFFF;
 
-  --muted: #171D26;
-  --muted-foreground: #A9B0BB;
-  --accent: #171D26;
-  --accent-foreground: #F5F7FA;
+  --muted: #141414;
+  --muted-foreground: #A9A9A9;
+  --accent: #1A1A1A;
+  --accent-foreground: #FFFFFF;
 
-  /* Error: #EF4444, Warning: #F5B83D */
+  /* Functional States Only */
   --destructive: #EF4444;
-  --warning: #F5B83D;
+  --warning: #F59E0B;
+  --success: #22C55E;
 
-  --border: rgba(255,255,255,0.08);
-  --input: rgba(255,255,255,0.10);
-  --ring: #ABFF2A;
+  --border: #222222;
+  --input: #262626;
+  --ring: #FFFFFF;
 
-  /* Charts */
-  --chart-1: #ABFF2A;
-  --chart-2: #00D4FF;
-  --chart-3: #F5B83D;
-  --chart-4: #EF4444;
-  --chart-5: #A9B0BB;
+  /* Charts & Data */
+  --chart-1: #FFFFFF;
+  --chart-2: #A9A9A9;
+  --chart-3: #666666;
+  --chart-4: #333333;
+  --chart-5: #22C55E;
 }
 
 @theme inline {
