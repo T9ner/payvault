@@ -6,6 +6,8 @@ vendor/
 dist/
 build/
 .next/
+.tanstack/
+.vercel/
 *.exe
 *.out
 

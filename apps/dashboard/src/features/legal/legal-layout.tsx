@@ -1,6 +1,5 @@
 import { Link } from '@tanstack/react-router'
-import { Logo } from '@/assets/logo'
-import { Button } from '@/components/ui/button'
+import { QuirkLogo } from '@/components/quirk-logo'
 import { ChevronLeft } from 'lucide-react'
 
 interface LegalLayoutProps {
@@ -11,47 +10,48 @@ interface LegalLayoutProps {
 
 export function LegalLayout({ children, title, lastUpdated }: LegalLayoutProps) {
   return (
-    <div className='min-h-screen bg-background font-sans text-foreground'>
-      <header className='sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60'>
-        <div className='container flex h-16 items-center justify-between'>
+    <div className='min-h-screen bg-[#000000] font-sans text-[#FFFFFF] antialiased'>
+      <header className='sticky top-0 z-50 w-full border-b border-[#222222] bg-[#000000]/90 backdrop-blur'>
+        <div className='container max-w-4xl mx-auto flex h-16 items-center justify-between px-4'>
           <div className='flex items-center gap-2'>
-            <Link to='/sign-in' className='flex items-center gap-2 transition-opacity hover:opacity-80'>
-              <Logo className='size-6' />
-              <span className='text-lg font-bold tracking-tight'>Quirk</span>
+            <Link to='/' className='flex items-center gap-2 transition-opacity hover:opacity-80'>
+              <QuirkLogo size={22} lightMode={false} />
             </Link>
           </div>
-          <Button variant='ghost' size='sm' asChild>
-            <Link to='/sign-in' className='flex items-center gap-1'>
-              <ChevronLeft className='size-4' />
-              Back to Login
-            </Link>
-          </Button>
+          <Link
+            to='/'
+            className='inline-flex items-center gap-1.5 text-xs text-[#A9A9A9] hover:text-[#FFFFFF] px-3 py-1.5 rounded-full bg-[#101010] border border-[#222222] transition-colors'
+          >
+            <ChevronLeft className='size-3.5' />
+            <span>Back to Home</span>
+          </Link>
         </div>
       </header>
 
-      <main className='container py-12 md:py-20'>
-        <div className='mx-auto max-w-3xl'>
+      <main className='container max-w-3xl mx-auto py-12 md:py-20 px-4'>
+        <div>
           <div className='mb-10 space-y-2'>
-            <h1 className='text-4xl font-semibold tracking-tight lg:text-5xl'>
+            <h1 className='text-3xl md:text-5xl font-bold tracking-tight text-[#FFFFFF] font-["Satoshi"]'>
               {title}
             </h1>
-            <p className='text-sm text-muted-foreground'>
+            <p className='text-xs font-["JetBrains_Mono"] text-[#A9A9A9]'>
               Last updated: {lastUpdated}
             </p>
           </div>
-          <div className='prose prose-zinc dark:prose-invert max-w-none'>
+          <div className='prose prose-invert max-w-none text-sm text-[#A9A9A9] leading-relaxed'>
             {children}
           </div>
         </div>
       </main>
 
-      <footer className='border-t py-12'>
-        <div className='container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row md:py-0'>
-          <div className='flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0'>
-            <p className='text-center text-sm leading-loose text-muted-foreground md:text-left'>
-              &copy; {new Date().getFullYear()} Quirk Inc. All rights reserved.
-            </p>
-          </div>
+      <footer className='border-t border-[#222222] py-12 text-xs text-[#A9A9A9]'>
+        <div className='container max-w-4xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4'>
+          <p className='text-center sm:text-left'>
+            &copy; {new Date().getFullYear()} Quirk Infrastructure Inc. All rights reserved.
+          </p>
+          <Link to='/' className='text-[#FFFFFF] hover:underline'>
+            Back to Home
+          </Link>
         </div>
       </footer>
     </div>
