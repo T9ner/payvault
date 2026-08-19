@@ -593,17 +593,27 @@ print(f"Routed via {charge.routed_rail} ({charge.latency_ms}ms)")`,
       </section>
 
       {/* ========================================================================= */}
-      {/* INFINITE MARQUEE RAIL TICKER (Primora Continuous Partner Flow) */}
+      {/* INFINITE MARQUEE RAIL TICKER (Continuous Rolling African Rails Loop) */}
       {/* ========================================================================= */}
-      <section className="py-6 border-y border-[#22303A] bg-[#11161D]/40 overflow-hidden relative" aria-label="Supported payment rails">
-        <div className="flex w-[200%] animate-[marquee_35s_linear_infinite] items-center gap-12 text-xs font-['JetBrains_Mono'] text-[#A9B0BB]">
+      <section className="py-5 border-y border-[#22303A] bg-[#11161D]/50 overflow-hidden relative" aria-label="Supported payment rails">
+        {/* Left & Right ambient fade masks for seamless entrance & exit */}
+        <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-20 sm:w-32 bg-gradient-to-r from-[#080B10] to-transparent z-10" />
+        <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-20 sm:w-32 bg-gradient-to-l from-[#080B10] to-transparent z-10" />
+
+        <div className="quirk-marquee-track items-center gap-10 text-xs font-['JetBrains_Mono'] text-[#A9B0BB]">
           {[...ECOSYSTEM_RAILS, ...ECOSYSTEM_RAILS].map((rail, idx) => (
-            <div key={idx} className="flex items-center gap-3 shrink-0">
-              <span className="size-1.5 rounded-full bg-[#ABFF2A]" />
-              <span className="font-semibold text-[#F5F7FA]">{rail.name}</span>
-              <span className="text-[#A9B0BB]/60">·</span>
+            <div
+              key={idx}
+              className="flex items-center gap-3 shrink-0 px-3.5 py-1.5 rounded-full bg-[#11161D] border border-[#22303A] hover:border-[#ABFF2A]/50 transition-colors"
+            >
+              <span className="relative flex size-2 shrink-0">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#ABFF2A] opacity-75" />
+                <span className="relative inline-flex rounded-full size-2 bg-[#ABFF2A]" />
+              </span>
+              <span className="font-semibold text-[#F5F7FA] tracking-tight">{rail.name}</span>
+              <span className="text-[#A9B0BB]/50">·</span>
               <span className="text-[#A9B0BB]">{rail.region}</span>
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#171D26] border border-[#22303A] text-[#00D4FF]">
+              <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-[#171D26] border border-[#22303A] text-[#00D4FF]">
                 {rail.ping}
               </span>
             </div>

@@ -99,11 +99,17 @@
    Landing page motion — Quirk routing-line brand motif
    ============================================================ */
 @keyframes quirk-marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
 }
 .quirk-marquee-track {
-  animation: quirk-marquee 48s linear infinite;
+  display: flex;
+  width: max-content;
+  animation: quirk-marquee 28s linear infinite;
   will-change: transform;
 }
 .quirk-marquee-track:hover {
