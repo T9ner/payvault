@@ -1,5 +1,7 @@
 {
-  "buildCommand": "pnpm --filter quirk-dashboard build",
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "installCommand": "cd apps/dashboard && pnpm install",
+  "buildCommand": "cd apps/dashboard && pnpm run build",
   "outputDirectory": "apps/dashboard/dist",
   "framework": "vite",
   "rewrites": [

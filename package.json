@@ -1,0 +1,9 @@
+{
+  "name": "quirk-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "pnpm --filter quirk-dashboard build",
+    "dev": "pnpm --filter quirk-dashboard dev"
+  }
+}
