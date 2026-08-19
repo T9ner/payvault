@@ -11,12 +11,16 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as LandingRouteImport } from './routes/landing'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
-import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as InsightsIndexRouteImport } from './routes/insights.index'
+import { Route as InsightsSlugRouteImport } from './routes/insights.$slug'
 import { Route as AuthenticatedTransactionsRouteImport } from './routes/_authenticated/transactions'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as AuthenticatedPaymentLinksRouteImport } from './routes/_authenticated/payment-links'
 import { Route as AuthenticatedFraudRouteImport } from './routes/_authenticated/fraud'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as errors503RouteImport } from './routes/(errors)/503'
 import { Route as errors500RouteImport } from './routes/(errors)/500'
 import { Route as errors404RouteImport } from './routes/(errors)/404'
@@ -39,14 +43,29 @@ const PrivacyRoute = PrivacyRouteImport.update({
   path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LandingRoute = LandingRouteImport.update({
+  id: '/landing',
+  path: '/landing',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
+const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => AuthenticatedRouteRoute,
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InsightsIndexRoute = InsightsIndexRouteImport.update({
+  id: '/insights/',
+  path: '/insights/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InsightsSlugRoute = InsightsSlugRouteImport.update({
+  id: '/insights/$slug',
+  path: '/insights/$slug',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedTransactionsRoute =
   AuthenticatedTransactionsRouteImport.update({
@@ -68,6 +87,11 @@ const AuthenticatedPaymentLinksRoute =
 const AuthenticatedFraudRoute = AuthenticatedFraudRouteImport.update({
   id: '/fraud',
   path: '/fraud',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const errors503Route = errors503RouteImport.update({
@@ -127,7 +151,8 @@ const authCallbackRoute = authCallbackRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof AuthenticatedIndexRoute
+  '/': typeof IndexRoute
+  '/landing': typeof LandingRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
   '/callback': typeof authCallbackRoute
@@ -141,12 +166,17 @@ export interface FileRoutesByFullPath {
   '/404': typeof errors404Route
   '/500': typeof errors500Route
   '/503': typeof errors503Route
+  '/dashboard': typeof AuthenticatedDashboardRoute
   '/fraud': typeof AuthenticatedFraudRoute
   '/payment-links': typeof AuthenticatedPaymentLinksRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/transactions': typeof AuthenticatedTransactionsRoute
+  '/insights/$slug': typeof InsightsSlugRoute
+  '/insights/': typeof InsightsIndexRoute
 }
 export interface FileRoutesByTo {
+  '/': typeof IndexRoute
+  '/landing': typeof LandingRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
   '/callback': typeof authCallbackRoute
@@ -160,15 +190,19 @@ export interface FileRoutesByTo {
   '/404': typeof errors404Route
   '/500': typeof errors500Route
   '/503': typeof errors503Route
+  '/dashboard': typeof AuthenticatedDashboardRoute
   '/fraud': typeof AuthenticatedFraudRoute
   '/payment-links': typeof AuthenticatedPaymentLinksRoute
   '/settings': typeof AuthenticatedSettingsRoute
   '/transactions': typeof AuthenticatedTransactionsRoute
-  '/': typeof AuthenticatedIndexRoute
+  '/insights/$slug': typeof InsightsSlugRoute
+  '/insights': typeof InsightsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/landing': typeof LandingRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
   '/(auth)/callback': typeof authCallbackRoute
@@ -182,16 +216,19 @@ export interface FileRoutesById {
   '/(errors)/404': typeof errors404Route
   '/(errors)/500': typeof errors500Route
   '/(errors)/503': typeof errors503Route
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/fraud': typeof AuthenticatedFraudRoute
   '/_authenticated/payment-links': typeof AuthenticatedPaymentLinksRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/_authenticated/transactions': typeof AuthenticatedTransactionsRoute
-  '/_authenticated/': typeof AuthenticatedIndexRoute
+  '/insights/$slug': typeof InsightsSlugRoute
+  '/insights/': typeof InsightsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/landing'
     | '/privacy'
     | '/terms'
     | '/callback'
@@ -205,12 +242,17 @@ export interface FileRouteTypes {
     | '/404'
     | '/500'
     | '/503'
+    | '/dashboard'
     | '/fraud'
     | '/payment-links'
     | '/settings'
     | '/transactions'
+    | '/insights/$slug'
+    | '/insights/'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/'
+    | '/landing'
     | '/privacy'
     | '/terms'
     | '/callback'
@@ -224,14 +266,18 @@ export interface FileRouteTypes {
     | '/404'
     | '/500'
     | '/503'
+    | '/dashboard'
     | '/fraud'
     | '/payment-links'
     | '/settings'
     | '/transactions'
-    | '/'
+    | '/insights/$slug'
+    | '/insights'
   id:
     | '__root__'
+    | '/'
     | '/_authenticated'
+    | '/landing'
     | '/privacy'
     | '/terms'
     | '/(auth)/callback'
@@ -245,15 +291,19 @@ export interface FileRouteTypes {
     | '/(errors)/404'
     | '/(errors)/500'
     | '/(errors)/503'
+    | '/_authenticated/dashboard'
     | '/_authenticated/fraud'
     | '/_authenticated/payment-links'
     | '/_authenticated/settings'
     | '/_authenticated/transactions'
-    | '/_authenticated/'
+    | '/insights/$slug'
+    | '/insights/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  LandingRoute: typeof LandingRoute
   PrivacyRoute: typeof PrivacyRoute
   TermsRoute: typeof TermsRoute
   authCallbackRoute: typeof authCallbackRoute
@@ -267,6 +317,8 @@ export interface RootRouteChildren {
   errors404Route: typeof errors404Route
   errors500Route: typeof errors500Route
   errors503Route: typeof errors503Route
+  InsightsSlugRoute: typeof InsightsSlugRoute
+  InsightsIndexRoute: typeof InsightsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -285,6 +337,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/landing': {
+      id: '/landing'
+      path: '/landing'
+      fullPath: '/landing'
+      preLoaderRoute: typeof LandingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated': {
       id: '/_authenticated'
       path: ''
@@ -292,12 +351,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/': {
-      id: '/_authenticated/'
+    '/': {
+      id: '/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof AuthenticatedIndexRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/insights/': {
+      id: '/insights/'
+      path: '/insights'
+      fullPath: '/insights/'
+      preLoaderRoute: typeof InsightsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/insights/$slug': {
+      id: '/insights/$slug'
+      path: '/insights/$slug'
+      fullPath: '/insights/$slug'
+      preLoaderRoute: typeof InsightsSlugRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_authenticated/transactions': {
       id: '/_authenticated/transactions'
@@ -325,6 +398,13 @@ declare module '@tanstack/react-router' {
       path: '/fraud'
       fullPath: '/fraud'
       preLoaderRoute: typeof AuthenticatedFraudRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/(errors)/503': {
@@ -408,26 +488,28 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedFraudRoute: typeof AuthenticatedFraudRoute
   AuthenticatedPaymentLinksRoute: typeof AuthenticatedPaymentLinksRoute
   AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
   AuthenticatedTransactionsRoute: typeof AuthenticatedTransactionsRoute
-  AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedFraudRoute: AuthenticatedFraudRoute,
   AuthenticatedPaymentLinksRoute: AuthenticatedPaymentLinksRoute,
   AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
   AuthenticatedTransactionsRoute: AuthenticatedTransactionsRoute,
-  AuthenticatedIndexRoute: AuthenticatedIndexRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
   AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  LandingRoute: LandingRoute,
   PrivacyRoute: PrivacyRoute,
   TermsRoute: TermsRoute,
   authCallbackRoute: authCallbackRoute,
@@ -441,6 +523,8 @@ const rootRouteChildren: RootRouteChildren = {
   errors404Route: errors404Route,
   errors500Route: errors500Route,
   errors503Route: errors503Route,
+  InsightsSlugRoute: InsightsSlugRoute,
+  InsightsIndexRoute: InsightsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

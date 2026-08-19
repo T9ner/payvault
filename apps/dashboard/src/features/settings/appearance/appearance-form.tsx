@@ -104,18 +104,18 @@ export function AppearanceForm() {
                       <RadioGroupItem value='light' className='sr-only' />
                     </FormControl>
                     <div className='items-center rounded-md border-2 border-muted p-1 hover:border-accent'>
-                      <div className='space-y-2 rounded-sm bg-[#ecedef] p-2'>
+                      <div className='space-y-2 rounded-sm bg-[#A9B0BB] p-2'>
                         <div className='space-y-2 rounded-md bg-white p-2 shadow-xs'>
-                          <div className='h-2 w-[80px] rounded-lg bg-[#ecedef]' />
-                          <div className='h-2 w-[100px] rounded-lg bg-[#ecedef]' />
+                          <div className='h-2 w-[80px] rounded-lg bg-[#A9B0BB]' />
+                          <div className='h-2 w-[100px] rounded-lg bg-[#A9B0BB]' />
                         </div>
                         <div className='flex items-center gap-x-2 rounded-md bg-white p-2 shadow-xs'>
-                          <div className='size-4 rounded-full bg-[#ecedef]' />
-                          <div className='h-2 w-[100px] rounded-lg bg-[#ecedef]' />
+                          <div className='size-4 rounded-full bg-[#A9B0BB]' />
+                          <div className='h-2 w-[100px] rounded-lg bg-[#A9B0BB]' />
                         </div>
                         <div className='flex items-center gap-x-2 rounded-md bg-white p-2 shadow-xs'>
-                          <div className='size-4 rounded-full bg-[#ecedef]' />
-                          <div className='h-2 w-[100px] rounded-lg bg-[#ecedef]' />
+                          <div className='size-4 rounded-full bg-[#A9B0BB]' />
+                          <div className='h-2 w-[100px] rounded-lg bg-[#A9B0BB]' />
                         </div>
                       </div>
                     </div>

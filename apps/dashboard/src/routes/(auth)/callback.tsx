@@ -53,7 +53,7 @@ function AuthCallback() {
         toast.success(`Welcome ${merchant.business_name || merchant.email}!`)
 
         // 3. Redirect to dashboard
-        navigate({ to: '/', replace: true })
+        navigate({ to: '/dashboard', replace: true })
       } catch (err) {
         console.error('OAuth Callback Error:', err)
         toast.error('Authentication failed. Please try again.')

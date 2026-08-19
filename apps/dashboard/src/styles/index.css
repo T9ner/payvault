@@ -14,6 +14,10 @@
   }
   body {
     @apply min-h-svh w-full bg-background text-foreground has-[div[data-variant='inset']]:bg-sidebar;
+    font-family: 'Inter', 'sans-serif';
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Satoshi', 'Inter', 'sans-serif';
   }
 
   /* Override Radix scroll locking for sticky headers */
@@ -21,10 +25,16 @@
     overflow: unset !important;
   }
 
-  /* Cursor pointer for buttons */
+  /* Cursor pointer & tactile press feedback */
   button:not(:disabled),
   [role='button']:not(:disabled) {
     cursor: pointer;
+    transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1), opacity 160ms cubic-bezier(0.23, 1, 0.32, 1), background-color 160ms ease, border-color 160ms ease;
+  }
+  
+  button:not(:disabled):active,
+  [role='button']:not(:disabled):active {
+    transform: scale(0.97);
   }
 
   /* Prevent focus zoom on mobile devices */
@@ -82,5 +92,57 @@
   }
   to {
     height: 0;
+  }
+}
+
+/* ============================================================
+   Landing page motion — Quirk routing-line brand motif
+   ============================================================ */
+@keyframes quirk-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.quirk-marquee-track {
+  animation: quirk-marquee 48s linear infinite;
+  will-change: transform;
+}
+.quirk-marquee-track:hover {
+  animation-play-state: paused;
+}
+
+/* Signal flowing along the routing lines */
+@keyframes quirk-flow {
+  to { stroke-dashoffset: -240; }
+}
+.quirk-flow-line {
+  stroke-dasharray: 5 11;
+  animation: quirk-flow 3.2s linear infinite;
+}
+
+/* Pulsing routing nodes */
+@keyframes quirk-node {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 1; }
+}
+.quirk-node {
+  animation: quirk-node 2.6s ease-in-out infinite;
+}
+
+/* Ambient hero/CTA glow */
+@keyframes quirk-glow {
+  0%, 100% { opacity: 0.45; transform: scale(1); }
+  50% { opacity: 0.75; transform: scale(1.04); }
+}
+.quirk-glow {
+  animation: quirk-glow 6s ease-in-out infinite;
+  will-change: opacity, transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .quirk-marquee-track,
+  .quirk-flow-line,
+  .quirk-node,
+  .quirk-glow {
+    animation: none !important;
   }
 }

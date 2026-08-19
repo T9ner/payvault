@@ -35,34 +35,47 @@
 }
 
 .dark {
-  --background: oklch(0.129 0.042 264.695);
-  --foreground: oklch(0.984 0.003 247.858);
-  --card: oklch(0.14 0.04 259.21);
-  --card-foreground: oklch(0.984 0.003 247.858);
-  --popover: oklch(0.208 0.042 265.755);
-  --popover-foreground: oklch(0.984 0.003 247.858);
-  --primary: oklch(0.929 0.013 255.508);
-  --primary-foreground: oklch(0.208 0.042 265.755);
-  --secondary: oklch(0.279 0.041 260.031);
-  --secondary-foreground: oklch(0.984 0.003 247.858);
-  --muted: oklch(0.279 0.041 260.031);
-  --muted-foreground: oklch(0.704 0.04 256.788);
-  --accent: oklch(0.279 0.041 260.031);
-  --accent-foreground: oklch(0.984 0.003 247.858);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.551 0.027 264.364);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
+  /* Quirk Brand — Dark Mode */
+  /* Background: #080B10, Surface: #11161D, Elevated: #171D26 */
+  --background: #080B10;
+  --foreground: #F5F7FA;
+  --card: #11161D;
+  --card-foreground: #F5F7FA;
+  --popover: #171D26;
+  --popover-foreground: #F5F7FA;
+
+  /* Primary: Lime #ABFF2A, Secondary: Cyan #00D4FF */
+  --primary: #ABFF2A;
+  --primary-foreground: #080B10;
+  --secondary: #00D4FF;
+  --secondary-foreground: #080B10;
+
+  --muted: #171D26;
+  --muted-foreground: #A9B0BB;
+  --accent: #171D26;
+  --accent-foreground: #F5F7FA;
+
+  /* Error: #EF4444, Warning: #F5B83D */
+  --destructive: #EF4444;
+  --warning: #F5B83D;
+
+  --border: rgba(255,255,255,0.08);
+  --input: rgba(255,255,255,0.10);
+  --ring: #ABFF2A;
+
+  /* Charts */
+  --chart-1: #ABFF2A;
+  --chart-2: #00D4FF;
+  --chart-3: #F5B83D;
+  --chart-4: #EF4444;
+  --chart-5: #A9B0BB;
 }
 
 @theme inline {
+  --font-satoshi: 'Satoshi', 'Inter', 'sans-serif';
   --font-inter: 'Inter', 'sans-serif';
-  --font-manrope: 'Manrope', 'sans-serif';
+  --font-space: 'Space Grotesk', 'sans-serif';
+  --font-mono: 'JetBrains Mono', monospace;
 
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);

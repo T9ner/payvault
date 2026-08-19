@@ -67,7 +67,7 @@ export function SignUpForm({
       toast.success(`Welcome to Quirk, ${response.merchant.business_name}!`)
 
       // Redirect to dashboard
-      navigate({ to: '/', replace: true })
+      navigate({ to: '/dashboard', replace: true })
     } catch (err: any) {
       console.error('Registration Error:', err)
       toast.error(err.message || 'Registration failed. Please try again.')

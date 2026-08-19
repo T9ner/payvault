@@ -11,8 +11,8 @@ export const fallbackActivityData = [
 ];
 
 export const fallbackPieData = [
-    { name: "USD", value: 400, color: "#0f172a" },
-    { name: "EUR", value: 300, color: "#3b82f6" }
+    { name: "USD", value: 400, color: "#11161D" },
+    { name: "EUR", value: 300, color: "#00D4FF" }
 ];
 
 export const transactionStatusTabs = [
