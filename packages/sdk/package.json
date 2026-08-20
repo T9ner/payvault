@@ -56,10 +56,10 @@
   },
   "homepage": "https://quirk-three.vercel.app/",
   "devDependencies": {
-    "@types/node": "^20.19.37",
-    "tsup": "^8.0.0",
-    "typedoc": "^0.28.17",
-    "typescript": "^5.4.0",
+    "@types/node": "^20.19.43",
+    "tsup": "^8.5.1",
+    "typedoc": "^0.28.20",
+    "typescript": "^5.9.3",
     "vitest": "^1.6.1"
   },
   "engines": {
