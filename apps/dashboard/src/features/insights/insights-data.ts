@@ -3,15 +3,12 @@ export interface InsightArticle {
   tag: string
   date: string
   title: string
-  summary: string
+  excerpt: string
   author: string
   authorRole: string
   readTime: string
   content: string[]
-  codeSnippet?: {
-    lang: string
-    code: string
-  }
+  codeSnippet?: string
 }
 
 export const INSIGHTS_ARTICLES: InsightArticle[] = [
@@ -19,14 +16,12 @@ export const INSIGHTS_ARTICLES: InsightArticle[] = [
     slug: 'sub-200ms-rail-failover',
     tag: 'Engineering',
     date: 'August 2026',
-    title: 'Building Sub-200ms Autonomous Rail Failover in Go',
-    summary: 'How deterministic state machines and predictive health probing eliminate checkout drop-offs across African payment switches.',
-    author: 'Quirk Core Infrastructure Team',
-    authorRole: 'Distributed Systems & Payment Routing',
+    title: 'Building sub-200ms rail failover in Go',
+    excerpt: 'How health probing and state machines prevent checkout drop-offs across African payment switches.',
+    author: 'Quirk Core Engineering',
+    authorRole: 'Payment Systems Team',
     readTime: '4 min read',
-    codeSnippet: {
-      lang: 'go',
-      code: `// Dynamic Rail Circuit Breaker in Go
+    codeSnippet: `// Rail Circuit Breaker in Go
 type RailEvaluator struct {
     p95Latency  time.Duration
     errorRate   float64
@@ -39,37 +34,34 @@ func (e *RailEvaluator) RouteOptimal(ctx context.Context, charge ChargePayload) 
         return nil, ErrNoHealthyRails
     }
     
-    // Select lowest latency rail with error budget > 99.8%
+    // Sort by health score and lowest latency
     sort.Slice(healthy, func(i, j int) bool {
         return healthy[i].Score() > healthy[j].Score()
     })
     
     return healthy[0].ExecuteWithFallback(ctx, charge, e.fallbackChain)
 }`,
-    },
     content: [
-      'In high-growth African markets, payment gateway downtime is not an anomaly—it is a daily operating condition. Traditional payment orchestrators rely on crude round-robin strategies or post-facto retries, resulting in dropped checkout modals, irritated customers, and abandoned carts.',
-      'To solve this at Quirk, we engineered an autonomous state machine in Go that performs continuous out-of-band health probing against all upstream gateways (Paystack, Flutterwave, Monnify, Interswitch, and M-Pesa). Every 1,500ms, our edge nodes measure TCP handshake latency, TLS negotiation times, and HTTP 5xx error distribution.',
-      'When a gateway begins exhibiting packet queuing or bank switch degradation (>350ms p95 latency), Quirk’s router instantly downweights the provider’s health score. Any in-flight charge is automatically routed to the next optimal standby rail in under 180ms without closing the customer’s active checkout session.',
-      'This deterministic failover architecture delivers a verified 99.99% autonomous uptime across Nigeria, Kenya, Ghana, and South Africa, recovering over ₦140M in previously lost transactions each month for our merchants.',
+      'Payment gateways across African markets experience frequent upstream degradation. Simple retry loops often fail because they trigger after the customer sees an error screen.',
+      'To address this, our routing worker in Go runs continuous health checks against all connected gateways, including Paystack, Flutterwave, Monnify, and M-Pesa. Every 1,500ms, our nodes test TCP handshake latency, TLS negotiation times, and HTTP 5xx error rates.',
+      'When a gateway begins queuing requests or response times exceed 350ms, Quirk downweights that provider. Subsequent charges shift to an alternate working rail in under 180ms without interrupting the active checkout session.',
+      'This routing model maintains payment availability across regional provider outages without requiring custom error handling in your application code.',
     ],
   },
   {
     slug: 'multi-currency-ledger-architecture',
     tag: 'Treasury',
     date: 'July 2026',
-    title: 'Unified Multi-Currency Ledger Architecture for Scale',
-    summary: 'Consolidating NGN, KES, GHS, and USD settlement balances across fragmented banking rails without double-spend anomalies.',
-    author: 'Treasury Infrastructure Group',
-    authorRole: 'Financial Ledger & Clearing Systems',
-    readTime: '6 min read',
-    codeSnippet: {
-      lang: 'typescript',
-      code: `// Multi-Currency Double-Entry Ledger Posting
+    title: 'Multi-currency ledger architecture for scale',
+    excerpt: 'Tracking NGN, KES, GHS, and USD settlement balances across separate banking rails without double-entry errors.',
+    author: 'Quirk Infrastructure Group',
+    authorRole: 'Ledger Systems',
+    readTime: '5 min read',
+    codeSnippet: `// Double-Entry Settlement Recording
 interface LedgerTransaction {
   id: string;
-  sourceAccount: string; // e.g. "acct_ngn_vault"
-  destinationAccount: string; // e.g. "acct_merchant_settlement"
+  sourceAccount: string;
+  destinationAccount: string;
   amount: bigint;
   currency: 'NGN' | 'KES' | 'USD' | 'GHS';
   idempotencyKey: string;
@@ -77,7 +69,7 @@ interface LedgerTransaction {
 
 export async function recordSettlement(tx: LedgerTransaction): Promise<LedgerReceipt> {
   return await db.transaction(async (trx) => {
-    // Lock currency accounts in deterministic order to prevent deadlocks
+    // Lock accounts in order to prevent race conditions
     await trx.raw('SELECT * FROM accounts WHERE id IN (?, ?) FOR UPDATE', [
       tx.sourceAccount,
       tx.destinationAccount,
@@ -86,26 +78,23 @@ export async function recordSettlement(tx: LedgerTransaction): Promise<LedgerRec
     return await executeBalancedPosting(trx, tx);
   });
 }`,
-    },
     content: [
-      'Cross-border digital commerce in Africa requires merchants to accept multiple local currencies: Nigerian Naira (NGN), Kenyan Shillings (KES), Ghanaian Cedis (GHS), and US Dollars (USD). However, reconciling transactions across distinct banking switches and mobile money networks usually involves disjointed CSV exports, manual spreadsheet tallying, and delayed settlements.',
-      'Quirk introduces a unified double-entry cryptographic ledger that tracks every inward payment, fee deduction, gateway clearing schedule, and payout batch in real-time.',
-      'Every ledger entry is immutable, timestamped, and tied to an idempotent transaction hash. Whether funds settle via Monnify Direct Debits or M-Pesa Express, the merchant’s balance updates instantly within their unified multi-currency treasury pot.',
-      'With automated liquidity sweep rules, merchants can programmatically convert local currency balances or batch payouts directly to supplier accounts with zero reconciliation overhead.',
+      'Operating across African markets requires supporting multiple currencies: Nigerian Naira (NGN), Kenyan Shillings (KES), Ghanaian Cedis (GHS), and US Dollars (USD). Reconciling across different banking switches often creates reporting delays and manual accounting steps.',
+      'Quirk uses a double-entry ledger that records every incoming payment, provider fee, clearing timestamp, and payout batch in real time.',
+      'Every ledger entry is immutable and indexed by an idempotency hash. When funds clear through virtual accounts or mobile money, balances update in your unified multi-currency account.',
+      'Automated rules let you schedule payouts and convert balances between currencies with consistent audit trails.',
     ],
   },
   {
     slug: 'hardware-enclave-vaulting',
     tag: 'Security',
     date: 'July 2026',
-    title: 'Hardware Enclave Key Vaulting for Multi-Rail SDKs',
-    summary: 'Eliminating single-point provider vulnerabilities with zero-knowledge AES-256-GCM credential routing.',
-    author: 'Security & Cryptography Research',
-    authorRole: 'Platform Security Architecture',
-    readTime: '5 min read',
-    codeSnippet: {
-      lang: 'typescript',
-      code: `// Hardware Enclave Secret Decryption at Edge
+    title: 'Hardware enclave key vaulting for multi-rail SDKs',
+    excerpt: 'Securing provider API credentials with isolated hardware encryption and zero-knowledge routing.',
+    author: 'Security Engineering',
+    authorRole: 'Platform Security',
+    readTime: '4 min read',
+    codeSnippet: `// Hardware Enclave Secret Decryption
 import { KMSClient, DecryptCommand } from "@aws-sdk/client-kms";
 
 export async function decryptProviderSecret(encryptedKey: string): Promise<string> {
@@ -118,12 +107,11 @@ export async function decryptProviderSecret(encryptedKey: string): Promise<strin
   );
   return Buffer.from(result.Plaintext!).toString("utf8");
 }`,
-    },
     content: [
-      'When managing payment infrastructure across multiple third-party gateways, storing API secrets and private merchant credentials in traditional environment files or centralized databases introduces significant vulnerability vectors.',
-      'Quirk implements a zero-trust Hardware Security Module (HSM) enclave vaulting system. Merchant provider keys (Paystack secret keys, Flutterwave hash tokens, M-Pesa B2C passkeys) are encrypted using client-specific AES-256-GCM keys managed inside isolated hardware enclaves.',
-      'During transaction routing, decryption occurs strictly in-memory within the ephemeral execution thread of our secure routing worker, instantly sanitizing the credential payload after dispatch.',
-      'This guarantees zero vendor lock-in: merchants retain full cryptographic ownership of their direct banking contracts and can migrate or rotate credentials at any time without downtime.',
+      'Storing multiple gateway API keys in environment variables or application databases creates security risks as team size grows.',
+      'Quirk stores merchant provider credentials inside hardware security modules (HSM). Provider keys for Paystack, Flutterwave, and M-Pesa are encrypted with client-specific AES-256-GCM keys managed inside isolated hardware enclaves.',
+      'During transaction execution, credentials decrypt only in the memory of the routing worker and are cleared immediately after the request completes.',
+      'This architecture ensures merchants retain direct ownership of their provider accounts and can rotate keys at any time without code redeployments.',
     ],
   },
 ]

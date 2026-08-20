@@ -5,56 +5,55 @@ export function PrivacyPolicy() {
     <LegalLayout title='Privacy Policy' lastUpdated='April 9, 2026'>
       <div className='space-y-8'>
         <section className='space-y-4'>
-          <h2 className='text-2xl font-semibold'>1. Information We Collect</h2>
+          <h2 className='text-2xl font-semibold'>1. Information we collect</h2>
           <p>
-            At Quirk, we collect information to provide better services to all our merchants. We collect data in the following ways:
+            Quirk collects information required to operate payment routing and account services for merchants. We collect data in the following categories:
           </p>
           <ul className='list-disc pl-6 space-y-2'>
-            <li><strong>Information you give us:</strong> Since we use GitHub OAuth, we receive your GitHub profile information (such as username, name, and email) to create and identify your merchant account.</li>
-            <li><strong>Financial Information:</strong> We collect business details, transaction history, and payout information necessary to process payments.</li>
-            <li><strong>Log Information:</strong> When you use our service, we automatically collect and store certain information in server logs, such as IP addresses and browser type.</li>
+            <li><strong>Account information:</strong> When you connect via GitHub OAuth, we receive your GitHub username, display name, and email address to create and manage your merchant profile.</li>
+            <li><strong>Financial and transaction data:</strong> We record business details, transaction amounts, provider routing references, and settlement timestamps to process and verify payments.</li>
+            <li><strong>Technical logs:</strong> Our infrastructure logs IP addresses, browser agents, request timestamps, and API response codes to monitor service health and prevent abuse.</li>
           </ul>
         </section>
 
         <section className='space-y-4'>
-          <h2 className='text-2xl font-semibold'>2. How We Use Information</h2>
+          <h2 className='text-2xl font-semibold'>2. How we use information</h2>
           <p>
-            We use the information we collect to provide, maintain, protect and improve our services, to develop new ones, and to protect Quirk and our users. This includes:
+            We use collected information to route transactions, monitor rail availability, and maintain merchant accounts. This includes:
           </p>
           <ul className='list-disc pl-6 space-y-2'>
-            <li>Processing your transactions and managing your merchant dashboard.</li>
-            <li>Protecting your account from fraud and unauthorized access.</li>
-            <li>Sending you technical notices, updates, and security alerts.</li>
+            <li>Executing charge requests and updating transaction ledger balances.</li>
+            <li>Detecting abnormal request patterns and preventing unauthorized API access.</li>
+            <li>Delivering operational alerts, service status updates, and security notices.</li>
           </ul>
         </section>
 
         <section className='space-y-4'>
-          <h2 className='text-2xl font-semibold'>3. Information We Share</h2>
+          <h2 className='text-2xl font-semibold'>3. Information sharing</h2>
           <p>
-            We do not share personal information with companies, organizations, or individuals outside of Quirk unless one of the following circumstances applies:
+            We share data with third parties only in the following operational situations:
           </p>
           <ul className='list-disc pl-6 space-y-2'>
-            <li><strong>With your consent:</strong> We will share information with third parties when we have your explicit permission.</li>
-            <li><strong>For external processing:</strong> We provide information to our trusted partners (such as bank processors and fraud detection services) to process it for us, based on our instructions.</li>
-            <li><strong>For legal reasons:</strong> We will share information if we have a good-faith belief that access, use, preservation or disclosure is reasonably necessary to meet any applicable law, regulation, legal process or enforceable governmental request.</li>
+            <li><strong>Payment processors:</strong> We forward transaction payloads to the upstream payment gateways and banks you configure (such as Paystack, Flutterwave, or M-Pesa) to authorize charges.</li>
+            <li><strong>Compliance and legal obligations:</strong> We disclose data if required by applicable law, regulation, court order, or enforceable government request.</li>
           </ul>
         </section>
 
         <section className='space-y-4'>
-          <h2 className='text-2xl font-semibold'>4. Data Security</h2>
+          <h2 className='text-2xl font-semibold'>4. Data security</h2>
           <p>
-            We work hard to protect Quirk and our users from unauthorized access to or unauthorized alteration, disclosure or destruction of information we hold. In particular:
+            We apply security controls to protect transaction records and merchant credentials:
           </p>
           <ul className='list-disc pl-6 space-y-2'>
-            <li>We encrypt many of our services using SSL/TLS.</li>
-            <li>We review our information collection, storage and processing practices, including physical security measures.</li>
-            <li>We restrict access to personal information to Quirk employees and contractors who need that information in order to process it for us.</li>
+            <li>All network traffic uses TLS 1.3 encryption in transit.</li>
+            <li>Provider credentials and secret keys are encrypted with AES-256-GCM in hardware security modules.</li>
+            <li>Internal access to production data is restricted to authorized operations staff.</li>
           </ul>
         </section>
 
         <section className='space-y-4 border-t pt-8'>
-          <p className='text-muted-foreground italic text-sm'>
-            If you have any questions about this Privacy Policy, please contact privacy@quirk.com.
+          <p className='text-muted-foreground text-xs'>
+            For questions about this policy, contact privacy@quirk.dev.
           </p>
         </section>
       </div>

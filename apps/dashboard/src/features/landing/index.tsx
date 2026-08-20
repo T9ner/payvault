@@ -49,27 +49,27 @@ const PROBLEM_STEPS = [
   {
     step: '01',
     highlight: 'One provider becomes two.',
-    description: 'You add a secondary processor for reliability. Suddenly your engineers are maintaining two different APIs, two webhook handlers, and two integration codebases.',
+    description: 'Adding a secondary gateway introduces a second API, a second webhook handler, and duplicate failure logic in your application.',
   },
   {
     step: '02',
-    highlight: 'One payment flow becomes five.',
-    description: 'Cards alone are not enough. Customers demand dynamic virtual accounts, mobile money, and USSD. Each new rail introduces custom checkout logic.',
+    highlight: 'One payment method becomes five.',
+    description: 'Customers in different regions expect cards, virtual bank accounts, USSD, or mobile money. Each rail requires custom checkout handling.',
   },
   {
     step: '03',
-    highlight: 'A failed transaction becomes a support issue.',
-    description: 'Upstream gateway degradation and flaky bank switches drop transactions silently. With no automated failover, customers abandon checkout permanently.',
+    highlight: 'Failed payments create support tickets.',
+    description: 'When an upstream switch degrades, payments fail silently without automatic failover. Customers drop off at the point of payment.',
   },
   {
     step: '04',
-    highlight: 'A new market means another integration.',
-    description: 'Expanding into Kenya, Ghana, or South Africa forces your team to navigate unfamiliar local payment rails from scratch instead of shipping core product.',
+    highlight: 'New countries require new integrations.',
+    description: 'Expanding from Nigeria to Kenya, Ghana, or South Africa means learning new local rail requirements and writing fresh integration code.',
   },
   {
     step: '05',
-    highlight: 'Reconciliation becomes another engineering problem.',
-    description: 'Mismatched payout schedules, fragmented CSV exports, and siloed provider dashboards leave finance teams with no single source of ledger truth.',
+    highlight: 'Reconciliation turns into manual spreadsheet work.',
+    description: 'Different settlement schedules and fragmented CSV exports leave finance teams without a single source of truth for balances.',
   },
 ]
 
@@ -78,25 +78,25 @@ const CAPABILITIES = [
   {
     tag: 'CONNECT',
     title: 'One integration for multiple payment providers',
-    description: 'Connect once through @quirk/sdk to access cards, bank transfers, virtual accounts, USSD, and mobile money without writing custom wrappers.',
+    description: 'Use @quirk/sdk to access cards, bank transfers, virtual accounts, USSD, and mobile money without writing custom provider adapters.',
     icon: Code2,
   },
   {
     tag: 'NORMALIZE',
     title: 'Consistent payment states, APIs, and webhooks',
-    description: 'Universal request schemas, standardized charge response envelopes, and unified HMAC-SHA256 signature verification across all switches.',
+    description: 'Standard request payloads, unified charge statuses, and HMAC-SHA256 signature verification across every provider.',
     icon: Layers,
   },
   {
     tag: 'MONITOR',
-    title: 'Understand what is happening across your infrastructure',
-    description: 'Continuous out-of-band health probing tests latency and clearing availability 24/7, spotting upstream degradations before your users do.',
+    title: 'Visibility into gateway health and latency',
+    description: 'Out-of-band health probing checks latency and response codes 24/7, catching upstream degradations before customer transactions fail.',
     icon: Activity,
   },
   {
     tag: 'OPTIMIZE',
-    title: 'Smarter routing, reliability, and payment intelligence',
-    description: 'Autonomous sub-200ms route shifting shifts payment sessions to healthy alternate rails during outages with deterministic idempotency.',
+    title: 'Automated failover and reliable routing',
+    description: 'Sub-200ms route switching moves payment sessions to working alternate rails during outages, using idempotent keys to prevent double charges.',
     icon: Zap,
   },
 ]
@@ -107,36 +107,36 @@ const TARGET_AUDIENCES = [
     id: 'marketplaces',
     label: 'Marketplaces',
     icon: Building2,
-    headline: 'Multi-merchant routing & split payments',
-    description: 'Collect payments through any African rail, hold securely, and route vendor payouts seamlessly across banks and mobile money wallets.',
+    headline: 'Multi-merchant payouts and split settlement',
+    description: 'Accept customer payments across African rails, hold funds in dedicated accounts, and route vendor payouts to local banks and mobile money wallets.',
   },
   {
     id: 'fintechs',
     label: 'Fintechs',
     icon: Zap,
-    headline: 'High-volume failover & zero vendor lock-in',
-    description: 'Bring your own negotiated merchant rates, vault API keys in hardware enclaves, and ensure 99.99% uptime with autonomous failover.',
+    headline: 'Multi-provider routing with direct gateway keys',
+    description: 'Use your direct merchant accounts, store API credentials in hardware enclaves, and automate failover when primary switches slow down.',
   },
   {
     id: 'commerce',
     label: 'Commerce Platforms',
     icon: CreditCard,
-    headline: 'Frictionless checkout across cards & virtual accounts',
-    description: 'Present local payment methods dynamically based on customer geography while maintaining a single backend order reconciliation stream.',
+    headline: 'Localized checkout options in one integration',
+    description: 'Show relevant payment rails based on customer geography while keeping a single order reconciliation stream in your backend.',
   },
   {
     id: 'saas',
     label: 'SaaS Platforms',
     icon: SlidersHorizontal,
-    headline: 'Multi-currency subscription billing & ledgers',
-    description: 'Charge recurring subscriptions in NGN, KES, or USD with automatic retry schedules and normalized webhook notifications.',
+    headline: 'Recurring billing and multi-currency accounts',
+    description: 'Charge subscriptions in NGN, KES, GHS, or USD with retry schedules and standard webhook events.',
   },
   {
     id: 'tech',
     label: 'Payment-Enabled Tech',
     icon: Database,
-    headline: 'Embedded payment infrastructure at scale',
-    description: 'For technology companies where payments are deeply woven into the core application and uptime is mission-critical.',
+    headline: 'Embedded payment plumbing built for uptime',
+    description: 'For software teams where payments are core to the application and payment downtime directly costs revenue.',
   },
 ]
 
@@ -144,32 +144,32 @@ const TARGET_AUDIENCES = [
 const VISION_PILLARS = [
   {
     title: 'Payment Reliability',
-    desc: 'Autonomous multi-rail failover that prevents checkout drop-offs during bank network downtime.',
+    desc: 'Automated multi-rail switching that keeps checkouts open when individual bank networks drop.',
     icon: ShieldCheck,
   },
   {
     title: 'Transaction Intelligence',
-    desc: 'Deep inspection of failure codes to categorize insufficient funds vs network drops vs scheme rejections.',
+    desc: 'Inspection of decline codes to separate insufficient funds from network drops and card scheme errors.',
     icon: LineChart,
   },
   {
     title: 'Provider Performance',
-    desc: 'Live benchmarking of true latency, authorization speed, and settlement accuracy across African rails.',
+    desc: 'Live latency and success rate benchmarks across African payment switches.',
     icon: Target,
   },
   {
     title: 'Failure Detection',
-    desc: 'Proactive anomaly detection that flags deteriorating bank routes before customer checkout fails.',
+    desc: 'Health probing that flags deteriorating bank routes before transactions fail.',
     icon: Activity,
   },
   {
     title: 'Payment Optimization',
-    desc: 'Cost-aware routing engines that direct transactions through the lowest fee verified channel.',
+    desc: 'Routing rules that direct transactions through the lowest fee verified channel.',
     icon: Sparkles,
   },
   {
     title: 'Smarter Infrastructure',
-    desc: 'Unified double-entry ledgers connecting multi-currency liquidity across NGN, KES, GHS, and USD.',
+    desc: 'Double-entry ledgers tracking multi-currency balances across NGN, KES, GHS, and USD.',
     icon: Network,
   },
 ]
@@ -178,12 +178,12 @@ const VISION_PILLARS = [
 const CODE_SNIPPETS = {
   typescript: `import { Quirk } from '@quirk/sdk'
 
-// Initialize Quirk with vaulted merchant credentials
+// Initialize Quirk with your secret key
 const quirk = new Quirk({
   secretKey: process.env.QUIRK_SECRET_KEY
 })
 
-// Create normalized multi-rail payment
+// Create a payment with automatic failover
 const payment = await quirk.payments.create({
   amount: 25000,
   currency: 'NGN',
@@ -202,7 +202,7 @@ import os
 # Initialize Quirk client
 quirk = Quirk(secret_key=os.environ.get("QUIRK_SECRET_KEY"))
 
-# Create unified multi-rail payment
+# Create payment with automatic failover
 payment = quirk.payments.create(
     amount=25000,
     currency="NGN",
@@ -249,7 +249,7 @@ export function LandingPage() {
       {/* 1. MINIMAL STICKY NAVIGATION */}
       <header className='sticky top-0 z-50 w-full border-b border-[#E5E5E5] bg-[#FFFFFF]/90 backdrop-blur-md'>
         <div className='container max-w-6xl mx-auto flex h-16 items-center justify-between px-4 sm:px-6'>
-          {/* Logo (Pure Black on White) */}
+          {/* Logo */}
           <Link to='/' className='flex items-center gap-2.5 transition-opacity hover:opacity-80'>
             <QuirkLogo size={24} lightMode={true} />
           </Link>
@@ -342,18 +342,17 @@ export function LandingPage() {
         )}
       </header>
 
-      {/* 2. DRAMATIC & CLEAN HERO SECTION */}
+      {/* 2. HERO SECTION */}
       <section className='relative pt-24 pb-20 md:pt-36 md:pb-28 overflow-hidden bg-[#FFFFFF]'>
         {/* Subtle Orbital Background Metaphor */}
         <div className='absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden opacity-60'>
-          {/* Concentric subtle orbital rings */}
           <div className='absolute size-[600px] md:size-[900px] rounded-full border border-[#EBEBE8] quirk-orbit-slow' />
           <div className='absolute size-[900px] md:size-[1300px] rounded-full border border-[#F2F2EF] quirk-orbit-reverse' />
           <div className='absolute size-[1200px] md:size-[1700px] rounded-full border border-[#F7F7F5]' />
         </div>
 
         <div className='container max-w-5xl mx-auto px-4 sm:px-6 text-center relative z-10'>
-          {/* Subtle Label */}
+          {/* Label */}
           <div className='inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#F7F7F5] border border-[#E5E5E5] text-xs font-["JetBrains_Mono"] text-[#666666] mb-8'>
             <span className='size-1.5 rounded-full bg-[#080808]' />
             <span className='tracking-wider uppercase text-[11px] font-semibold text-[#080808]'>
@@ -389,7 +388,7 @@ export function LandingPage() {
             </a>
           </div>
 
-          {/* 3. HERO ORBITAL INFRASTRUCTURE VISUAL (Many Systems -> One Connection) */}
+          {/* 3. HERO ORBITAL INFRASTRUCTURE VISUAL */}
           <div className='mt-16 md:mt-24 max-w-4xl mx-auto relative'>
             <div className='p-6 sm:p-10 rounded-3xl bg-[#FAFAFA] border border-[#E5E5E5] shadow-sm relative overflow-hidden text-left'>
               {/* Top metadata bar */}
@@ -399,7 +398,7 @@ export function LandingPage() {
                   <span>Orbital Routing Matrix</span>
                 </div>
                 <span className='text-[11px] font-["JetBrains_Mono"] text-[#888888]'>
-                  Many systems → One connection
+                  Many systems, one connection
                 </span>
               </div>
 
@@ -412,14 +411,13 @@ export function LandingPage() {
                   </div>
                   <div className='font-bold text-sm text-[#080808] font-["Satoshi"]'>Your Application</div>
                   <div className='text-[10px] text-[#666666] font-["JetBrains_Mono"] mt-0.5'>
-                    Marketplace · Fintech · SaaS
+                    Marketplace, Fintech, SaaS
                   </div>
                 </div>
 
                 {/* Center SVG Orbital Lines */}
                 <div className='w-full md:flex-1 h-20 md:h-32 relative flex items-center justify-center'>
                   <svg className='w-full h-full' viewBox='0 0 300 100' fill='none'>
-                    {/* Orbital Curves */}
                     <path
                       d='M 0 50 C 75 10, 100 50, 150 50 C 200 50, 225 10, 300 15'
                       stroke='#E0E0DC'
@@ -454,7 +452,7 @@ export function LandingPage() {
                       <span className='size-1.5 rounded-full bg-[#080808]' />
                       <span className='font-semibold text-[#080808]'>Paystack Direct</span>
                     </div>
-                    <span className='text-[10px] font-["JetBrains_Mono"] text-[#888888]'>Cards / VA</span>
+                    <span className='text-[10px] font-["JetBrains_Mono"] text-[#888888]'>Cards and Accounts</span>
                   </div>
                   <div className='p-2.5 rounded-xl bg-[#FFFFFF] border border-[#E5E5E5] shadow-xs flex items-center justify-between text-xs'>
                     <div className='flex items-center gap-2'>
@@ -475,7 +473,7 @@ export function LandingPage() {
 
               {/* Bottom tag */}
               <div className='pt-4 border-t border-[#EBEBE8] flex items-center justify-between text-[11px] font-["JetBrains_Mono"] text-[#666666]'>
-                <span>Zero vendor lock-in</span>
+                <span>Direct merchant provider keys</span>
                 <span>Hardware enclave key vault</span>
               </div>
             </div>
@@ -483,7 +481,7 @@ export function LandingPage() {
         </div>
       </section>
 
-      {/* 4. SLIM RAILS TICKER (Clean White Background) */}
+      {/* 4. SLIM RAILS TICKER */}
       <section className='border-y border-[#E5E5E5] bg-[#FAFAFA] py-3.5 overflow-hidden relative'>
         <div className='quirk-marquee-container relative flex overflow-x-hidden'>
           <div className='quirk-marquee-track flex shrink-0 items-center gap-6 pr-6'>
@@ -514,20 +512,20 @@ export function LandingPage() {
           {/* Section Header */}
           <div className='mb-20'>
             <div className='text-xs font-semibold text-[#666666] uppercase tracking-wider font-["JetBrains_Mono"] mb-3'>
-              The Problem
+              The problem
             </div>
             <h2 className='text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-[#080808] font-["Satoshi"] leading-tight'>
               Payments get complicated <br className='hidden sm:inline' />
               as you grow.
             </h2>
             <p className='text-base sm:text-lg text-[#666666] mt-4 max-w-xl leading-relaxed'>
-              What started as a single API key quickly turns into fragmented checkout logic, silent drop-offs, and reconciliation overhead.
+              What started as a single API key turns into fragmented checkout logic, silent drop-offs, and manual reconciliation.
             </p>
           </div>
 
           {/* Progressive Statements with Orbital Route Flow */}
           <div className='relative pl-6 sm:pl-10 space-y-12 border-l border-[#E5E5E5]'>
-            {PROBLEM_STEPS.map((prob, idx) => (
+            {PROBLEM_STEPS.map((prob) => (
               <div key={prob.step} className='relative group'>
                 {/* Node dot on the vertical route line */}
                 <div className='absolute -left-[31px] sm:-left-[47px] top-1 size-3.5 rounded-full bg-[#FFFFFF] border-2 border-[#080808] flex items-center justify-center' />
@@ -549,14 +547,14 @@ export function LandingPage() {
         </div>
       </section>
 
-      {/* 6. SECTION: THE QUIRK LAYER (Infrastructure Diagram & Centerpiece) */}
+      {/* 6. SECTION: THE QUIRK LAYER */}
       <section id='product' className='py-24 md:py-36 border-b border-[#E5E5E5] bg-[#FAFAFA]'>
         <div className='container max-w-5xl mx-auto px-4 sm:px-6 text-center'>
           <div className='text-xs font-semibold text-[#666666] uppercase tracking-wider font-["JetBrains_Mono"] mb-3'>
-            The Quirk Layer
+            The Quirk layer
           </div>
           <h2 className='text-3xl sm:text-5xl font-bold tracking-tight text-[#080808] font-["Satoshi"]'>
-            A clean network floating between your product and every rail.
+            A clean network between your product and every rail.
           </h2>
           <p className='text-sm sm:text-base text-[#666666] mt-3 max-w-xl mx-auto'>
             Quirk acts as the central control plane, normalizing requests, routing sessions, and vaulting provider keys.
@@ -567,12 +565,12 @@ export function LandingPage() {
             {/* Top Level: Application */}
             <div className='p-6 rounded-2xl bg-[#FAFAFA] border border-[#E5E5E5] text-center max-w-md mx-auto'>
               <div className='text-[11px] font-["JetBrains_Mono"] uppercase tracking-wider text-[#666666] mb-1'>
-                Application Layer
+                Application layer
               </div>
               <div className='font-bold text-base text-[#080808] font-["Satoshi"]'>
                 YOUR APPLICATION CODE
               </div>
-              <div className='text-xs text-[#888888] mt-0.5'>Single SDK Client Integration</div>
+              <div className='text-xs text-[#888888] mt-0.5'>Single SDK client integration</div>
             </div>
 
             {/* Connecting Vertical Flow */}
@@ -585,7 +583,7 @@ export function LandingPage() {
             <div className='p-8 rounded-3xl bg-[#080808] text-[#FFFFFF] text-center max-w-xl mx-auto shadow-xl relative'>
               <div className='inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1A1A1A] border border-[#333333] text-[10px] font-["JetBrains_Mono"] text-[#FFFFFF] mb-3'>
                 <Lock className='size-3 text-[#FFFFFF]' />
-                <span>AES-256 Hardware Enclave Vault</span>
+                <span>AES-256 hardware enclave vault</span>
               </div>
               <h3 className='text-2xl font-bold font-["Satoshi"] tracking-tight'>
                 QUIRK CONTROL PLANE
@@ -597,11 +595,11 @@ export function LandingPage() {
                 </div>
                 <div className='p-2 rounded-lg bg-[#141414] border border-[#222222]'>
                   <div className='text-[#FFFFFF] font-semibold'>Normalize</div>
-                  <div className='text-[10px] text-[#888888]'>HMAC Schema</div>
+                  <div className='text-[10px] text-[#888888]'>HMAC schema</div>
                 </div>
                 <div className='p-2 rounded-lg bg-[#141414] border border-[#222222]'>
                   <div className='text-[#FFFFFF] font-semibold'>Monitor</div>
-                  <div className='text-[10px] text-[#888888]'>24/7 Probing</div>
+                  <div className='text-[10px] text-[#888888]'>24/7 probing</div>
                 </div>
                 <div className='p-2 rounded-lg bg-[#141414] border border-[#222222]'>
                   <div className='text-[#FFFFFF] font-semibold'>Route</div>
@@ -619,21 +617,21 @@ export function LandingPage() {
             {/* Bottom Level: Payment Rails */}
             <div className='grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-2xl mx-auto'>
               <div className='p-4 rounded-xl bg-[#FAFAFA] border border-[#E5E5E5] text-center'>
-                <div className='font-bold text-xs text-[#080808]'>Paystack & Monnify</div>
+                <div className='font-bold text-xs text-[#080808]'>Paystack and Monnify</div>
                 <div className='text-[10px] text-[#666666] font-["JetBrains_Mono"] mt-1'>
-                  Cards · Dynamic VA
+                  Cards and dynamic accounts
                 </div>
               </div>
               <div className='p-4 rounded-xl bg-[#FAFAFA] border border-[#E5E5E5] text-center'>
                 <div className='font-bold text-xs text-[#080808]'>Flutterwave</div>
                 <div className='text-[10px] text-[#666666] font-["JetBrains_Mono"] mt-1'>
-                  Pan-Africa · USD
+                  Pan-Africa and USD
                 </div>
               </div>
               <div className='p-4 rounded-xl bg-[#FAFAFA] border border-[#E5E5E5] text-center'>
-                <div className='font-bold text-xs text-[#080808]'>M-Pesa & Squad</div>
+                <div className='font-bold text-xs text-[#080808]'>M-Pesa and Squad</div>
                 <div className='text-[10px] text-[#666666] font-["JetBrains_Mono"] mt-1'>
-                  Mobile Money · USSD
+                  Mobile money and USSD
                 </div>
               </div>
             </div>
@@ -641,22 +639,22 @@ export function LandingPage() {
         </div>
       </section>
 
-      {/* 7. SECTION: WHAT QUIRK DOES (4 Capabilities on Clean Minimal Cards) */}
+      {/* 7. SECTION: WHAT QUIRK DOES */}
       <section className='py-24 md:py-36 border-b border-[#E5E5E5] bg-[#FFFFFF]'>
         <div className='container max-w-5xl mx-auto px-4 sm:px-6'>
           <div className='mb-16'>
             <div className='text-xs font-semibold text-[#666666] uppercase tracking-wider font-["JetBrains_Mono"] mb-3'>
-              Core Capabilities
+              Core capabilities
             </div>
             <h2 className='text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#080808] font-["Satoshi"]'>
               What Quirk does
             </h2>
             <p className='text-base text-[#666666] mt-2 max-w-lg'>
-              Four foundational pillars that eliminate payment complexity for growing software engineering teams.
+              Four foundational tools that remove payment complexity for growing software engineering teams.
             </p>
           </div>
 
-          {/* 4 Minimalist Spacious Cards (No colorful clutter) */}
+          {/* 4 Minimalist Spacious Cards */}
           <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
             {CAPABILITIES.map((cap) => {
               const Icon = cap.icon
@@ -693,13 +691,13 @@ export function LandingPage() {
         <div className='container max-w-5xl mx-auto px-4 sm:px-6'>
           <div className='text-center max-w-2xl mx-auto mb-16'>
             <div className='text-xs font-semibold text-[#666666] uppercase tracking-wider font-["JetBrains_Mono"] mb-3'>
-              Target Customers
+              Target customers
             </div>
             <h2 className='text-3xl sm:text-5xl font-bold tracking-tight text-[#080808] font-["Satoshi"]'>
-              Built for companies where payments are part of the product.
+              Built for products with embedded payments.
             </h2>
             <p className='text-sm sm:text-base text-[#666666] mt-4 leading-relaxed'>
-              Quirk is engineered specifically for software companies whose payment infrastructure becomes increasingly complex as they scale.
+              Quirk is built for software companies whose payment infrastructure becomes increasingly complex as transaction volume grows.
             </p>
           </div>
 
@@ -740,18 +738,17 @@ export function LandingPage() {
         </div>
       </section>
 
-      {/* 9. SECTION: THE BIGGER VISION (Cosmic Depth Transition into White Environment) */}
+      {/* 9. SECTION: THE BIGGER VISION */}
       <section id='vision' className='py-24 md:py-36 border-b border-[#E5E5E5] bg-[#FFFFFF]'>
         <div className='container max-w-5xl mx-auto px-4 sm:px-6'>
           {/* Deep Dark Cosmic Element Against the White Page */}
           <div className='p-8 sm:p-14 md:p-20 rounded-3xl bg-[#080808] text-[#FFFFFF] relative overflow-hidden shadow-2xl'>
-            {/* Subtle orbital celestial ring within cosmic container */}
             <div className='absolute right-0 top-0 translate-x-1/3 -translate-y-1/3 size-[500px] rounded-full border border-[#222222] pointer-events-none quirk-orbit-slow opacity-40' />
 
             <div className='relative z-10 max-w-3xl'>
               <div className='inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#161616] border border-[#262626] text-xs font-["JetBrains_Mono"] text-[#A9A9A9] mb-6'>
                 <span className='size-1.5 rounded-full bg-[#FFFFFF]' />
-                <span>The Long-Term Vision · Roadmap</span>
+                <span>Roadmap and early access</span>
               </div>
 
               <h2 className='text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-[#FFFFFF] font-["Satoshi"] leading-tight'>
@@ -759,7 +756,7 @@ export function LandingPage() {
               </h2>
 
               <p className='text-base sm:text-lg text-[#A9A9A9] mt-6 leading-relaxed'>
-                Every transaction contains information about how your business is performing. The long-term vision of Quirk is to turn raw payment logs into actionable infrastructure intelligence.
+                Every transaction record contains diagnostic data about authorization speed, bank uptime, and drop-offs. Quirk's roadmap focuses on turning this data into failure detection and routing rules.
               </p>
 
               {/* 6 Vision Pillars Grid */}
@@ -789,7 +786,7 @@ export function LandingPage() {
         </div>
       </section>
 
-      {/* 10. DEVELOPER SECTION (Clean Technical Environment) */}
+      {/* 10. DEVELOPER SECTION */}
       <section id='developers' className='py-24 md:py-36 border-b border-[#E5E5E5] bg-[#FAFAFA]'>
         <div className='container max-w-5xl mx-auto px-4 sm:px-6'>
           <div className='grid grid-cols-1 lg:grid-cols-12 gap-12 items-center'>
@@ -797,13 +794,13 @@ export function LandingPage() {
             <div className='lg:col-span-5 space-y-6'>
               <div>
                 <div className='text-xs font-semibold text-[#666666] uppercase tracking-wider font-["JetBrains_Mono"] mb-3'>
-                  Developer Platform
+                  Developer platform
                 </div>
                 <h2 className='text-3xl sm:text-4xl font-bold tracking-tight text-[#080808] font-["Satoshi"]'>
-                  Engineered for developers first.
+                  Built for developers.
                 </h2>
                 <p className='text-sm text-[#666666] mt-3 leading-relaxed'>
-                  Install the SDK, initialize with your vaulted key, and execute unified payments with normalized responses across all payment rails.
+                  Install the SDK, initialize with your secret key, and charge across any payment rail with standard responses.
                 </p>
               </div>
 
@@ -826,20 +823,20 @@ export function LandingPage() {
               <div className='space-y-2 text-xs text-[#666666] font-["JetBrains_Mono"]'>
                 <div className='flex items-center gap-2'>
                   <Check className='size-3.5 text-[#080808]' />
-                  <span>Zero vendor lock-in — bring your own keys</span>
+                  <span>Use your own direct merchant accounts</span>
                 </div>
                 <div className='flex items-center gap-2'>
                   <Check className='size-3.5 text-[#080808]' />
-                  <span>Full TypeScript type definitions included</span>
+                  <span>TypeScript type definitions included</span>
                 </div>
                 <div className='flex items-center gap-2'>
                   <Check className='size-3.5 text-[#080808]' />
-                  <span>Deterministic idempotency out of the box</span>
+                  <span>Deterministic idempotency to prevent duplicate charges</span>
                 </div>
               </div>
             </div>
 
-            {/* Right Monochromatic Minimal Code Block (No Bright Green Syntax) */}
+            {/* Right Monochromatic Minimal Code Block */}
             <div className='lg:col-span-7 rounded-3xl bg-[#080808] border border-[#222222] shadow-xl overflow-hidden text-[#FFFFFF]'>
               {/* Header with Monochromatic Tabs */}
               <div className='flex items-center justify-between px-5 py-3.5 border-b border-[#222222] bg-[#101010]'>
@@ -879,20 +876,20 @@ export function LandingPage() {
         </div>
       </section>
 
-      {/* 11. EARLY ACCESS / DESIGN PARTNERS (Spacious Clean Invitation) */}
+      {/* 11. EARLY ACCESS / DESIGN PARTNERS */}
       <section className='py-24 md:py-36 border-b border-[#E5E5E5] bg-[#FFFFFF]'>
         <div className='container max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-6'>
           <div className='inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#F7F7F5] border border-[#E5E5E5] text-xs font-["JetBrains_Mono"] text-[#666666]'>
             <span className='size-1.5 rounded-full bg-[#080808]' />
-            <span>Design Partner Program</span>
+            <span>Design partners</span>
           </div>
 
           <h2 className='text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-[#080808] font-["Satoshi"] max-w-2xl mx-auto leading-tight'>
-            Building a product where payments are becoming complicated?
+            Building a product with complex payment requirements?
           </h2>
 
           <p className='text-base sm:text-lg text-[#666666] max-w-xl mx-auto leading-relaxed'>
-            We're working with early technology companies to build the infrastructure they actually need.
+            We are working with engineering teams to build the infrastructure they need. If you manage multiple payment providers, talk to us.
           </p>
 
           <div className='pt-4'>
@@ -931,12 +928,12 @@ export function LandingPage() {
               <ul className='space-y-2'>
                 <li>
                   <a href='#product' className='hover:text-[#080808] transition-colors'>
-                    Quirk Layer
+                    Quirk layer
                   </a>
                 </li>
                 <li>
                   <a href='#developers' className='hover:text-[#080808] transition-colors'>
-                    API & SDK
+                    API and SDK
                   </a>
                 </li>
                 <li>
@@ -963,7 +960,7 @@ export function LandingPage() {
               <ul className='space-y-2'>
                 <li>
                   <Link to='/insights' className='hover:text-[#080808] transition-colors'>
-                    Research & Insights
+                    Research and insights
                   </Link>
                 </li>
                 <li>
@@ -971,7 +968,7 @@ export function LandingPage() {
                     href='mailto:engineering@quirk.dev'
                     className='hover:text-[#080808] transition-colors'
                   >
-                    Contact Engineering
+                    Contact engineering
                   </a>
                 </li>
                 <li>
@@ -979,7 +976,7 @@ export function LandingPage() {
                     href='mailto:engineering@quirk.dev?subject=Quirk%20Design%20Partner%20Inquiry'
                     className='hover:text-[#080808] transition-colors'
                   >
-                    Design Partners
+                    Design partners
                   </a>
                 </li>
               </ul>
@@ -987,20 +984,20 @@ export function LandingPage() {
 
             {/* Legal Column */}
             <div className='md:col-span-3 space-y-3'>
-              <div className='font-semibold text-[#080808] font-["Satoshi"]'>Legal & Security</div>
+              <div className='font-semibold text-[#080808] font-["Satoshi"]'>Legal and security</div>
               <ul className='space-y-2'>
                 <li>
                   <Link to='/privacy' className='hover:text-[#080808] transition-colors'>
-                    Privacy Policy
+                    Privacy policy
                   </Link>
                 </li>
                 <li>
                   <Link to='/terms' className='hover:text-[#080808] transition-colors'>
-                    Terms of Service
+                    Terms of service
                   </Link>
                 </li>
                 <li>
-                  <span className='text-[#888888]'>AES-256 Hardware Security Enclave</span>
+                  <span className='text-[#888888]'>AES-256 hardware security enclave</span>
                 </li>
               </ul>
             </div>
