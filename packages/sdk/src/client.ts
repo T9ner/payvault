@@ -36,8 +36,8 @@ const BUILTIN_PROVIDERS: Record<string, new (config: QuirkConfig) => Provider> =
 };
 
 export class Quirk {
-  private primaryProvider: Provider;
-  private provider: Provider;
+  public primaryProvider: Provider;
+  public provider: Provider;
   private providers: Map<ProviderName, Provider> = new Map();
   private config: QuirkConfig;
   private webhookHandlers: Map<string, WebhookHandler[]> = new Map();
