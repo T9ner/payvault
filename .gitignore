@@ -1,47 +1,72 @@
 # Dependencies
 node_modules/
+.pnpm-store/
 vendor/
 
-# Build outputs
+# Build & Bundler Outputs
 dist/
 build/
 .next/
 .tanstack/
 .vercel/
+.turbo/
+*.tsbuildinfo
+*.eslintcache
+
+# Executables & Binaries
 *.exe
 *.out
-
-# Go binaries (no extension)
 apps/api/api
 apps/api/tmp_*
 
-# Environment files
+# Environment Variables & Secrets
 .env
 .env.local
 .env.*.local
+*.pem
+*.key
 
-# IDE
+# IDE & Editor Configs
 .idea/
 .vscode/
 *.swp
 *.swo
+*.sublime-project
+*.sublime-workspace
 
-# OS
+# Operating System Files
 .DS_Store
 Thumbs.db
+desktop.ini
 
-# Logs
+# Logs & Debug Output
 *.log
 npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
 
-# Test
+# Test Coverage & Reports
 coverage/
+.nyc_output/
 
-# Generated docs
+# Documentation & Generated Artifacts
 docs/
+typedoc/
 
-# agent skills
-.agent/
+# AI Tooling, Agents & Ephemeral Skills
+.agents/skills/
+.claude/
+.gemini/
+.firecrawl/
+agent/
+skills-lock.json
 
-# Local dev Docker overrides (Adminer, Redis Commander, hot-reload)
+# Local Development Docker Overrides
 docker-compose.override.yml
+
+# Loose Media / Scratch
+scratch/
+/logo.jpg
+/logo2.png
+/quirk.jpg
