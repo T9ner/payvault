@@ -287,7 +287,7 @@ export function LandingPage() {
           </nav>
 
           {/* Right Action Group */}
-          <div className='hidden sm:flex items-center gap-2.5'>
+          <div className='hidden sm:flex items-center gap-3'>
             <a
               href='https://github.com/T9ner/quirk'
               target='_blank'
