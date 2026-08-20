@@ -1,10 +1,10 @@
 <div align="center">
 
-# @quirk/sdk
+# quirk-sdk
 
 ### Developer-first payment infrastructure and control plane for African technology companies.
 
-[![npm version](https://img.shields.io/npm/v/@quirk/sdk.svg?style=flat-square)](https://www.npmjs.com/package/@quirk/sdk)
+[![npm version](https://img.shields.io/npm/v/quirk-sdk.svg?style=flat-square)](https://www.npmjs.com/package/quirk-sdk)
 [![License: MIT](https://img.shields.io/badge/License-MIT-black.svg?style=flat-square)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.4+-black?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 
@@ -33,17 +33,17 @@ Quirk standardizes heterogeneous African payment rails into a unified, type-safe
 ### Installation
 
 ```bash
-npm install @quirk/sdk
+npm install quirk-sdk
 # or
-pnpm add @quirk/sdk
+pnpm add quirk-sdk
 # or
-yarn add @quirk/sdk
+yarn add quirk-sdk
 ```
 
 ### Basic Initialization (Single Provider)
 
 ```typescript
-import { Quirk } from '@quirk/sdk';
+import { Quirk } from 'quirk-sdk';
 
 // Initialize with Paystack
 const quirk = Quirk.paystack(process.env.PAYSTACK_SECRET_KEY!);
