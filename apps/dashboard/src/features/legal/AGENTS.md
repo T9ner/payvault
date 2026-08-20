@@ -8,7 +8,7 @@
 1. **Layout Requirements**
    - Wrapped in `LegalLayout` with sticky top header containing black Quirk logo and "Back to Home" navigation.
    - Clean white background (`#FFFFFF`) with neutral typography (`#080808` headings, `#444444` body text).
-   - Contact email addresses must reference official Quirk domains: `privacy@quirk.dev` and `engineering@quirk.dev`.
+   - Contact email addresses must reference `dbosshonour@gmail.com`.
 
 2. **Writing Tone**
    - Unslop standard: sentence case section headings, clear definitions of data handling and hardware encryption, and zero legal filler words.

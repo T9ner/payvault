@@ -53,7 +53,7 @@ export function TermsOfService() {
 
         <section className='space-y-4 border-t pt-8'>
           <p className='text-muted-foreground text-xs'>
-            For questions about these terms, contact engineering@quirk.dev.
+            For questions about these terms, contact dbosshonour@gmail.com.
           </p>
         </section>
       </div>
