@@ -19,7 +19,7 @@ import {
   ShoppingBag,
   ArrowUpRight,
   TrendingUp,
-  Zap,
+  ArrowRightLeft,
   ShieldCheck,
   Plus,
   ArrowRight,
@@ -197,7 +197,7 @@ export function Dashboard() {
               <CardTitle className="text-xs font-medium text-[#A9A9A9]">
                 Autonomous Failover
               </CardTitle>
-              <Zap className='size-4 text-[#FFFFFF]' />
+              <ArrowRightLeft className='size-4 text-[#FFFFFF]' />
             </CardHeader>
             <CardContent>
               <div className="font-['JetBrains_Mono'] text-2xl sm:text-3xl font-bold text-[#FFFFFF]">

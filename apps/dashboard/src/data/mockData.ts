@@ -1,4 +1,4 @@
-import { Zap, Target, Fingerprint, Globe } from "lucide-react";
+import { Timer, Target, Fingerprint, Globe } from "lucide-react";
 
 export const fallbackActivityData = [
     { name: "Mon", income: 4000, expense: 2400 },
@@ -24,7 +24,7 @@ export const transactionStatusTabs = [
 ];
 
 export const fraudRuleTypes = [
-    { value: "velocity", label: "Velocity Check", desc: "Max transactions per time window", icon: Zap },
+    { value: "velocity", label: "Velocity Check", desc: "Max transactions per time window", icon: Timer },
     { value: "amount_limit", label: "Amount Limit", desc: "Block transactions above threshold", icon: Target },
     { value: "duplicate", label: "Duplicate Detection", desc: "Detect duplicate payment attempts", icon: Fingerprint },
     { value: "geo_block", label: "Geo Blocking", desc: "Block transactions from specific regions", icon: Globe },
