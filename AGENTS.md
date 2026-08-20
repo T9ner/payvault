@@ -28,6 +28,10 @@
    - Webhooks require verified HMAC-SHA256 signature checking.
    - Every transaction payload requires deterministic idempotency keys to prevent double-charging.
 
+5. **Pull Request & Branch Protection**
+   - Never merge a Pull Request, push directly to `main`, or auto-merge branches autonomously.
+   - PRs must remain open for human review until the user explicitly commands a merge (e.g. "merge PR #25").
+
 ## Work Guidance
 
 - Before modifying code in any package or subfolder, traverse the DOX tree down to the nearest owning `AGENTS.md`.
