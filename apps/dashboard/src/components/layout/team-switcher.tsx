@@ -1,78 +1,36 @@
 import * as React from 'react'
-import { ChevronsUpDown, Plus } from 'lucide-react'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
+import { Link } from '@tanstack/react-router'
+import { QuirkLogo } from '@/components/quirk-logo'
 import {
   SidebarMenu,
-  SidebarMenuButton,
   SidebarMenuItem,
-  useSidebar,
 } from '@/components/ui/sidebar'
 
-type TeamSwitcherProps = {
-  teams: {
-    name: string
-    logo: React.ElementType
-    plan: string
-  }[]
-}
-
-export function TeamSwitcher({ teams }: TeamSwitcherProps) {
-  const { isMobile } = useSidebar()
-  const [activeTeam, setActiveTeam] = React.useState(teams[0])
-
+export function TeamSwitcher() {
   return (
     <SidebarMenu>
       <SidebarMenuItem>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <SidebarMenuButton
-              size='lg'
-              className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground'
-            >
-              <div className='flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground'>
-                <activeTeam.logo className='size-4' />
-              </div>
-              <div className='grid flex-1 text-start text-sm leading-tight'>
-                <span className='truncate font-semibold'>
-                  {activeTeam.name}
-                </span>
-                <span className='truncate text-xs'>{activeTeam.plan}</span>
-              </div>
-              <ChevronsUpDown className='ms-auto' />
-            </SidebarMenuButton>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent
-            className='w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg'
-            align='start'
-            side={isMobile ? 'bottom' : 'right'}
-            sideOffset={4}
-          >
-            <DropdownMenuLabel className='text-xs text-muted-foreground'>
-              Teams
-            </DropdownMenuLabel>
-            {teams.map((team, index) => (
-              <DropdownMenuItem
-                key={team.name}
-                onClick={() => setActiveTeam(team)}
-                className='gap-2 p-2'
-              >
-                <div className='flex size-6 items-center justify-center rounded-sm border'>
-                  <team.logo className='size-4 shrink-0' />
-                </div>
-                {team.name}
-                <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <Link
+          to='/dashboard'
+          className='flex w-full items-center justify-between p-2 rounded-xl hover:bg-[#F7F7F5] transition-colors duration-150 group'
+        >
+          <div className='flex items-center gap-2.5'>
+            <QuirkLogo size={22} lightMode={true} />
+            <div className='flex flex-col text-start leading-tight'>
+              <span className='font-["Satoshi"] font-bold text-sm text-[#080808] tracking-tight'>
+                Quirk
+              </span>
+              <span className='text-[10px] font-mono text-[#666666]'>
+                Control Plane
+              </span>
+            </div>
+          </div>
+
+          <div className='inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#FAFAFA] border border-[#E5E5E5] text-[10px] font-mono text-[#080808]'>
+            <span className='size-1.5 rounded-full bg-[#22C55E] animate-pulse' />
+            <span>Live</span>
+          </div>
+        </Link>
       </SidebarMenuItem>
     </SidebarMenu>
   )

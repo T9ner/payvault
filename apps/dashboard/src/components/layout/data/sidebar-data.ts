@@ -1,44 +1,43 @@
 import {
-  LayoutDashboard,
-  CreditCard,
-  Link as LinkIcon,
+  Activity,
+  ArrowRightLeft,
+  Link2,
   ShieldAlert,
-  Settings,
-  Command,
+  SlidersHorizontal,
+  Terminal,
 } from 'lucide-react'
 import { type SidebarData } from '../types'
 
 export const sidebarData: SidebarData = {
   user: {
-    name: 'Admin',
-    email: 'dbosshonour@gmail.com',
+    name: 'Quirk Merchant',
+    email: 'merchant@quirk.dev',
     avatar: '',
   },
   teams: [
     {
-      name: 'Quirk',
-      logo: Command,
-      plan: 'Live Platform',
+      name: 'Quirk Control Plane',
+      plan: 'Live Multi-Rail',
     },
   ],
   navGroups: [
     {
-      title: 'General',
+      title: 'Control Plane',
       items: [
         {
-          title: 'Dashboard',
+          title: 'Overview',
           url: '/dashboard',
-          icon: LayoutDashboard,
+          icon: Activity,
         },
         {
           title: 'Transactions',
           url: '/transactions',
-          icon: CreditCard,
+          icon: ArrowRightLeft,
         },
         {
           title: 'Payment Links',
           url: '/payment-links',
-          icon: LinkIcon,
+          icon: Link2,
         },
         {
           title: 'Fraud Matrix',
@@ -48,12 +47,17 @@ export const sidebarData: SidebarData = {
       ],
     },
     {
-      title: 'Other',
+      title: 'Platform',
       items: [
         {
-          title: 'Settings',
+          title: 'Settings & Keys',
           url: '/settings',
-          icon: Settings,
+          icon: SlidersHorizontal,
+        },
+        {
+          title: 'SDK Reference',
+          url: '/insights',
+          icon: Terminal,
         },
       ],
     },
