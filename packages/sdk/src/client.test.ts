@@ -408,3 +408,41 @@ describe('Quirk.pollVerification', () => {
     await assertPromise;
   });
 });
+
+describe('Quirk Modern Namespaces', () => {
+  let quirk: Quirk;
+
+  beforeEach(() => {
+    quirk = new Quirk({ provider: 'mock', secretKey: 'sk_test_123' });
+  });
+
+  it('payments.create delegates correctly', async () => {
+    const res = await quirk.payments.create({
+      amount: 25000,
+      email: 'alex@example.com',
+    });
+    expect(res.success).toBe(true);
+    expect(res.authorizationUrl).toBe('https://mock.pay/checkout');
+  });
+
+  it('payments.verify delegates correctly', async () => {
+    const res = await quirk.payments.verify('qrk_ref_123');
+    expect(res.status).toBe('success');
+    expect(res.amount).toBe(5000);
+  });
+
+  it('webhooks.verify delegates correctly', () => {
+    const isValid = quirk.webhooks.verify('{"event":"charge.success"}', 'sig_123');
+    expect(isValid).toBe(true);
+  });
+
+  it('refunds.create delegates correctly', async () => {
+    const res = await quirk.refunds.create({
+      reference: 'qrk_ref_123',
+      amount: 2500,
+    });
+    expect(res.success).toBe(true);
+    expect(res.refundReference).toBe('ref_001');
+  });
+});
+

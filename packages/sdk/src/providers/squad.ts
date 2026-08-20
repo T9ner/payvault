@@ -48,14 +48,14 @@ export class SquadProvider implements Provider {
   private defaultMetadata: Record<string, any>;
 
   constructor(config: QuirkConfig) {
-    this.secretKey = config.secretKey;
+    this.secretKey = config.secretKey || '';
     this.webhookSecret = config.webhookSecret;
     this.defaultCurrency = config.currency || 'NGN';
     this.defaultMetadata = config.metadata || {};
 
     // Sandbox keys start with "sandbox_"
     this.baseUrl = config.baseUrl || (
-      config.secretKey.startsWith('sandbox_') ? SQUAD_SANDBOX_URL : SQUAD_LIVE_URL
+      this.secretKey.startsWith('sandbox_') ? SQUAD_SANDBOX_URL : SQUAD_LIVE_URL
     );
 
     this.http = new HttpClient('squad', {

@@ -4,18 +4,18 @@ export class QuirkError extends Error {
   public statusCode?: number;
   public raw?: any;
 
-  constructor(message: string, options: {
-    code: string;
-    provider: string;
+  constructor(message: string, options?: {
+    code?: string;
+    provider?: string;
     statusCode?: number;
     raw?: any;
   }) {
     super(message);
     this.name = 'QuirkError';
-    this.code = options.code;
-    this.provider = options.provider;
-    this.statusCode = options.statusCode;
-    this.raw = options.raw;
+    this.code = options?.code || 'QUIRK_ERROR';
+    this.provider = options?.provider || 'quirk';
+    this.statusCode = options?.statusCode;
+    this.raw = options?.raw;
   }
 }
 

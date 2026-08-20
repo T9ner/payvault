@@ -11,51 +11,51 @@
    ========================================================================== */
 
 .pv-checkout {
-  /* Light theme (default) */
-  --pv-primary: #635BFF;
-  --pv-primary-hover: #5046E4;
-  --pv-primary-light: rgba(99, 91, 255, 0.08);
-  --pv-primary-ring: rgba(99, 91, 255, 0.35);
+  /* Light theme (default) - Quirk Brand */
+  --pv-primary: #080808;
+  --pv-primary-hover: #222222;
+  --pv-primary-light: rgba(8, 8, 8, 0.05);
+  --pv-primary-ring: rgba(8, 8, 8, 0.2);
   --pv-bg: #FFFFFF;
-  --pv-bg-secondary: #F6F8FA;
+  --pv-bg-secondary: #FAFAFA;
   --pv-bg-input: #FFFFFF;
-  --pv-text: #0A2540;
-  --pv-text-secondary: #516F90;
-  --pv-text-muted: #8898AA;
-  --pv-border: #E3E8EE;
-  --pv-border-focus: #635BFF;
+  --pv-text: #080808;
+  --pv-text-secondary: #555555;
+  --pv-text-muted: #888888;
+  --pv-border: #E5E5E5;
+  --pv-border-focus: #080808;
   --pv-error: #DF1B41;
   --pv-error-bg: rgba(223, 27, 65, 0.06);
-  --pv-success: #30B566;
-  --pv-success-bg: rgba(48, 181, 102, 0.06);
+  --pv-success: #22C55E;
+  --pv-success-bg: rgba(34, 197, 94, 0.06);
   --pv-warning: #F5A623;
-  --pv-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
-  --pv-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
-  --pv-shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.15);
-  --pv-shadow-modal: 0 20px 60px rgba(0, 0, 0, 0.3);
+  --pv-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+  --pv-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --pv-shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.12);
+  --pv-shadow-modal: 0 24px 64px rgba(0, 0, 0, 0.24);
   --pv-radius: 8px;
   --pv-radius-lg: 12px;
-  --pv-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --pv-font: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
   --pv-transition-fast: 150ms ease;
   --pv-transition: 200ms ease;
   --pv-transition-slow: 300ms ease;
-  --pv-backdrop: rgba(0, 0, 0, 0.5);
+  --pv-backdrop: rgba(0, 0, 0, 0.6);
 }
 
 /* Dark theme */
 .pv-checkout[data-theme="dark"] {
-  --pv-primary: #7C6BFF;
-  --pv-primary-hover: #8F80FF;
-  --pv-primary-light: rgba(124, 107, 255, 0.12);
-  --pv-primary-ring: rgba(124, 107, 255, 0.4);
-  --pv-bg: #1A1A2E;
-  --pv-bg-secondary: #16162A;
-  --pv-bg-input: #222240;
-  --pv-text: #E8E8F0;
-  --pv-text-secondary: #A0A0B8;
-  --pv-text-muted: #6B6B82;
-  --pv-border: #2E2E4A;
-  --pv-border-focus: #7C6BFF;
+  --pv-primary: #FFFFFF;
+  --pv-primary-hover: #E5E5E5;
+  --pv-primary-light: rgba(255, 255, 255, 0.1);
+  --pv-primary-ring: rgba(255, 255, 255, 0.3);
+  --pv-bg: #080B10;
+  --pv-bg-secondary: #11161D;
+  --pv-bg-input: #171D26;
+  --pv-text: #F5F7FA;
+  --pv-text-secondary: #A9B0BB;
+  --pv-text-muted: #667085;
+  --pv-border: #22303A;
+  --pv-border-focus: #FFFFFF;
   --pv-error: #FF6B8A;
   --pv-error-bg: rgba(255, 107, 138, 0.1);
   --pv-success: #4ADE80;
