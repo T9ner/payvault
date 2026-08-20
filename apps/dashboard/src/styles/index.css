@@ -121,32 +121,53 @@
   to { stroke-dashoffset: -240; }
 }
 .quirk-flow-line {
-  stroke-dasharray: 5 11;
-  animation: quirk-flow 3.2s linear infinite;
+  stroke-dasharray: 4 10;
+  animation: quirk-flow 4s linear infinite;
+}
+
+/* Orbital rotation for space-infrastructure rings */
+@keyframes quirk-orbit-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.quirk-orbit-slow {
+  animation: quirk-orbit-slow 90s linear infinite;
+  transform-origin: center;
+}
+
+@keyframes quirk-orbit-reverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+.quirk-orbit-reverse {
+  animation: quirk-orbit-reverse 120s linear infinite;
+  transform-origin: center;
 }
 
 /* Pulsing routing nodes */
 @keyframes quirk-node {
-  0%, 100% { opacity: 0.35; }
-  50% { opacity: 1; }
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.15); }
 }
 .quirk-node {
-  animation: quirk-node 2.6s ease-in-out infinite;
+  animation: quirk-node 3.2s ease-in-out infinite;
 }
 
-/* Ambient hero/CTA glow */
+/* Ambient cosmic depth glow */
 @keyframes quirk-glow {
-  0%, 100% { opacity: 0.45; transform: scale(1); }
-  50% { opacity: 0.75; transform: scale(1.04); }
+  0%, 100% { opacity: 0.35; transform: scale(1); }
+  50% { opacity: 0.65; transform: scale(1.03); }
 }
 .quirk-glow {
-  animation: quirk-glow 6s ease-in-out infinite;
+  animation: quirk-glow 8s ease-in-out infinite;
   will-change: opacity, transform;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .quirk-marquee-track,
   .quirk-flow-line,
+  .quirk-orbit-slow,
+  .quirk-orbit-reverse,
   .quirk-node,
   .quirk-glow {
     animation: none !important;
