@@ -31,17 +31,25 @@ import {
   Sparkles,
 } from 'lucide-react'
 import { QuirkLogo } from '@/components/quirk-logo'
+import { Marquee } from '@/components/ui/marquee'
 
-// Supported payment rails for the infinite marquee
-const ECOSYSTEM_RAILS = [
-  { name: 'Paystack Direct', code: 'PSTK', ping: '185ms', status: 'Operational', type: 'Cards & Transfer' },
-  { name: 'Flutterwave Switch', code: 'FLW', ping: '210ms', status: 'Operational', type: 'Pan-African & Global' },
-  { name: 'M-Pesa Express', code: 'MPESA', ping: '140ms', status: 'Operational', type: 'STK Push' },
-  { name: 'Monnify Dynamic VA', code: 'MNFY', ping: '195ms', status: 'Operational', type: 'Virtual Accounts' },
-  { name: 'Squad HabariPay', code: 'SQD', ping: '205ms', status: 'Operational', type: 'USSD & VA' },
-  { name: 'Interswitch Switch', code: 'ISW', ping: '240ms', status: 'Operational', type: 'Card Switch' },
-  { name: 'MTN MoMo Rail', code: 'MOMO', ping: '220ms', status: 'Operational', type: 'Mobile Money' },
-  { name: 'Airtel Money Rail', code: 'ARTL', ping: '215ms', status: 'Operational', type: 'Mobile Money' },
+const LOGOS = [
+  { src: '/logos/vercel.svg', alt: 'Vercel logo' },
+  { src: '/logos/google.svg', alt: 'Google logo' },
+  { src: '/logos/framer.svg', alt: 'Framer logo' },
+  { src: '/logos/discord.svg', alt: 'Discord logo' },
+  { src: '/logos/openai.svg', alt: 'OpenAI logo' },
+  { src: '/logos/phantom.svg', alt: 'Phantom logo' },
+  { src: '/logos/descript.svg', alt: 'Descript logo' },
+  { src: '/logos/netflix.svg', alt: 'Netflix logo' },
+  { src: '/logos/linear.svg', alt: 'Linear logo' },
+  { src: '/logos/notion.svg', alt: 'Notion logo' },
+  { src: '/logos/shopify.svg', alt: 'Shopify logo' },
+  { src: '/logos/duolingo.svg', alt: 'Duolingo logo' },
+  { src: '/logos/ramp.svg', alt: 'Ramp logo' },
+  { src: '/logos/tesla.svg', alt: 'Tesla logo' },
+  { src: '/logos/opensea.svg', alt: 'OpenSea logo' },
+  { src: '/logos/cursor.svg', alt: 'Cursor logo' },
 ]
 
 // The 5 Progressive Scaling Challenges
@@ -481,29 +489,20 @@ export function LandingPage() {
         </div>
       </section>
 
-      {/* 4. SLIM RAILS TICKER */}
-      <section className='border-y border-[#E5E5E5] bg-[#FAFAFA] py-3.5 overflow-hidden relative'>
-        <div className='quirk-marquee-container relative flex overflow-x-hidden'>
-          <div className='quirk-marquee-track flex shrink-0 items-center gap-6 pr-6'>
-            {[...ECOSYSTEM_RAILS, ...ECOSYSTEM_RAILS].map((rail, idx) => (
-              <div
-                key={idx}
-                className='flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#FFFFFF] border border-[#E5E5E5] text-xs shrink-0 shadow-2xs'
-              >
-                <div className='size-5 rounded bg-[#F7F7F5] border border-[#E5E5E5] flex items-center justify-center font-["JetBrains_Mono"] font-bold text-[8px] text-[#080808]'>
-                  {rail.code}
-                </div>
-                <span className='font-semibold text-[#080808]'>{rail.name}</span>
-                <span className='text-[#CCCCCC]'>·</span>
-                <span className='text-[11px] text-[#666666]'>{rail.type}</span>
-                <span className='inline-flex items-center gap-1 text-[10px] font-["JetBrains_Mono"] text-[#888888] pl-1'>
-                  <span className='size-1 rounded-full bg-[#080808]' />
-                  {rail.ping}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
+      {/* 4. COMPANY LOGOS MARQUEE */}
+      <section className='border-y border-[#E5E5E5] bg-[#FAFAFA] py-4 overflow-hidden relative'>
+        <Marquee className='flex py-4' duration={40} pauseOnHover repeat={4}>
+          {LOGOS.map((logo, idx) => (
+            <img
+              key={idx}
+              src={logo.src}
+              alt={logo.alt}
+              width={96}
+              height={96}
+              className='pointer-events-none mx-8 h-10 w-10 sm:h-12 sm:w-12 md:h-14 md:w-14 object-contain opacity-70 select-none grayscale hover:opacity-100 transition-opacity'
+            />
+          ))}
+        </Marquee>
       </section>
 
       {/* 5. SECTION: THE PROBLEM */}
