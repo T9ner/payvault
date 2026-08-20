@@ -1,7 +1,7 @@
 {
-  "name": "quirk-sdk",
-  "version": "0.3.0",
-  "description": "Unified payment SDK for African markets. One API for Paystack + Flutterwave -- backend TypeScript SDK + embeddable checkout widget.",
+  "name": "@quirk/sdk",
+  "version": "1.0.0",
+  "description": "Developer-first payment infrastructure SDK for African technology companies. One unified API for multi-rail payments, cards, virtual accounts, USSD, and mobile money with autonomous failover.",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -24,7 +24,7 @@
     "build": "tsup src/index.ts --format cjs,esm --dts --clean --external crypto",
     "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
     "lint": "tsc --noEmit",
-    "prepublishOnly": "npm run build",
+    "prepublishOnly": "pnpm run build",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
@@ -32,6 +32,7 @@
   },
   "keywords": [
     "payments",
+    "quirk",
     "paystack",
     "flutterwave",
     "monnify",
@@ -39,27 +40,27 @@
     "africa",
     "fintech",
     "checkout",
-    "nigeria",
-    "ghana",
-    "kenya",
+    "virtual-accounts",
+    "failover",
     "sdk"
   ],
-  "author": "T9ner",
+  "author": "Quirk Engineering <dbosshonour@gmail.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/T9ner/quirk.git"
+    "url": "https://github.com/T9ner/quirk.git",
+    "directory": "packages/sdk"
   },
   "bugs": {
     "url": "https://github.com/T9ner/quirk/issues"
   },
-  "homepage": "https://github.com/T9ner/quirk#readme",
+  "homepage": "https://quirk-three.vercel.app/",
   "devDependencies": {
     "@types/node": "^20.19.37",
     "tsup": "^8.0.0",
     "typedoc": "^0.28.17",
     "typescript": "^5.4.0",
-    "vitest": "^4.1.0"
+    "vitest": "^1.6.1"
   },
   "engines": {
     "node": ">=18.0.0"

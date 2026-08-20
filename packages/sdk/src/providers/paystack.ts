@@ -40,7 +40,7 @@ export class PaystackProvider implements Provider {
   private defaultMetadata: Record<string, any>;
 
   constructor(config: QuirkConfig) {
-    this.secretKey = config.secretKey;
+    this.secretKey = config.secretKey || '';
     this.webhookSecret = config.webhookSecret;
     this.baseUrl = config.baseUrl || PAYSTACK_BASE_URL;
     this.defaultCurrency = config.currency || 'NGN';

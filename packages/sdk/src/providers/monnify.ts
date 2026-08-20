@@ -75,14 +75,17 @@ export class MonnifyProvider implements Provider {
   private defaultMetadata: Record<string, any>;
 
   constructor(config: QuirkConfig) {
-    this.rawSecret = config.secretKey;
+    this.rawSecret = config.secretKey || '';
     this.webhookSecret = config.webhookSecret;
     this.defaultCurrency = config.currency || 'NGN';
     this.defaultMetadata = config.metadata || {};
 
-    // Determine base URL: test keys start with MK_TEST_
-    const { apiKey } = parseMonnifyCredentials(config.secretKey);
-    this.baseUrl = config.baseUrl || (apiKey.startsWith('MK_TEST_') ? MONNIFY_SANDBOX_URL : MONNIFY_LIVE_URL);
+    if (this.rawSecret) {
+      const { apiKey } = parseMonnifyCredentials(this.rawSecret);
+      this.baseUrl = config.baseUrl || (apiKey.startsWith('MK_TEST_') ? MONNIFY_SANDBOX_URL : MONNIFY_LIVE_URL);
+    } else {
+      this.baseUrl = config.baseUrl || MONNIFY_LIVE_URL;
+    }
 
     this.http = new HttpClient('monnify', {
       retry: config.retry,
