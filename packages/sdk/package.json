@@ -21,10 +21,10 @@
     "README.md"
   ],
   "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --dts --clean --external crypto",
-    "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
-    "lint": "tsc --noEmit",
-    "prepublishOnly": "pnpm run build",
+    "build": "npx tsup src/index.ts --format cjs,esm --dts --clean --external crypto",
+    "dev": "npx tsup src/index.ts --format cjs,esm --dts --watch",
+    "lint": "npx tsc --noEmit",
+    "prepublishOnly": "npx tsup src/index.ts --format cjs,esm --dts --clean --external crypto",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",

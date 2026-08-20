@@ -79,7 +79,7 @@ const CAPABILITIES = [
   {
     tag: 'CONNECT',
     title: 'One integration for multiple payment providers',
-    description: 'Use @quirk/sdk to access cards, bank transfers, virtual accounts, USSD, and mobile money without writing custom provider adapters.',
+    description: 'Use quirk-sdk to access cards, bank transfers, virtual accounts, USSD, and mobile money without writing custom provider adapters.',
     icon: Code2,
   },
   {
@@ -177,50 +177,65 @@ const VISION_PILLARS = [
 
 // Monochromatic Minimal Code Snippets
 const CODE_SNIPPETS = {
-  typescript: `import { Quirk } from '@quirk/sdk'
+  typescript: `import { Quirk } from 'quirk-sdk'
 
-// Initialize Quirk with your secret key
+// Initialize multi-rail payment control plane
 const quirk = new Quirk({
-  secretKey: process.env.QUIRK_SECRET_KEY
+  providers: {
+    paystack: process.env.PAYSTACK_SECRET_KEY,
+    flutterwave: process.env.FLUTTERWAVE_SECRET_KEY,
+  },
+  strategy: 'dynamic_failover',
 })
 
-// Create a payment with automatic failover
+// Create normalized payment session
 const payment = await quirk.payments.create({
-  amount: 25000,
+  amount: 25000, // ₦250.00 in minor units
   currency: 'NGN',
   customer: {
-    email: 'alex@company.dev',
-    name: 'Alex Okafor'
+    email: 'alex@company.com',
+    name: 'Alex Johnson',
   },
-  strategy: 'dynamic_failover'
+  channels: ['card', 'bank_transfer', 'virtual_account'],
+  callbackUrl: 'https://app.company.com/checkout/callback',
 })
 
-console.log('Checkout URL:', payment.checkout_url)
-console.log('Routed Rail:', payment.routed_provider)`,
+console.log('Authorization URL:', payment.authorizationUrl)`,
   python: `from quirk import Quirk
-import os
 
-# Initialize Quirk client
-quirk = Quirk(secret_key=os.environ.get("QUIRK_SECRET_KEY"))
-
-# Create payment with automatic failover
-payment = quirk.payments.create(
-    amount=25000,
-    currency="NGN",
-    customer={"email": "alex@company.dev", "name": "Alex Okafor"},
+# Initialize multi-rail payment control plane
+client = Quirk(
+    providers={
+        "paystack": os.environ["PAYSTACK_SECRET_KEY"],
+        "flutterwave": os.environ["FLUTTERWAVE_SECRET_KEY"],
+    },
     strategy="dynamic_failover"
 )
 
-print(f"Checkout URL: {payment.checkout_url}")
-print(f"Routed Rail: {payment.routed_provider}")`,
+# Create normalized payment session
+payment = client.payments.create(
+    amount=25000,
+    currency="NGN",
+    customer={"email": "alex@company.com", "name": "Alex Johnson"},
+    channels=["card", "bank_transfer", "virtual_account"],
+    callback_url="https://app.company.com/checkout/callback"
+)
+
+print(f"Payment URL: {payment.authorization_url}")`,
   curl: `curl -X POST https://api.quirk.dev/v1/payments \\
-  -H "Authorization: Bearer qrk_secret_9f81a..." \\
+  -H "Authorization: Bearer qrk_live_sec_99a8b7c6d5e4f3a2" \\
   -H "Content-Type: application/json" \\
+  -H "Idempotency-Key: qrk_idem_88291039" \\
   -d '{
     "amount": 25000,
     "currency": "NGN",
-    "customer": { "email": "alex@company.dev" },
-    "strategy": "dynamic_failover"
+    "strategy": "dynamic_failover",
+    "customer": {
+      "email": "alex@company.com",
+      "name": "Alex Johnson"
+    },
+    "channels": ["card", "bank_transfer", "virtual_account"],
+    "callback_url": "https://app.company.com/checkout/callback"
   }'`,
 }
 
@@ -820,7 +835,7 @@ export function LandingPage() {
               <div className='p-3.5 rounded-2xl bg-[#FFFFFF] border border-[#E5E5E5] flex items-center justify-between font-["JetBrains_Mono"] text-xs shadow-2xs'>
                 <div className='flex items-center gap-2 text-[#080808]'>
                   <Terminal className='size-3.5 text-[#666666]' />
-                  <span>npm install @quirk/sdk</span>
+                  <span>npm install quirk-sdk</span>
                 </div>
                 <button
                   onClick={copyInstallCommand}
