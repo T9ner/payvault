@@ -282,7 +282,7 @@ export function LandingPage() {
           {/* Single Clear CTA */}
           <div className='hidden sm:flex items-center gap-3'>
             <a
-              href='mailto:engineering@quirk.dev?subject=Quirk%20Inquiry'
+              href='mailto:dbosshonour@gmail.com?subject=Quirk%20Inquiry'
               className='text-xs font-medium text-[#080808] bg-[#FAFAFA] hover:bg-[#F0F0F0] border border-[#E5E5E5] px-4 py-2 rounded-full transition-all active:scale-[0.98]'
             >
               Talk to us
@@ -332,7 +332,7 @@ export function LandingPage() {
             </Link>
             <div className='pt-4 border-t border-[#E5E5E5]'>
               <a
-                href='mailto:engineering@quirk.dev?subject=Quirk%20Inquiry'
+                href='mailto:dbosshonour@gmail.com?subject=Quirk%20Inquiry'
                 className='block text-center text-xs font-semibold text-[#FFFFFF] bg-[#080808] py-2.5 rounded-full'
               >
                 Talk to us
@@ -381,7 +381,7 @@ export function LandingPage() {
               <ArrowRight className='size-4' />
             </a>
             <a
-              href='mailto:engineering@quirk.dev?subject=Quirk%20Inquiry'
+              href='mailto:dbosshonour@gmail.com?subject=Quirk%20Inquiry'
               className='w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#FFFFFF] hover:bg-[#F7F7F5] border border-[#E5E5E5] text-[#080808] font-medium text-sm px-7 py-3.5 rounded-full transition-all active:scale-[0.98]'
             >
               <span>Talk to us</span>
@@ -894,7 +894,7 @@ export function LandingPage() {
 
           <div className='pt-4'>
             <a
-              href='mailto:engineering@quirk.dev?subject=Quirk%20Design%20Partner%20Inquiry'
+              href='mailto:dbosshonour@gmail.com?subject=Quirk%20Design%20Partner%20Inquiry'
               className='inline-flex items-center gap-2 bg-[#080808] hover:bg-[#222222] text-[#FFFFFF] font-semibold text-sm px-8 py-4 rounded-full transition-all active:scale-[0.98] shadow-sm'
             >
               <span>Talk to us</span>
@@ -965,7 +965,7 @@ export function LandingPage() {
                 </li>
                 <li>
                   <a
-                    href='mailto:engineering@quirk.dev'
+                    href='mailto:dbosshonour@gmail.com'
                     className='hover:text-[#080808] transition-colors'
                   >
                     Contact engineering
@@ -973,7 +973,7 @@ export function LandingPage() {
                 </li>
                 <li>
                   <a
-                    href='mailto:engineering@quirk.dev?subject=Quirk%20Design%20Partner%20Inquiry'
+                    href='mailto:dbosshonour@gmail.com?subject=Quirk%20Design%20Partner%20Inquiry'
                     className='hover:text-[#080808] transition-colors'
                   >
                     Design partners

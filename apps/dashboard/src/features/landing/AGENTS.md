@@ -19,7 +19,7 @@
 
 3. **Actions & Interactivity**
    - Primary hero CTA: "Explore the API" (smooth scroll to `#developers`).
-   - Secondary hero CTA: "Talk to us" (`mailto:engineering@quirk.dev`).
+   - Secondary hero CTA: "Talk to us" (`mailto:dbosshonour@gmail.com`).
    - Code snippet tabs: TypeScript, Python, cURL with copy-to-clipboard functionality.
 
 ## Verification

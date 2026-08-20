@@ -53,7 +53,7 @@ export function PrivacyPolicy() {
 
         <section className='space-y-4 border-t pt-8'>
           <p className='text-muted-foreground text-xs'>
-            For questions about this policy, contact privacy@quirk.dev.
+            For questions about this policy, contact dbosshonour@gmail.com.
           </p>
         </section>
       </div>
