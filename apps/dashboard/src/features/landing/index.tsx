@@ -284,20 +284,20 @@ export function LandingPage() {
             <Link to='/insights' className='transition-colors hover:text-[#080808]'>
               Insights
             </Link>
+          </nav>
+
+          {/* Right Action Group */}
+          <div className='hidden sm:flex items-center gap-2.5'>
             <a
               href='https://github.com/T9ner/quirk'
               target='_blank'
               rel='noopener noreferrer'
-              className='transition-colors text-[#666666] hover:text-[#080808] flex items-center'
-              title='GitHub'
-              aria-label='GitHub'
+              className='text-[#666666] hover:text-[#080808] transition-colors p-1.5 rounded-full hover:bg-[#F7F7F5] flex items-center justify-center'
+              title='GitHub Repository'
+              aria-label='GitHub Repository'
             >
               <IconGithub className='size-4' />
             </a>
-          </nav>
-
-          {/* Single Clear CTA */}
-          <div className='hidden sm:flex items-center gap-3'>
             <a
               href='mailto:dbosshonour@gmail.com?subject=Quirk%20Inquiry'
               className='text-xs font-medium text-[#080808] bg-[#FAFAFA] hover:bg-[#F0F0F0] border border-[#E5E5E5] px-4 py-2 rounded-full transition-all active:scale-[0.98]'
