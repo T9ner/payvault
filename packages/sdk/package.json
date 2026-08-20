@@ -1,5 +1,5 @@
 {
-  "name": "@quirk/sdk",
+  "name": "quirk-sdk",
   "version": "1.0.0",
   "description": "Developer-first payment infrastructure SDK for African technology companies. One unified API for multi-rail payments, cards, virtual accounts, USSD, and mobile money with autonomous failover.",
   "main": "dist/index.js",
