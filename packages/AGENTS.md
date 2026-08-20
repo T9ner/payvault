@@ -23,4 +23,3 @@ pnpm --filter "@quirk/*" test
 ## Child DOX Index
 
 - [sdk](./sdk/AGENTS.md): Official `quirk-sdk` TypeScript client library
-- [payvault-sdk](./payvault-sdk/AGENTS.md): Deprecated transition bridge package

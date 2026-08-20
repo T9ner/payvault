@@ -1,4 +1,4 @@
-# Quirk TypeScript SDK (`@quirk/sdk`)
+# Quirk TypeScript SDK (`quirk-sdk`)
 
 - Purpose: Official TypeScript and JavaScript client library enabling developers to integrate multi-rail African payments with one unified API.
 - Ownership: All files in `packages/sdk/src/`, `packages/sdk/package.json`, and test suites.
@@ -8,7 +8,7 @@
 1. **Client Interface Contract**
    - The primary export is the `Quirk` class:
      ```ts
-     import { Quirk } from '@quirk/sdk'
+     import { Quirk } from 'quirk-sdk'
      const quirk = new Quirk({
        providers: { paystack: 'sk_...', flutterwave: 'flw_...' },
        strategy: 'dynamic_failover'
