@@ -22,4 +22,4 @@ pnpm --filter "@quirk/*" test
 
 ## Child DOX Index
 
-- [sdk](./sdk/AGENTS.md): Official `@quirk/sdk` TypeScript client library
+- [sdk](./sdk/AGENTS.md): Official `quirk-sdk` TypeScript client library
