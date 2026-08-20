@@ -61,6 +61,7 @@ typedoc/
 .firecrawl/
 agent/
 skills-lock.json
+.intent-leads/
 
 # Local Development Docker Overrides
 docker-compose.override.yml

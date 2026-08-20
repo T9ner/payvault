@@ -99,57 +99,58 @@ export function GatewayHealthMatrix() {
   ).toFixed(2)
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Top Banner & Quick Metrics */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 rounded-xl bg-[#FAFAFA] border border-[#E5E5E5]">
-        <div>
-          <div className="flex items-center gap-2.5">
-            <span className="size-2 rounded-full bg-[#22C55E] animate-pulse" />
-            <h3 className="font-['Satoshi'] font-bold text-base text-[#080808]">
-              Multi-Rail Network Status
-            </h3>
-            <Badge variant="outline" className="text-xs font-['JetBrains_Mono'] border-[#E5E5E5] bg-white text-[#080808]">
-              4 / 4 Gateways Connected
-            </Badge>
-          </div>
-          <p className="text-xs text-[#666666] font-['Inter'] mt-1">
-            Real-time telemetry and ping health across African payment gateways.
-          </p>
-        </div>
-
-        <div className="flex items-center gap-4">
-          <div className="hidden md:flex items-center gap-4 text-xs font-['JetBrains_Mono'] px-4 py-2 bg-white border border-[#E5E5E5] rounded-lg">
-            <div>
-              <span className="text-[#888888]">Avg Latency:</span>{' '}
-              <span className="font-bold text-[#080808]">{averageLatency}ms</span>
+      <div className="flex flex-col gap-4 p-4 sm:p-5 rounded-2xl bg-[#FAFAFA] border border-[#E5E5E5]">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <div className="flex items-center gap-2.5">
+              <span className="size-2 rounded-full bg-[#22C55E] animate-pulse" />
+              <h3 className="font-['Satoshi'] font-bold text-base text-[#080808]">
+                Multi-Rail Network Status
+              </h3>
+              <Badge variant="outline" className="text-xs font-['JetBrains_Mono'] border-[#E5E5E5] bg-white text-[#080808]">
+                4 / 4 Gateways Connected
+              </Badge>
             </div>
-            <div className="h-3 w-px bg-[#E5E5E5]" />
-            <div>
-              <span className="text-[#888888]">Network Success:</span>{' '}
-              <span className="font-bold text-[#080808]">{networkSuccessRate}%</span>
-            </div>
+            <p className="text-xs text-[#666666] font-['Inter'] mt-1">
+              Real-time telemetry and ping health across African payment gateways.
+            </p>
           </div>
 
           <Button
             size="sm"
             onClick={handlePingAll}
             disabled={isPinging}
-            className="bg-[#080808] hover:bg-[#222222] text-white font-['JetBrains_Mono'] text-xs h-9 px-3 gap-2"
+            className="w-full sm:w-auto bg-[#080808] hover:bg-[#222222] text-white font-['JetBrains_Mono'] text-xs h-10 sm:h-9 px-4 gap-2 rounded-xl active:scale-[0.97]"
           >
             <RefreshCw className={`size-3.5 ${isPinging ? 'animate-spin' : ''}`} />
             {isPinging ? 'Pinging Rails...' : 'Ping All Rails'}
           </Button>
+        </div>
+
+        {/* Telemetry Summary Bar (Visible on all mobile screens) */}
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:inline-flex md:w-fit items-center gap-2 sm:gap-4 text-xs font-['JetBrains_Mono'] p-2.5 sm:px-4 sm:py-2 bg-white border border-[#E5E5E5] rounded-xl">
+          <div>
+            <span className="text-[#888888] block sm:inline">Avg Latency:</span>{' '}
+            <span className="font-bold text-[#080808]">{averageLatency}ms</span>
+          </div>
+          <div className="hidden sm:block h-3 w-px bg-[#E5E5E5]" />
+          <div>
+            <span className="text-[#888888] block sm:inline">Network Success:</span>{' '}
+            <span className="font-bold text-[#080808]">{networkSuccessRate}%</span>
+          </div>
         </div>
       </div>
 
       {/* Gateway Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {gateways.map(gateway => (
-          <Card key={gateway.id} className="border border-[#E5E5E5] bg-white hover:border-[#CCCCCC] transition-colors">
-            <CardHeader className="pb-3 pt-4 px-5">
-              <div className="flex items-start justify-between">
+          <Card key={gateway.id} className="border border-[#E5E5E5] bg-white hover:border-[#CCCCCC] transition-colors rounded-2xl">
+            <CardHeader className="pb-3 pt-4 px-4 sm:px-5">
+              <div className="flex items-start justify-between gap-2">
                 <div className="space-y-1">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap">
                     <CardTitle className="font-['Satoshi'] text-base font-bold text-[#080808]">
                       {gateway.name}
                     </CardTitle>
@@ -157,26 +158,26 @@ export function GatewayHealthMatrix() {
                       {gateway.code}
                     </span>
                   </div>
-                  <CardDescription className="text-xs text-[#666666] font-['Inter'] line-clamp-1">
+                  <CardDescription className="text-xs text-[#666666] font-['Inter'] line-clamp-2 sm:line-clamp-1">
                     {gateway.recommendedFor}
                   </CardDescription>
                 </div>
 
-                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#F0FDF4] border border-[#DCFCE7] text-[11px] font-['JetBrains_Mono'] text-[#15803D]">
+                <div className="shrink-0 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#F0FDF4] border border-[#DCFCE7] text-[11px] font-['JetBrains_Mono'] text-[#15803D]">
                   <span className="size-1.5 rounded-full bg-[#22C55E]" />
                   Operational
                 </div>
               </div>
             </CardHeader>
 
-            <CardContent className="px-5 pb-4 space-y-4">
+            <CardContent className="px-4 sm:px-5 pb-4 space-y-4">
               {/* Telemetry Stats Grid */}
-              <div className="grid grid-cols-3 gap-2 p-3 bg-[#FBFBFA] border border-[#ECECE9] rounded-lg">
+              <div className="grid grid-cols-3 gap-2 p-3 bg-[#FBFBFA] border border-[#ECECE9] rounded-xl text-center sm:text-left">
                 <div>
                   <div className="text-[10px] uppercase font-['JetBrains_Mono'] text-[#888888]">
-                    Ping Latency
+                    Latency
                   </div>
-                  <div className="text-sm font-bold font-['JetBrains_Mono'] text-[#080808] mt-0.5">
+                  <div className="text-xs sm:text-sm font-bold font-['JetBrains_Mono'] text-[#080808] mt-0.5 tabular-nums">
                     {gateway.latencyMs}ms
                   </div>
                 </div>
@@ -185,7 +186,7 @@ export function GatewayHealthMatrix() {
                   <div className="text-[10px] uppercase font-['JetBrains_Mono'] text-[#888888]">
                     24h Success
                   </div>
-                  <div className="text-sm font-bold font-['JetBrains_Mono'] text-[#080808] mt-0.5">
+                  <div className="text-xs sm:text-sm font-bold font-['JetBrains_Mono'] text-[#080808] mt-0.5 tabular-nums">
                     {gateway.successRate24h}%
                   </div>
                 </div>
@@ -194,7 +195,7 @@ export function GatewayHealthMatrix() {
                   <div className="text-[10px] uppercase font-['JetBrains_Mono'] text-[#888888]">
                     30d Uptime
                   </div>
-                  <div className="text-sm font-bold font-['JetBrains_Mono'] text-[#080808] mt-0.5">
+                  <div className="text-xs sm:text-sm font-bold font-['JetBrains_Mono'] text-[#080808] mt-0.5 tabular-nums">
                     {gateway.uptime30d}%
                   </div>
                 </div>
@@ -209,7 +210,7 @@ export function GatewayHealthMatrix() {
                   {gateway.supportedRails.map((rail, idx) => (
                     <span
                       key={idx}
-                      className="text-[11px] font-['JetBrains_Mono'] px-2 py-0.5 rounded bg-white border border-[#E5E5E5] text-[#333333]"
+                      className="text-[11px] font-['JetBrains_Mono'] px-2 py-0.5 rounded-lg bg-white border border-[#E5E5E5] text-[#333333]"
                     >
                       {rail}
                     </span>
@@ -217,10 +218,10 @@ export function GatewayHealthMatrix() {
                 </div>
               </div>
 
-              <div className="pt-2 border-t border-[#F0F0F0] flex items-center justify-between text-[11px] text-[#888888] font-['JetBrains_Mono']">
+              <div className="pt-2 border-t border-[#F0F0F0] flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-[11px] text-[#888888] font-['JetBrains_Mono']">
                 <span>Health check: {gateway.lastChecked}</span>
                 <span className="text-[#080808] font-medium flex items-center gap-1">
-                  <ShieldCheck className="size-3 text-[#22C55E]" /> Direct-to-Gateway Fallback Enabled
+                  <ShieldCheck className="size-3 text-[#22C55E]" /> Direct-to-Gateway Fallback
                 </span>
               </div>
             </CardContent>

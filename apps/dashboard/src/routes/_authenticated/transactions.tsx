@@ -158,7 +158,8 @@ function Transactions() {
             </div>
           </CardHeader>
           <CardContent className="p-0">
-             <div className="overflow-x-auto">
+             {/* Desktop Table View */}
+             <div className="hidden md:block overflow-x-auto">
                 <table className="w-full text-xs font-['Inter']">
                     <thead>
                         <tr className="border-b border-[#222222] bg-[#121212] text-[#A9A9A9] font-['JetBrains_Mono']">
@@ -224,7 +225,7 @@ function Transactions() {
                                             </div>
                                         </td>
                                         <td className="p-4 align-middle text-[#FFFFFF] font-medium">{tx.email}</td>
-                                        <td className="p-4 align-middle text-right font-['JetBrains_Mono'] font-bold text-[#FFFFFF]">
+                                        <td className="p-4 align-middle text-right font-['JetBrains_Mono'] font-bold text-[#FFFFFF] tabular-nums">
                                             {formatCurrency(tx.amount, tx.currency)}
                                         </td>
                                         <td className="p-4 align-middle text-center">
@@ -249,6 +250,81 @@ function Transactions() {
                         )}
                     </tbody>
                 </table>
+             </div>
+
+             {/* Mobile Card Stream (Optimized for one-thumb lookup) */}
+             <div className="md:hidden divide-y divide-[#222222]">
+                {loading ? (
+                    [...Array(4)].map((_, i) => (
+                        <div key={i} className="p-4 space-y-2.5">
+                            <div className="flex justify-between items-center">
+                                <Skeleton className="h-4 w-28" />
+                                <Skeleton className="h-5 w-16 rounded-full" />
+                            </div>
+                            <Skeleton className="h-3 w-44" />
+                            <div className="flex justify-between items-center pt-1">
+                                <Skeleton className="h-5 w-24" />
+                                <Skeleton className="h-3 w-20" />
+                            </div>
+                        </div>
+                    ))
+                ) : filteredTransactions.length === 0 ? (
+                    <div className="p-8 text-center">
+                        <Filter className="size-8 text-[#A9A9A9]/40 mx-auto mb-2" />
+                        <p className="text-[#FFFFFF] font-medium text-sm">No transactions found</p>
+                        <p className="text-xs text-[#A9A9A9] mt-1">Adjust search or filter parameters.</p>
+                    </div>
+                ) : (
+                    filteredTransactions.map(tx => {
+                        const style = statusStyles[tx.status as TransactionStatus] || { bg: 'bg-[#161616] border border-[#222222]', text: 'text-[#A9A9A9]', icon: Clock }
+                        const StatusIcon = style.icon
+                        return (
+                            <div
+                                key={tx.id}
+                                onClick={() => setSelected(tx)}
+                                className="p-4 active:bg-[#181818] transition-colors cursor-pointer space-y-2.5"
+                            >
+                                <div className="flex items-center justify-between gap-2">
+                                    <div className="flex items-center gap-1.5 min-w-0">
+                                        <span className="font-['JetBrains_Mono'] text-xs font-bold text-[#FFFFFF] truncate">
+                                            {tx.reference.slice(0, 14)}...
+                                        </span>
+                                        <button
+                                            onClick={(e) => { e.stopPropagation(); copyToClipboard(tx.reference, "Reference") }}
+                                            className="p-1 hover:bg-[#222222] rounded shrink-0 min-h-[32px] min-w-[32px] flex items-center justify-center"
+                                            title="Copy reference"
+                                        >
+                                            <Copy className="size-3 text-[#A9A9A9]" />
+                                        </button>
+                                    </div>
+                                    <div className={cn(
+                                        "inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider font-['JetBrains_Mono'] shrink-0",
+                                        style.bg, style.text
+                                    )}>
+                                        <StatusIcon className="size-2.5" />
+                                        {tx.status}
+                                    </div>
+                                </div>
+
+                                <div className="text-xs text-[#A9A9A9] flex items-center justify-between">
+                                    <span className="truncate max-w-[200px]">{tx.email}</span>
+                                    <span className="font-['JetBrains_Mono'] text-[10px] px-1.5 py-0.5 rounded bg-[#181818] border border-[#262626] text-[#CCCCCC] capitalize">
+                                        {tx.provider}
+                                    </span>
+                                </div>
+
+                                <div className="flex items-center justify-between pt-1 border-t border-[#1C1C1C]">
+                                    <div className="font-['JetBrains_Mono'] font-bold text-sm text-[#FFFFFF] tabular-nums">
+                                        {formatCurrency(tx.amount, tx.currency)}
+                                    </div>
+                                    <div className="text-[10px] text-[#777777] font-['JetBrains_Mono']">
+                                        {formatDate(tx.created_at)}
+                                    </div>
+                                </div>
+                            </div>
+                        )
+                    })
+                )}
              </div>
           </CardContent>
         </Card>
