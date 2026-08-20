@@ -33,6 +33,7 @@ pnpm --filter quirk-dashboard build
 
 ## Child DOX Index
 
+- [dashboard](./dashboard/AGENTS.md): Developer control plane, gateway health matrix, routing simulator, and webhook debugger
 - [landing](./landing/AGENTS.md): Landing page components and space infrastructure visuals
 - [insights](./insights/AGENTS.md): Architecture research articles and detail renderer
 - [legal](./legal/AGENTS.md): Editorial legal layouts and compliance documents
