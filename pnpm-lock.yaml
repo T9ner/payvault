@@ -225,16 +225,16 @@ importers:
   packages/sdk:
     devDependencies:
       '@types/node':
-        specifier: ^20.19.37
+        specifier: ^20.19.43
         version: 20.19.43
       tsup:
-        specifier: ^8.0.0
+        specifier: ^8.5.1
         version: 8.5.1(@swc/core@1.16.0)(jiti@2.7.0)(postcss@8.5.26)(typescript@5.9.3)(yaml@2.9.0)
       typedoc:
-        specifier: ^0.28.17
+        specifier: ^0.28.20
         version: 0.28.20(typescript@5.9.3)
       typescript:
-        specifier: ^5.4.0
+        specifier: ^5.9.3
         version: 5.9.3
       vitest:
         specifier: ^1.6.1
