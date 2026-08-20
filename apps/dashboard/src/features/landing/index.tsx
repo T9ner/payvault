@@ -10,14 +10,11 @@ import {
   Zap,
   Layers,
   Activity,
-  ChevronRight,
   Menu,
   X,
   CreditCard,
   Building2,
-  Smartphone,
   SlidersHorizontal,
-  FileCode2,
   ExternalLink,
   Code2,
   Database,
@@ -26,7 +23,6 @@ import {
   Lock,
   Globe,
   TrendingDown,
-  AlertTriangle,
   FileSpreadsheet,
   PlusCircle,
   Compass,
@@ -35,7 +31,6 @@ import {
   Sparkles,
 } from 'lucide-react'
 import { QuirkLogo } from '@/components/quirk-logo'
-import { INSIGHTS_ARTICLES } from '@/features/insights/insights-data'
 
 // Supported payment rails for the infinite marquee
 const ECOSYSTEM_RAILS = [
@@ -49,86 +44,60 @@ const ECOSYSTEM_RAILS = [
   { name: 'Airtel Money Rail', code: 'ARTL', ping: '215ms', status: 'Operational', type: 'Mobile Money' },
 ]
 
-// 5 Core Problems Scaling African Tech Companies Face
-const PROBLEMS = [
+// The 5 Progressive Scaling Challenges
+const PROBLEM_STEPS = [
   {
-    number: '01',
-    icon: Network,
-    title: 'Multiple providers becoming unmanageable',
-    summary: 'As you add secondary gateways and local rails, your engineering team drowns in divergent APIs, inconsistent error codes, and duplicate integration maintenance.',
-    impact: 'Engineering spent maintaining gateway wrappers instead of core product.',
+    step: '01',
+    highlight: 'One provider becomes two.',
+    description: 'You add a secondary processor for reliability. Suddenly your engineers are maintaining two different APIs, two webhook handlers, and two integration codebases.',
   },
   {
-    number: '02',
-    icon: TrendingDown,
-    title: 'Failed transactions and silent drops',
-    summary: 'Upstream provider downtime and flaky bank networks cause payments to fail silently with zero automated failover, losing customers at the point of checkout.',
-    impact: 'Lost revenue and eroded customer trust during peak traffic periods.',
+    step: '02',
+    highlight: 'One payment flow becomes five.',
+    description: 'Cards alone are not enough. Customers demand dynamic virtual accounts, mobile money, and USSD. Each new rail introduces custom checkout logic.',
   },
   {
-    number: '03',
-    icon: FileSpreadsheet,
-    title: 'Fragmented reconciliation across providers',
-    summary: 'Settlements arrive on different schedules across Paystack, Flutterwave, Monnify, and M-Pesa. Finance teams manually piece together spreadsheets to balance books.',
-    impact: 'Zero unified ledger view of multi-currency cash flow and payout status.',
+    step: '03',
+    highlight: 'A failed transaction becomes a support issue.',
+    description: 'Upstream gateway degradation and flaky bank switches drop transactions silently. With no automated failover, customers abandon checkout permanently.',
   },
   {
-    number: '04',
-    icon: PlusCircle,
-    title: 'Adding new payment methods takes weeks',
-    summary: 'Supporting virtual accounts, mobile money in East Africa, or USSD requires building custom integrations from scratch with new webhook listeners each time.',
-    impact: 'Months of engineering delay to capture localized payment preferences.',
+    step: '04',
+    highlight: 'A new market means another integration.',
+    description: 'Expanding into Kenya, Ghana, or South Africa forces your team to navigate unfamiliar local payment rails from scratch instead of shipping core product.',
   },
   {
-    number: '05',
-    icon: Globe,
-    title: 'Expanding into new markets and currencies',
-    summary: 'Expanding from Nigeria to Kenya, Ghana, or South Africa forces teams to research local rails, negotiate new merchant accounts, and rebuild payment plumbing.',
-    impact: 'Market expansion stalled by fragmented cross-border payment infrastructure.',
+    step: '05',
+    highlight: 'Reconciliation becomes another engineering problem.',
+    description: 'Mismatched payout schedules, fragmented CSV exports, and siloed provider dashboards leave finance teams with no single source of ledger truth.',
   },
 ]
 
-// 5 Direct Mirrored Solutions Provided by Quirk
-const SOLUTIONS = [
+// 4 Core Capabilities
+const CAPABILITIES = [
   {
-    number: '01',
-    badge: 'Connect',
+    tag: 'CONNECT',
+    title: 'One integration for multiple payment providers',
+    description: 'Connect once through @quirk/sdk to access cards, bank transfers, virtual accounts, USSD, and mobile money without writing custom wrappers.',
     icon: Code2,
-    title: 'One SDK for every provider',
-    description: 'Integrate @quirk/sdk once. Access cards, bank transfers, dynamic virtual accounts, USSD, and mobile money networks through a single, battle-tested API.',
-    codeSnippet: 'const quirk = new Quirk({ apiKey: env.QUIRK_KEY });',
   },
   {
-    number: '02',
-    badge: 'Normalize',
+    tag: 'NORMALIZE',
+    title: 'Consistent payment states, APIs, and webhooks',
+    description: 'Universal request schemas, standardized charge response envelopes, and unified HMAC-SHA256 signature verification across all switches.',
     icon: Layers,
-    title: 'Standardized schemas & webhooks',
-    description: 'Universal request parameters, consistent charge statuses, and one normalized webhook event envelope with verified HMAC-SHA256 signatures.',
-    codeSnippet: 'quirk.webhooks.verify(signature, rawPayload);',
   },
   {
-    number: '03',
-    badge: 'Monitor',
+    tag: 'MONITOR',
+    title: 'Understand what is happening across your infrastructure',
+    description: 'Continuous out-of-band health probing tests latency and clearing availability 24/7, spotting upstream degradations before your users do.',
     icon: Activity,
-    title: 'Real-time health probing & diagnostics',
-    description: 'Autonomous health probing monitors provider latency and clearing success rates 24/7, pinpointing upstream network degradations before users experience errors.',
-    codeSnippet: 'status: "operational" | latency: "174ms"',
   },
   {
-    number: '04',
-    badge: 'Route',
+    tag: 'OPTIMIZE',
+    title: 'Smarter routing, reliability, and payment intelligence',
+    description: 'Autonomous sub-200ms route shifting shifts payment sessions to healthy alternate rails during outages with deterministic idempotency.',
     icon: Zap,
-    title: 'Intelligent failover & switch selection',
-    description: 'Sub-200ms automated failover dynamically shifts customer checkout sessions to healthy alternate rails whenever primary gateways experience degradation.',
-    codeSnippet: 'strategy: "dynamic_failover" | maxRetries: 2',
-  },
-  {
-    number: '05',
-    badge: 'Scale',
-    icon: Compass,
-    title: 'Instant market & currency expansion',
-    description: 'Activate NGN, KES, GHS, and USD settlement routes on demand. Enter new African markets without modifying your core checkout code.',
-    codeSnippet: 'currencies: ["NGN", "KES", "GHS", "USD"]',
   },
 ]
 
@@ -146,7 +115,7 @@ const TARGET_AUDIENCES = [
     label: 'Fintechs',
     icon: Zap,
     headline: 'High-volume failover & zero vendor lock-in',
-    description: 'Bring your own negotiated merchant provider rates, vault API keys in hardware enclaves, and ensure 99.99% uptime with autonomous failover.',
+    description: 'Bring your own negotiated merchant rates, vault API keys in hardware enclaves, and ensure 99.99% uptime with autonomous failover.',
   },
   {
     id: 'commerce',
@@ -157,101 +126,99 @@ const TARGET_AUDIENCES = [
   },
   {
     id: 'saas',
-    label: 'SaaS Companies',
+    label: 'SaaS Platforms',
     icon: SlidersHorizontal,
     headline: 'Multi-currency subscription billing & ledgers',
     description: 'Charge recurring subscriptions in NGN, KES, or USD with automatic retry schedules and normalized webhook notifications.',
   },
   {
-    id: 'neobanks',
-    label: 'Neobanks & Wallets',
+    id: 'tech',
+    label: 'Payment-Enabled Tech',
     icon: Database,
-    headline: 'Dynamic virtual account generation & clearing',
-    description: 'Generate dedicated virtual bank accounts on demand with real-time transfer notifications and automated double-entry ledger bookkeeping.',
-  },
-  {
-    id: 'lending',
-    label: 'Lending Platforms',
-    icon: Lock,
-    headline: 'Reliable disbursement & direct debit collections',
-    description: 'Route loan disbursements through the fastest verified bank rail and schedule automated repayment collections with full audit trails.',
+    headline: 'Embedded payment infrastructure at scale',
+    description: 'For technology companies where payments are deeply woven into the core application and uptime is mission-critical.',
   },
 ]
 
 // Intelligence Vision Roadmap Items
-const ROADMAP_ITEMS = [
+const VISION_PILLARS = [
   {
+    title: 'Payment Reliability',
+    desc: 'Autonomous multi-rail failover that prevents checkout drop-offs during bank network downtime.',
+    icon: ShieldCheck,
+  },
+  {
+    title: 'Transaction Intelligence',
+    desc: 'Deep inspection of failure codes to categorize insufficient funds vs network drops vs scheme rejections.',
     icon: LineChart,
-    title: 'Failure Pattern Analysis',
-    description: 'Categorize upstream bank rejections, insufficient funds, and network timeout signatures to diagnose why transactions drop.',
   },
   {
+    title: 'Provider Performance',
+    desc: 'Live benchmarking of true latency, authorization speed, and settlement accuracy across African rails.',
     icon: Target,
-    title: 'Provider Performance Scoring',
-    description: 'Real-time clearing benchmarks comparing true latency, success rates, and cost efficiency across African payment switches.',
   },
   {
-    icon: Compass,
-    title: 'Customer Drop-Off Insights',
-    description: 'Identify checkout abandonment friction points and optimize payment rail presentation by user device and geography.',
+    title: 'Failure Detection',
+    desc: 'Proactive anomaly detection that flags deteriorating bank routes before customer checkout fails.',
+    icon: Activity,
   },
   {
+    title: 'Payment Optimization',
+    desc: 'Cost-aware routing engines that direct transactions through the lowest fee verified channel.',
     icon: Sparkles,
-    title: 'Transaction Cost Optimization',
-    description: 'Smart routing algorithms that automatically select the lowest-cost verified rail while preserving sub-second authorization speed.',
+  },
+  {
+    title: 'Smarter Infrastructure',
+    desc: 'Unified double-entry ledgers connecting multi-currency liquidity across NGN, KES, GHS, and USD.',
+    icon: Network,
   },
 ]
 
-// Code playground language snippets
+// Monochromatic Minimal Code Snippets
 const CODE_SNIPPETS = {
   typescript: `import { Quirk } from '@quirk/sdk'
 
-// Initialize Quirk with hardware vaulted credentials
-const quirk = new Quirk({ 
-  apiKey: process.env.QUIRK_SECRET_KEY 
+// Initialize Quirk with vaulted merchant credentials
+const quirk = new Quirk({
+  secretKey: process.env.QUIRK_SECRET_KEY
 })
 
-// Initialize normalized multi-rail charge
-const charge = await quirk.charges.create({
-  amount: 2500000, // ₦25,000.00
+// Create normalized multi-rail payment
+const payment = await quirk.payments.create({
+  amount: 25000,
   currency: 'NGN',
-  customer: { 
+  customer: {
     email: 'alex@company.dev',
     name: 'Alex Okafor'
   },
-  channels: ['card', 'bank_transfer', 'ussd'],
-  strategy: 'dynamic_failover',
-  metadata: { orderId: 'ord_98124' }
+  strategy: 'dynamic_failover'
 })
 
-console.log('Checkout URL:', charge.checkout_url)
-console.log('Active Rail:', charge.routed_provider)`,
+console.log('Checkout URL:', payment.checkout_url)
+console.log('Routed Rail:', payment.routed_provider)`,
   python: `from quirk import Quirk
 import os
 
-# Initialize Quirk with vaulted API key
-client = Quirk(api_key=os.environ.get("QUIRK_SECRET_KEY"))
+# Initialize Quirk client
+quirk = Quirk(secret_key=os.environ.get("QUIRK_SECRET_KEY"))
 
-# Create unified multi-rail charge
-charge = client.charges.create(
-    amount=2500000,  # ₦25,000.00
+# Create unified multi-rail payment
+payment = quirk.payments.create(
+    amount=25000,
     currency="NGN",
     customer={"email": "alex@company.dev", "name": "Alex Okafor"},
-    channels=["card", "bank_transfer", "ussd"],
-    strategy="dynamic_failover",
-    metadata={"order_id": "ord_98124"}
+    strategy="dynamic_failover"
 )
 
-print(f"Checkout URL: {charge.checkout_url}")
-print(f"Routed Switch: {charge.routed_provider}")`,
-  curl: `curl -X POST https://api.quirk.dev/v1/charges \\
-  -H "Authorization: Bearer qrk_live_9f81a..." \\
+print(f"Checkout URL: {payment.checkout_url}")
+print(f"Routed Rail: {payment.routed_provider}")`,
+  curl: `curl -X POST https://api.quirk.dev/v1/payments \\
+  -H "Authorization: Bearer qrk_secret_9f81a..." \\
   -H "Content-Type: application/json" \\
   -d '{
-    "amount": 2500000,
+    "amount": 25000,
     "currency": "NGN",
     "customer": { "email": "alex@company.dev" },
-    "channels": ["card", "bank_transfer", "ussd"],
     "strategy": "dynamic_failover"
   }'`,
 }
@@ -278,60 +245,54 @@ export function LandingPage() {
   }
 
   return (
-    <div className='min-h-screen bg-[#000000] font-sans text-[#FFFFFF] antialiased selection:bg-[#FFFFFF] selection:text-[#000000]'>
-      {/* 1. TOP STICKY NAVBAR */}
-      <header className='sticky top-0 z-50 w-full border-b border-[#222222] bg-[#000000]/90 backdrop-blur-md'>
+    <div className='min-h-screen bg-[#FFFFFF] font-sans text-[#080808] antialiased selection:bg-[#080808] selection:text-[#FFFFFF]'>
+      {/* 1. MINIMAL STICKY NAVIGATION */}
+      <header className='sticky top-0 z-50 w-full border-b border-[#E5E5E5] bg-[#FFFFFF]/90 backdrop-blur-md'>
         <div className='container max-w-6xl mx-auto flex h-16 items-center justify-between px-4 sm:px-6'>
-          {/* Logo */}
-          <Link to='/' className='flex items-center gap-2.5 transition-opacity hover:opacity-90'>
-            <QuirkLogo size={24} lightMode={false} />
+          {/* Logo (Pure Black on White) */}
+          <Link to='/' className='flex items-center gap-2.5 transition-opacity hover:opacity-80'>
+            <QuirkLogo size={24} lightMode={true} />
           </Link>
 
-          {/* Desktop Nav Links */}
-          <nav className='hidden md:flex items-center gap-8 text-xs font-medium text-[#A9A9A9]'>
-            <a href='#problems' className='transition-colors hover:text-[#FFFFFF]'>
-              Overview
-            </a>
-            <a href='#solutions' className='transition-colors hover:text-[#FFFFFF]'>
+          {/* Minimal Desktop Nav */}
+          <nav className='hidden md:flex items-center gap-8 text-xs font-medium text-[#666666]'>
+            <a href='#product' className='transition-colors hover:text-[#080808]'>
               Product
             </a>
-            <a href='#roadmap' className='transition-colors hover:text-[#FFFFFF]'>
-              Roadmap
+            <a href='#developers' className='transition-colors hover:text-[#080808]'>
+              Developers
             </a>
-            <Link to='/insights' className='transition-colors hover:text-[#FFFFFF]'>
+            <a href='#vision' className='transition-colors hover:text-[#080808]'>
+              Vision
+            </a>
+            <Link to='/insights' className='transition-colors hover:text-[#080808]'>
               Insights
             </Link>
             <a
               href='https://github.com/T9ner/quirk'
               target='_blank'
               rel='noopener noreferrer'
-              className='transition-colors hover:text-[#FFFFFF] inline-flex items-center gap-1'
+              className='transition-colors hover:text-[#080808] inline-flex items-center gap-1'
             >
-              <span>GitHub</span>
-              <ExternalLink className='size-3 opacity-60' />
+              <span>Company</span>
+              <ExternalLink className='size-3 opacity-50' />
             </a>
           </nav>
 
-          {/* Right Action CTAs */}
+          {/* Single Clear CTA */}
           <div className='hidden sm:flex items-center gap-3'>
             <a
               href='mailto:engineering@quirk.dev?subject=Quirk%20Inquiry'
-              className='text-xs font-medium text-[#A9A9A9] hover:text-[#FFFFFF] px-3.5 py-1.5 rounded-full border border-[#222222] bg-[#101010] hover:bg-[#161616] transition-all'
+              className='text-xs font-medium text-[#080808] bg-[#FAFAFA] hover:bg-[#F0F0F0] border border-[#E5E5E5] px-4 py-2 rounded-full transition-all active:scale-[0.98]'
             >
               Talk to us
-            </a>
-            <a
-              href='#get-started'
-              className='text-xs font-semibold text-[#000000] bg-[#FFFFFF] hover:bg-[#E5E5E5] px-4 py-1.5 rounded-full transition-all active:scale-[0.98]'
-            >
-              Explore the API
             </a>
           </div>
 
           {/* Mobile Menu Toggle */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className='md:hidden p-2 text-[#A9A9A9] hover:text-[#FFFFFF]'
+            className='md:hidden p-2 text-[#080808] hover:text-[#666666]'
             aria-label='Toggle Menu'
           >
             {mobileMenuOpen ? <X className='size-5' /> : <Menu className='size-5' />}
@@ -340,191 +301,205 @@ export function LandingPage() {
 
         {/* Mobile Dropdown */}
         {mobileMenuOpen && (
-          <div className='md:hidden border-b border-[#222222] bg-[#0A0A0A] px-4 py-6 space-y-4 text-sm'>
+          <div className='md:hidden border-b border-[#E5E5E5] bg-[#FFFFFF] px-4 py-6 space-y-4 text-sm'>
             <a
-              href='#problems'
+              href='#product'
               onClick={() => setMobileMenuOpen(false)}
-              className='block text-[#A9A9A9] hover:text-[#FFFFFF]'
-            >
-              Overview
-            </a>
-            <a
-              href='#solutions'
-              onClick={() => setMobileMenuOpen(false)}
-              className='block text-[#A9A9A9] hover:text-[#FFFFFF]'
+              className='block text-[#666666] hover:text-[#080808]'
             >
               Product
             </a>
             <a
-              href='#roadmap'
+              href='#developers'
               onClick={() => setMobileMenuOpen(false)}
-              className='block text-[#A9A9A9] hover:text-[#FFFFFF]'
+              className='block text-[#666666] hover:text-[#080808]'
             >
-              Roadmap
+              Developers
+            </a>
+            <a
+              href='#vision'
+              onClick={() => setMobileMenuOpen(false)}
+              className='block text-[#666666] hover:text-[#080808]'
+            >
+              Vision
             </a>
             <Link
               to='/insights'
               onClick={() => setMobileMenuOpen(false)}
-              className='block text-[#A9A9A9] hover:text-[#FFFFFF]'
+              className='block text-[#666666] hover:text-[#080808]'
             >
               Insights
             </Link>
-            <a
-              href='https://github.com/T9ner/quirk'
-              target='_blank'
-              rel='noopener noreferrer'
-              className='block text-[#A9A9A9] hover:text-[#FFFFFF]'
-            >
-              GitHub
-            </a>
-            <div className='pt-4 border-t border-[#222222] flex flex-col gap-2.5'>
+            <div className='pt-4 border-t border-[#E5E5E5]'>
               <a
                 href='mailto:engineering@quirk.dev?subject=Quirk%20Inquiry'
-                className='text-center text-xs font-medium text-[#FFFFFF] py-2 rounded-full border border-[#222222] bg-[#101010]'
+                className='block text-center text-xs font-semibold text-[#FFFFFF] bg-[#080808] py-2.5 rounded-full'
               >
                 Talk to us
-              </a>
-              <a
-                href='#get-started'
-                onClick={() => setMobileMenuOpen(false)}
-                className='text-center text-xs font-semibold text-[#000000] bg-[#FFFFFF] py-2 rounded-full'
-              >
-                Explore the API
               </a>
             </div>
           </div>
         )}
       </header>
 
-      {/* 2. HERO SECTION */}
-      <section className='relative pt-20 pb-16 md:pt-28 md:pb-20 overflow-hidden'>
-        <div className='container max-w-5xl mx-auto px-4 sm:px-6 text-center'>
-          {/* Status Badge */}
-          <div className='inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#101010] border border-[#222222] text-xs font-["JetBrains_Mono"] text-[#A9A9A9] mb-8'>
-            <span className='size-1.5 rounded-full bg-[#22C55E]' />
-            <span>Developer-first payment infrastructure for Africa</span>
+      {/* 2. DRAMATIC & CLEAN HERO SECTION */}
+      <section className='relative pt-24 pb-20 md:pt-36 md:pb-28 overflow-hidden bg-[#FFFFFF]'>
+        {/* Subtle Orbital Background Metaphor */}
+        <div className='absolute inset-0 pointer-events-none flex items-center justify-center overflow-hidden opacity-60'>
+          {/* Concentric subtle orbital rings */}
+          <div className='absolute size-[600px] md:size-[900px] rounded-full border border-[#EBEBE8] quirk-orbit-slow' />
+          <div className='absolute size-[900px] md:size-[1300px] rounded-full border border-[#F2F2EF] quirk-orbit-reverse' />
+          <div className='absolute size-[1200px] md:size-[1700px] rounded-full border border-[#F7F7F5]' />
+        </div>
+
+        <div className='container max-w-5xl mx-auto px-4 sm:px-6 text-center relative z-10'>
+          {/* Subtle Label */}
+          <div className='inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#F7F7F5] border border-[#E5E5E5] text-xs font-["JetBrains_Mono"] text-[#666666] mb-8'>
+            <span className='size-1.5 rounded-full bg-[#080808]' />
+            <span className='tracking-wider uppercase text-[11px] font-semibold text-[#080808]'>
+              Payment Infrastructure
+            </span>
           </div>
 
           {/* Main Headline */}
-          <h1 className='text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-[#FFFFFF] font-["Satoshi"] max-w-4xl mx-auto leading-[1.08]'>
-            Payment infrastructure, without the complexity
+          <h1 className='text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight text-[#080808] font-["Satoshi"] max-w-4xl mx-auto leading-[1.05]'>
+            Payment infrastructure, <br className='hidden sm:inline' />
+            without the complexity.
           </h1>
 
-          {/* Subtitle */}
-          <p className='mt-6 text-base sm:text-lg md:text-xl text-[#A9A9A9] max-w-2xl mx-auto font-normal leading-relaxed'>
-            One unified layer to connect, manage, and scale payments across every provider and rail in Africa.
+          {/* Supporting Text */}
+          <p className='mt-8 text-base sm:text-lg md:text-xl text-[#666666] max-w-2xl mx-auto font-normal leading-relaxed'>
+            Quirk gives African technology companies one unified layer to connect, manage, and scale their payment infrastructure.
           </p>
 
-          {/* Primary Action Buttons */}
+          {/* Primary & Secondary CTAs */}
           <div className='mt-10 flex flex-col sm:flex-row items-center justify-center gap-3.5'>
             <a
-              href='#get-started'
-              className='w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#FFFFFF] hover:bg-[#E5E5E5] text-[#000000] font-semibold text-sm px-6 py-3 rounded-full transition-all active:scale-[0.98]'
+              href='#developers'
+              className='w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#080808] hover:bg-[#222222] text-[#FFFFFF] font-medium text-sm px-7 py-3.5 rounded-full transition-all active:scale-[0.98] shadow-sm'
             >
               <span>Explore the API</span>
               <ArrowRight className='size-4' />
             </a>
             <a
-              href='mailto:engineering@quirk.dev?subject=Quirk%20Design%20Partner%20Inquiry'
-              className='w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#101010] hover:bg-[#161616] border border-[#222222] hover:border-[#333333] text-[#FFFFFF] font-medium text-sm px-6 py-3 rounded-full transition-all'
+              href='mailto:engineering@quirk.dev?subject=Quirk%20Inquiry'
+              className='w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#FFFFFF] hover:bg-[#F7F7F5] border border-[#E5E5E5] text-[#080808] font-medium text-sm px-7 py-3.5 rounded-full transition-all active:scale-[0.98]'
             >
               <span>Talk to us</span>
             </a>
           </div>
 
-          {/* 3. MINIMAL ARCHITECTURE DIAGRAM */}
-          <div className='mt-16 md:mt-20 border border-[#222222] bg-[#0A0A0A] rounded-2xl p-6 sm:p-10 shadow-2xl relative overflow-hidden text-left'>
-            <div className='flex items-center justify-between pb-6 border-b border-[#222222]'>
-              <div className='flex items-center gap-2 font-["JetBrains_Mono"] text-xs text-[#A9A9A9]'>
-                <span className='size-2 rounded-full bg-[#22C55E]' />
-                <span>Quirk Unified Middleware Topology</span>
-              </div>
-              <span className='text-[11px] font-["JetBrains_Mono"] text-[#777777]'>Active Routing: Sub-200ms</span>
-            </div>
-
-            {/* Architecture Node Layout */}
-            <div className='grid grid-cols-1 md:grid-cols-12 gap-6 items-center py-8'>
-              {/* Client App Node */}
-              <div className='md:col-span-3 p-4 rounded-xl bg-[#101010] border border-[#222222] text-center'>
-                <div className='size-8 rounded-lg bg-[#161616] border border-[#222222] flex items-center justify-center mx-auto mb-2.5 text-[#FFFFFF]'>
-                  <Cpu className='size-4' />
+          {/* 3. HERO ORBITAL INFRASTRUCTURE VISUAL (Many Systems -> One Connection) */}
+          <div className='mt-16 md:mt-24 max-w-4xl mx-auto relative'>
+            <div className='p-6 sm:p-10 rounded-3xl bg-[#FAFAFA] border border-[#E5E5E5] shadow-sm relative overflow-hidden text-left'>
+              {/* Top metadata bar */}
+              <div className='flex items-center justify-between pb-6 border-b border-[#EBEBE8]'>
+                <div className='flex items-center gap-2 font-["JetBrains_Mono"] text-xs text-[#666666]'>
+                  <span className='size-1.5 rounded-full bg-[#080808]' />
+                  <span>Orbital Routing Matrix</span>
                 </div>
-                <div className='font-semibold text-sm text-[#FFFFFF]'>Your Application</div>
-                <div className='text-[10px] text-[#A9A9A9] font-["JetBrains_Mono"] mt-0.5'>Marketplace · Fintech · SaaS</div>
+                <span className='text-[11px] font-["JetBrains_Mono"] text-[#888888]'>
+                  Many systems → One connection
+                </span>
               </div>
 
-              {/* Arrow Connector 1 */}
-              <div className='hidden md:flex md:col-span-1 justify-center'>
-                <div className='flex items-center text-[#444444]'>
-                  <div className='w-6 h-px bg-[#333333]' />
-                  <ArrowRight className='size-4 text-[#A9A9A9]' />
+              {/* Topology SVG Network Diagram */}
+              <div className='py-10 sm:py-14 relative flex flex-col md:flex-row items-center justify-between gap-8 md:gap-4'>
+                {/* Left Node: Client App */}
+                <div className='w-full md:w-56 p-4 rounded-2xl bg-[#FFFFFF] border border-[#E5E5E5] shadow-xs text-center relative z-10'>
+                  <div className='size-9 rounded-xl bg-[#F7F7F5] border border-[#E5E5E5] flex items-center justify-center mx-auto mb-2 text-[#080808]'>
+                    <Cpu className='size-4' />
+                  </div>
+                  <div className='font-bold text-sm text-[#080808] font-["Satoshi"]'>Your Application</div>
+                  <div className='text-[10px] text-[#666666] font-["JetBrains_Mono"] mt-0.5'>
+                    Marketplace · Fintech · SaaS
+                  </div>
+                </div>
+
+                {/* Center SVG Orbital Lines */}
+                <div className='w-full md:flex-1 h-20 md:h-32 relative flex items-center justify-center'>
+                  <svg className='w-full h-full' viewBox='0 0 300 100' fill='none'>
+                    {/* Orbital Curves */}
+                    <path
+                      d='M 0 50 C 75 10, 100 50, 150 50 C 200 50, 225 10, 300 15'
+                      stroke='#E0E0DC'
+                      strokeWidth='1.5'
+                      fill='none'
+                    />
+                    <path
+                      d='M 0 50 C 75 50, 100 50, 150 50 C 200 50, 225 50, 300 50'
+                      stroke='#080808'
+                      strokeWidth='1.5'
+                      className='quirk-flow-line'
+                      fill='none'
+                    />
+                    <path
+                      d='M 0 50 C 75 90, 100 50, 150 50 C 200 50, 225 90, 300 85'
+                      stroke='#E0E0DC'
+                      strokeWidth='1.5'
+                      fill='none'
+                    />
+                  </svg>
+
+                  {/* Central Floating Quirk Core Node */}
+                  <div className='absolute size-12 rounded-full bg-[#080808] text-[#FFFFFF] flex items-center justify-center shadow-md border-2 border-[#FFFFFF] z-20'>
+                    <span className='font-bold text-xs font-["Satoshi"]'>Q</span>
+                  </div>
+                </div>
+
+                {/* Right Nodes: Payment Rails */}
+                <div className='w-full md:w-60 space-y-2 relative z-10'>
+                  <div className='p-2.5 rounded-xl bg-[#FFFFFF] border border-[#E5E5E5] shadow-xs flex items-center justify-between text-xs'>
+                    <div className='flex items-center gap-2'>
+                      <span className='size-1.5 rounded-full bg-[#080808]' />
+                      <span className='font-semibold text-[#080808]'>Paystack Direct</span>
+                    </div>
+                    <span className='text-[10px] font-["JetBrains_Mono"] text-[#888888]'>Cards / VA</span>
+                  </div>
+                  <div className='p-2.5 rounded-xl bg-[#FFFFFF] border border-[#E5E5E5] shadow-xs flex items-center justify-between text-xs'>
+                    <div className='flex items-center gap-2'>
+                      <span className='size-1.5 rounded-full bg-[#080808]' />
+                      <span className='font-semibold text-[#080808]'>Flutterwave</span>
+                    </div>
+                    <span className='text-[10px] font-["JetBrains_Mono"] text-[#888888]'>Pan-Africa</span>
+                  </div>
+                  <div className='p-2.5 rounded-xl bg-[#FFFFFF] border border-[#E5E5E5] shadow-xs flex items-center justify-between text-xs'>
+                    <div className='flex items-center gap-2'>
+                      <span className='size-1.5 rounded-full bg-[#080808]' />
+                      <span className='font-semibold text-[#080808]'>M-Pesa STK</span>
+                    </div>
+                    <span className='text-[10px] font-["JetBrains_Mono"] text-[#888888]'>Mobile Money</span>
+                  </div>
                 </div>
               </div>
 
-              {/* Quirk Control Layer Center Node */}
-              <div className='md:col-span-4 p-5 rounded-2xl bg-[#121212] border border-[#FFFFFF]/20 text-center relative shadow-lg'>
-                <div className='inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#181818] border border-[#333333] text-[10px] font-["JetBrains_Mono"] text-[#FFFFFF] mb-2'>
-                  <Lock className='size-3 text-[#FFFFFF]' />
-                  <span>Hardware Key Vault</span>
-                </div>
-                <div className='font-bold text-base text-[#FFFFFF] font-["Satoshi"]'>Quirk Control Layer</div>
-                <div className='text-[11px] text-[#A9A9A9] mt-1'>Normalization · Probing · Failover</div>
-                <div className='mt-3 flex items-center justify-center gap-1.5 font-["JetBrains_Mono"] text-[10px] text-[#777777]'>
-                  <span>@quirk/sdk</span>
-                  <span>·</span>
-                  <span>REST API</span>
-                </div>
-              </div>
-
-              {/* Arrow Connector 2 */}
-              <div className='hidden md:flex md:col-span-1 justify-center'>
-                <div className='flex items-center text-[#444444]'>
-                  <div className='w-6 h-px bg-[#333333]' />
-                  <ArrowRight className='size-4 text-[#A9A9A9]' />
-                </div>
-              </div>
-
-              {/* Provider Rails Nodes */}
-              <div className='md:col-span-3 space-y-2'>
-                <div className='p-2.5 rounded-lg bg-[#101010] border border-[#222222] flex items-center justify-between text-xs'>
-                  <span className='font-semibold text-[#FFFFFF]'>Paystack</span>
-                  <span className='text-[10px] font-["JetBrains_Mono"] text-[#A9A9A9]'>Cards & Accounts</span>
-                </div>
-                <div className='p-2.5 rounded-lg bg-[#101010] border border-[#222222] flex items-center justify-between text-xs'>
-                  <span className='font-semibold text-[#FFFFFF]'>Flutterwave</span>
-                  <span className='text-[10px] font-["JetBrains_Mono"] text-[#A9A9A9]'>Pan-Africa & USD</span>
-                </div>
-                <div className='p-2.5 rounded-lg bg-[#101010] border border-[#222222] flex items-center justify-between text-xs'>
-                  <span className='font-semibold text-[#FFFFFF]'>M-Pesa</span>
-                  <span className='text-[10px] font-["JetBrains_Mono"] text-[#A9A9A9]'>STK Push MoMo</span>
-                </div>
-                <div className='p-2.5 rounded-lg bg-[#101010] border border-[#222222] flex items-center justify-between text-xs'>
-                  <span className='font-semibold text-[#FFFFFF]'>Monnify & Squad</span>
-                  <span className='text-[10px] font-["JetBrains_Mono"] text-[#A9A9A9]'>Dynamic VA & USSD</span>
-                </div>
+              {/* Bottom tag */}
+              <div className='pt-4 border-t border-[#EBEBE8] flex items-center justify-between text-[11px] font-["JetBrains_Mono"] text-[#666666]'>
+                <span>Zero vendor lock-in</span>
+                <span>Hardware enclave key vault</span>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 4. INFINITE PAYMENT RAILS MARQUEE STRIP */}
-      <section className='border-y border-[#222222] bg-[#080808] py-4 overflow-hidden relative'>
+      {/* 4. SLIM RAILS TICKER (Clean White Background) */}
+      <section className='border-y border-[#E5E5E5] bg-[#FAFAFA] py-3.5 overflow-hidden relative'>
         <div className='quirk-marquee-container relative flex overflow-x-hidden'>
           <div className='quirk-marquee-track flex shrink-0 items-center gap-6 pr-6'>
             {[...ECOSYSTEM_RAILS, ...ECOSYSTEM_RAILS].map((rail, idx) => (
               <div
                 key={idx}
-                className='flex items-center gap-3 px-4 py-2 rounded-full bg-[#101010] border border-[#222222] text-xs shrink-0'
+                className='flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#FFFFFF] border border-[#E5E5E5] text-xs shrink-0 shadow-2xs'
               >
-                <div className='size-6 rounded bg-[#161616] border border-[#222222] flex items-center justify-center font-["JetBrains_Mono"] font-bold text-[9px] text-[#FFFFFF]'>
+                <div className='size-5 rounded bg-[#F7F7F5] border border-[#E5E5E5] flex items-center justify-center font-["JetBrains_Mono"] font-bold text-[8px] text-[#080808]'>
                   {rail.code}
                 </div>
-                <span className='font-semibold text-[#FFFFFF]'>{rail.name}</span>
-                <span className='text-[#666666]'>·</span>
-                <span className='text-[11px] text-[#A9A9A9]'>{rail.type}</span>
-                <span className='inline-flex items-center gap-1 text-[10px] font-["JetBrains_Mono"] text-[#A9A9A9] pl-1'>
-                  <span className='size-1.5 rounded-full bg-[#22C55E]' />
+                <span className='font-semibold text-[#080808]'>{rail.name}</span>
+                <span className='text-[#CCCCCC]'>·</span>
+                <span className='text-[11px] text-[#666666]'>{rail.type}</span>
+                <span className='inline-flex items-center gap-1 text-[10px] font-["JetBrains_Mono"] text-[#888888] pl-1'>
+                  <span className='size-1 rounded-full bg-[#080808]' />
                   {rail.ping}
                 </span>
               </div>
@@ -533,54 +508,179 @@ export function LandingPage() {
         </div>
       </section>
 
-      {/* 5. THE PROBLEM SECTION: 5 Stacked Problem Blocks */}
-      <section id='problems' className='py-20 md:py-28 border-b border-[#222222]'>
-        <div className='container max-w-5xl mx-auto px-4 sm:px-6'>
-          <div className='mb-16'>
-            <div className='text-xs font-semibold text-[#A9A9A9] uppercase tracking-wider font-["JetBrains_Mono"] mb-2'>
-              The Reality of Scaling African Payments
+      {/* 5. SECTION: THE PROBLEM */}
+      <section className='py-24 md:py-36 border-b border-[#E5E5E5] bg-[#FFFFFF]'>
+        <div className='container max-w-4xl mx-auto px-4 sm:px-6'>
+          {/* Section Header */}
+          <div className='mb-20'>
+            <div className='text-xs font-semibold text-[#666666] uppercase tracking-wider font-["JetBrains_Mono"] mb-3'>
+              The Problem
             </div>
-            <h2 className='text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#FFFFFF] font-["Satoshi"]'>
-              When payments become complicated
+            <h2 className='text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-[#080808] font-["Satoshi"] leading-tight'>
+              Payments get complicated <br className='hidden sm:inline' />
+              as you grow.
             </h2>
-            <p className='text-base text-[#A9A9A9] mt-3 max-w-2xl'>
-              As your product grows, your payment architecture fragments. What started as a simple integration turns into an unmanageable burden of custom scripts, failed checkouts, and reconciliation gaps.
+            <p className='text-base sm:text-lg text-[#666666] mt-4 max-w-xl leading-relaxed'>
+              What started as a single API key quickly turns into fragmented checkout logic, silent drop-offs, and reconciliation overhead.
             </p>
           </div>
 
-          {/* 5 Stacked Problem Cards */}
-          <div className='space-y-4'>
-            {PROBLEMS.map((problem) => {
-              const Icon = problem.icon
+          {/* Progressive Statements with Orbital Route Flow */}
+          <div className='relative pl-6 sm:pl-10 space-y-12 border-l border-[#E5E5E5]'>
+            {PROBLEM_STEPS.map((prob, idx) => (
+              <div key={prob.step} className='relative group'>
+                {/* Node dot on the vertical route line */}
+                <div className='absolute -left-[31px] sm:-left-[47px] top-1 size-3.5 rounded-full bg-[#FFFFFF] border-2 border-[#080808] flex items-center justify-center' />
+
+                <div className='space-y-1.5'>
+                  <div className='text-xs font-["JetBrains_Mono"] font-semibold text-[#888888]'>
+                    PHASE {prob.step}
+                  </div>
+                  <h3 className='text-xl sm:text-2xl font-bold text-[#080808] font-["Satoshi"]'>
+                    {prob.highlight}
+                  </h3>
+                  <p className='text-sm sm:text-base text-[#666666] max-w-2xl leading-relaxed'>
+                    {prob.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 6. SECTION: THE QUIRK LAYER (Infrastructure Diagram & Centerpiece) */}
+      <section id='product' className='py-24 md:py-36 border-b border-[#E5E5E5] bg-[#FAFAFA]'>
+        <div className='container max-w-5xl mx-auto px-4 sm:px-6 text-center'>
+          <div className='text-xs font-semibold text-[#666666] uppercase tracking-wider font-["JetBrains_Mono"] mb-3'>
+            The Quirk Layer
+          </div>
+          <h2 className='text-3xl sm:text-5xl font-bold tracking-tight text-[#080808] font-["Satoshi"]'>
+            A clean network floating between your product and every rail.
+          </h2>
+          <p className='text-sm sm:text-base text-[#666666] mt-3 max-w-xl mx-auto'>
+            Quirk acts as the central control plane, normalizing requests, routing sessions, and vaulting provider keys.
+          </p>
+
+          {/* Floating Infrastructure Visual */}
+          <div className='mt-16 p-8 sm:p-14 rounded-3xl bg-[#FFFFFF] border border-[#E5E5E5] shadow-sm max-w-4xl mx-auto text-left relative overflow-hidden'>
+            {/* Top Level: Application */}
+            <div className='p-6 rounded-2xl bg-[#FAFAFA] border border-[#E5E5E5] text-center max-w-md mx-auto'>
+              <div className='text-[11px] font-["JetBrains_Mono"] uppercase tracking-wider text-[#666666] mb-1'>
+                Application Layer
+              </div>
+              <div className='font-bold text-base text-[#080808] font-["Satoshi"]'>
+                YOUR APPLICATION CODE
+              </div>
+              <div className='text-xs text-[#888888] mt-0.5'>Single SDK Client Integration</div>
+            </div>
+
+            {/* Connecting Vertical Flow */}
+            <div className='h-16 flex items-center justify-center relative'>
+              <div className='w-px h-full bg-[#E5E5E5]' />
+              <div className='absolute size-2 rounded-full bg-[#080808]' />
+            </div>
+
+            {/* Central Node: Quirk */}
+            <div className='p-8 rounded-3xl bg-[#080808] text-[#FFFFFF] text-center max-w-xl mx-auto shadow-xl relative'>
+              <div className='inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1A1A1A] border border-[#333333] text-[10px] font-["JetBrains_Mono"] text-[#FFFFFF] mb-3'>
+                <Lock className='size-3 text-[#FFFFFF]' />
+                <span>AES-256 Hardware Enclave Vault</span>
+              </div>
+              <h3 className='text-2xl font-bold font-["Satoshi"] tracking-tight'>
+                QUIRK CONTROL PLANE
+              </h3>
+              <div className='grid grid-cols-2 sm:grid-cols-4 gap-2 mt-6 pt-6 border-t border-[#222222] text-xs font-["JetBrains_Mono"]'>
+                <div className='p-2 rounded-lg bg-[#141414] border border-[#222222]'>
+                  <div className='text-[#FFFFFF] font-semibold'>Connect</div>
+                  <div className='text-[10px] text-[#888888]'>1 SDK</div>
+                </div>
+                <div className='p-2 rounded-lg bg-[#141414] border border-[#222222]'>
+                  <div className='text-[#FFFFFF] font-semibold'>Normalize</div>
+                  <div className='text-[10px] text-[#888888]'>HMAC Schema</div>
+                </div>
+                <div className='p-2 rounded-lg bg-[#141414] border border-[#222222]'>
+                  <div className='text-[#FFFFFF] font-semibold'>Monitor</div>
+                  <div className='text-[10px] text-[#888888]'>24/7 Probing</div>
+                </div>
+                <div className='p-2 rounded-lg bg-[#141414] border border-[#222222]'>
+                  <div className='text-[#FFFFFF] font-semibold'>Route</div>
+                  <div className='text-[10px] text-[#888888]'>Sub-200ms</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Connecting Vertical Flow */}
+            <div className='h-16 flex items-center justify-center relative'>
+              <div className='w-px h-full bg-[#E5E5E5]' />
+              <div className='absolute size-2 rounded-full bg-[#080808]' />
+            </div>
+
+            {/* Bottom Level: Payment Rails */}
+            <div className='grid grid-cols-1 sm:grid-cols-3 gap-3 max-w-2xl mx-auto'>
+              <div className='p-4 rounded-xl bg-[#FAFAFA] border border-[#E5E5E5] text-center'>
+                <div className='font-bold text-xs text-[#080808]'>Paystack & Monnify</div>
+                <div className='text-[10px] text-[#666666] font-["JetBrains_Mono"] mt-1'>
+                  Cards · Dynamic VA
+                </div>
+              </div>
+              <div className='p-4 rounded-xl bg-[#FAFAFA] border border-[#E5E5E5] text-center'>
+                <div className='font-bold text-xs text-[#080808]'>Flutterwave</div>
+                <div className='text-[10px] text-[#666666] font-["JetBrains_Mono"] mt-1'>
+                  Pan-Africa · USD
+                </div>
+              </div>
+              <div className='p-4 rounded-xl bg-[#FAFAFA] border border-[#E5E5E5] text-center'>
+                <div className='font-bold text-xs text-[#080808]'>M-Pesa & Squad</div>
+                <div className='text-[10px] text-[#666666] font-["JetBrains_Mono"] mt-1'>
+                  Mobile Money · USSD
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 7. SECTION: WHAT QUIRK DOES (4 Capabilities on Clean Minimal Cards) */}
+      <section className='py-24 md:py-36 border-b border-[#E5E5E5] bg-[#FFFFFF]'>
+        <div className='container max-w-5xl mx-auto px-4 sm:px-6'>
+          <div className='mb-16'>
+            <div className='text-xs font-semibold text-[#666666] uppercase tracking-wider font-["JetBrains_Mono"] mb-3'>
+              Core Capabilities
+            </div>
+            <h2 className='text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#080808] font-["Satoshi"]'>
+              What Quirk does
+            </h2>
+            <p className='text-base text-[#666666] mt-2 max-w-lg'>
+              Four foundational pillars that eliminate payment complexity for growing software engineering teams.
+            </p>
+          </div>
+
+          {/* 4 Minimalist Spacious Cards (No colorful clutter) */}
+          <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+            {CAPABILITIES.map((cap) => {
+              const Icon = cap.icon
               return (
                 <div
-                  key={problem.number}
-                  className='p-6 sm:p-8 rounded-2xl bg-[#101010] border border-[#222222] hover:border-[#333333] transition-all grid grid-cols-1 md:grid-cols-12 gap-6 items-start'
+                  key={cap.tag}
+                  className='p-8 rounded-3xl bg-[#FAFAFA] border border-[#E5E5E5] hover:border-[#CCCCCC] transition-all space-y-4'
                 >
-                  <div className='md:col-span-1 flex items-center md:flex-col gap-3'>
-                    <span className='font-["JetBrains_Mono"] text-xs font-bold text-[#666666]'>
-                      {problem.number}
-                    </span>
-                    <div className='size-9 rounded-xl bg-[#161616] border border-[#222222] flex items-center justify-center text-[#FFFFFF]'>
+                  <div className='flex items-center justify-between'>
+                    <div className='text-xs font-["JetBrains_Mono"] font-bold text-[#080808] uppercase tracking-widest px-2.5 py-1 rounded-full bg-[#FFFFFF] border border-[#E5E5E5]'>
+                      {cap.tag}
+                    </div>
+                    <div className='size-8 rounded-xl bg-[#FFFFFF] border border-[#E5E5E5] flex items-center justify-center text-[#080808]'>
                       <Icon className='size-4' />
                     </div>
                   </div>
 
-                  <div className='md:col-span-7 space-y-2'>
-                    <h3 className='text-lg sm:text-xl font-bold text-[#FFFFFF] font-["Satoshi"]'>
-                      {problem.title}
-                    </h3>
-                    <p className='text-xs sm:text-sm text-[#A9A9A9] leading-relaxed'>
-                      {problem.summary}
-                    </p>
-                  </div>
+                  <h3 className='text-xl font-bold text-[#080808] font-["Satoshi"] leading-snug'>
+                    {cap.title}
+                  </h3>
 
-                  <div className='md:col-span-4 p-3.5 rounded-xl bg-[#0A0A0A] border border-[#222222] text-xs text-[#888888]'>
-                    <div className='font-semibold text-[#FFFFFF] text-[11px] mb-1 font-["JetBrains_Mono"] uppercase tracking-wider'>
-                      Consequence
-                    </div>
-                    <div>{problem.impact}</div>
-                  </div>
+                  <p className='text-sm text-[#666666] leading-relaxed'>
+                    {cap.description}
+                  </p>
                 </div>
               )
             })}
@@ -588,79 +688,23 @@ export function LandingPage() {
         </div>
       </section>
 
-      {/* 6. THE SOLUTION SECTION: 5 Mirrored Solutions */}
-      <section id='solutions' className='py-20 md:py-28 border-b border-[#222222] bg-[#050505]'>
+      {/* 8. SECTION: WHO IT IS FOR */}
+      <section className='py-24 md:py-36 border-b border-[#E5E5E5] bg-[#FAFAFA]'>
         <div className='container max-w-5xl mx-auto px-4 sm:px-6'>
-          <div className='mb-16'>
-            <div className='text-xs font-semibold text-[#A9A9A9] uppercase tracking-wider font-["JetBrains_Mono"] mb-2'>
-              The Control Layer
-            </div>
-            <h2 className='text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#FFFFFF] font-["Satoshi"]'>
-              One layer. Total control.
-            </h2>
-            <p className='text-base text-[#A9A9A9] mt-3 max-w-2xl'>
-              Quirk sits between your application and every payment provider, turning complex multi-provider operations into a clean, predictable infrastructure.
-            </p>
-          </div>
-
-          {/* 5 Mirrored Solution Blocks */}
-          <div className='space-y-4'>
-            {SOLUTIONS.map((solution) => {
-              const Icon = solution.icon
-              return (
-                <div
-                  key={solution.number}
-                  className='p-6 sm:p-8 rounded-2xl bg-[#101010] border border-[#222222] hover:border-[#333333] transition-all grid grid-cols-1 md:grid-cols-12 gap-6 items-center'
-                >
-                  <div className='md:col-span-1 flex items-center md:flex-col gap-3'>
-                    <span className='font-["JetBrains_Mono"] text-xs font-bold text-[#FFFFFF]'>
-                      {solution.number}
-                    </span>
-                    <div className='size-9 rounded-xl bg-[#161616] border border-[#222222] flex items-center justify-center text-[#FFFFFF]'>
-                      <Icon className='size-4' />
-                    </div>
-                  </div>
-
-                  <div className='md:col-span-7 space-y-1.5'>
-                    <div className='inline-block text-[10px] font-["JetBrains_Mono"] uppercase tracking-wider text-[#A9A9A9] px-2 py-0.5 rounded bg-[#161616] border border-[#222222] mb-1'>
-                      {solution.badge}
-                    </div>
-                    <h3 className='text-lg sm:text-xl font-bold text-[#FFFFFF] font-["Satoshi"]'>
-                      {solution.title}
-                    </h3>
-                    <p className='text-xs sm:text-sm text-[#A9A9A9] leading-relaxed'>
-                      {solution.description}
-                    </p>
-                  </div>
-
-                  <div className='md:col-span-4 p-3 rounded-xl bg-[#0A0A0A] border border-[#222222] font-["JetBrains_Mono"] text-xs text-[#A9A9A9] overflow-x-auto'>
-                    <div className='text-[10px] text-[#666666] mb-1'>// Quirk normalized API</div>
-                    <code className='text-[#FFFFFF] text-[11px]'>{solution.codeSnippet}</code>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* 7. TARGET CUSTOMER AUDIENCE SECTION */}
-      <section className='py-20 md:py-28 border-b border-[#222222]'>
-        <div className='container max-w-5xl mx-auto px-4 sm:px-6'>
-          <div className='text-center max-w-2xl mx-auto mb-12'>
-            <div className='text-xs font-semibold text-[#A9A9A9] uppercase tracking-wider font-["JetBrains_Mono"] mb-2'>
+          <div className='text-center max-w-2xl mx-auto mb-16'>
+            <div className='text-xs font-semibold text-[#666666] uppercase tracking-wider font-["JetBrains_Mono"] mb-3'>
               Target Customers
             </div>
-            <h2 className='text-3xl sm:text-4xl font-bold tracking-tight text-[#FFFFFF] font-["Satoshi"]'>
-              Built for technology businesses
+            <h2 className='text-3xl sm:text-5xl font-bold tracking-tight text-[#080808] font-["Satoshi"]'>
+              Built for companies where payments are part of the product.
             </h2>
-            <p className='text-sm text-[#A9A9A9] mt-2'>
-              Designed specifically for platforms and technology products where payments are deeply embedded into the customer journey.
+            <p className='text-sm sm:text-base text-[#666666] mt-4 leading-relaxed'>
+              Quirk is engineered specifically for software companies whose payment infrastructure becomes increasingly complex as they scale.
             </p>
           </div>
 
-          {/* Audience Selection Pills */}
-          <div className='flex flex-wrap items-center justify-center gap-2 mb-8'>
+          {/* Interactive Audience Pills */}
+          <div className='flex flex-wrap items-center justify-center gap-2 mb-10'>
             {TARGET_AUDIENCES.map((aud) => {
               const isSelected = aud.id === selectedAudience
               const Icon = aud.icon
@@ -670,8 +714,8 @@ export function LandingPage() {
                   onClick={() => setSelectedAudience(aud.id)}
                   className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium transition-all ${
                     isSelected
-                      ? 'bg-[#FFFFFF] text-[#000000] font-semibold shadow-md'
-                      : 'bg-[#101010] border border-[#222222] text-[#A9A9A9] hover:text-[#FFFFFF] hover:border-[#333333]'
+                      ? 'bg-[#080808] text-[#FFFFFF] font-semibold shadow-sm'
+                      : 'bg-[#FFFFFF] border border-[#E5E5E5] text-[#666666] hover:text-[#080808] hover:border-[#CCCCCC]'
                   }`}
                 >
                   <Icon className='size-3.5' />
@@ -682,135 +726,132 @@ export function LandingPage() {
           </div>
 
           {/* Active Audience Card */}
-          <div className='p-8 rounded-2xl bg-[#101010] border border-[#222222] max-w-2xl mx-auto text-center space-y-3'>
-            <div className='size-12 rounded-2xl bg-[#161616] border border-[#222222] flex items-center justify-center mx-auto text-[#FFFFFF]'>
+          <div className='p-8 sm:p-12 rounded-3xl bg-[#FFFFFF] border border-[#E5E5E5] max-w-2xl mx-auto text-center space-y-4 shadow-xs'>
+            <div className='size-12 rounded-2xl bg-[#F7F7F5] border border-[#E5E5E5] flex items-center justify-center mx-auto text-[#080808]'>
               {React.createElement(activeAudience.icon, { className: 'size-5' })}
             </div>
-            <h3 className='text-xl font-bold text-[#FFFFFF] font-["Satoshi"]'>
+            <h3 className='text-2xl font-bold text-[#080808] font-["Satoshi"]'>
               {activeAudience.headline}
             </h3>
-            <p className='text-sm text-[#A9A9A9] leading-relaxed max-w-lg mx-auto'>
+            <p className='text-sm sm:text-base text-[#666666] leading-relaxed max-w-lg mx-auto'>
               {activeAudience.description}
             </p>
           </div>
         </div>
       </section>
 
-      {/* 8. WHAT'S NEXT: PAYMENT INTELLIGENCE VISION */}
-      <section id='roadmap' className='py-20 md:py-28 border-b border-[#222222] bg-[#050505]'>
+      {/* 9. SECTION: THE BIGGER VISION (Cosmic Depth Transition into White Environment) */}
+      <section id='vision' className='py-24 md:py-36 border-b border-[#E5E5E5] bg-[#FFFFFF]'>
         <div className='container max-w-5xl mx-auto px-4 sm:px-6'>
-          <div className='p-8 sm:p-12 rounded-3xl bg-[#0E0E0E] border border-[#262626] relative overflow-hidden'>
-            <div className='flex flex-wrap items-center justify-between gap-4 mb-8 pb-6 border-b border-[#222222]'>
-              <div>
-                <div className='inline-flex items-center gap-1.5 text-[10px] font-["JetBrains_Mono"] uppercase tracking-wider text-[#A9A9A9] px-2.5 py-0.5 rounded-full bg-[#161616] border border-[#222222] mb-2'>
-                  <span className='size-1.5 rounded-full bg-[#A9A9A9]' />
-                  <span>On the Roadmap · Early Access</span>
-                </div>
-                <h2 className='text-2xl sm:text-3xl md:text-4xl font-bold text-[#FFFFFF] font-["Satoshi"]'>
-                  Beyond routing: Payment Intelligence
-                </h2>
-                <p className='text-xs sm:text-sm text-[#A9A9A9] mt-1 max-w-xl'>
-                  The long-term vision: helping technology businesses understand transaction patterns, eliminate customer drop-offs, and benchmark provider reliability.
-                </p>
+          {/* Deep Dark Cosmic Element Against the White Page */}
+          <div className='p-8 sm:p-14 md:p-20 rounded-3xl bg-[#080808] text-[#FFFFFF] relative overflow-hidden shadow-2xl'>
+            {/* Subtle orbital celestial ring within cosmic container */}
+            <div className='absolute right-0 top-0 translate-x-1/3 -translate-y-1/3 size-[500px] rounded-full border border-[#222222] pointer-events-none quirk-orbit-slow opacity-40' />
+
+            <div className='relative z-10 max-w-3xl'>
+              <div className='inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#161616] border border-[#262626] text-xs font-["JetBrains_Mono"] text-[#A9A9A9] mb-6'>
+                <span className='size-1.5 rounded-full bg-[#FFFFFF]' />
+                <span>The Long-Term Vision · Roadmap</span>
               </div>
 
-              <a
-                href='mailto:engineering@quirk.dev?subject=Quirk%20Payment%20Intelligence%20Early%20Access'
-                className='text-xs font-semibold text-[#FFFFFF] bg-[#161616] hover:bg-[#202020] border border-[#333333] px-4 py-2 rounded-full transition-all'
-              >
-                Request early access
-              </a>
-            </div>
+              <h2 className='text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-[#FFFFFF] font-["Satoshi"] leading-tight'>
+                Payments are more than transactions.
+              </h2>
 
-            {/* 4 Roadmap Pillars */}
-            <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
-              {ROADMAP_ITEMS.map((item, idx) => {
-                const Icon = item.icon
-                return (
-                  <div
-                    key={idx}
-                    className='p-5 rounded-xl bg-[#0A0A0A] border border-[#222222] space-y-2'
-                  >
-                    <div className='flex items-center gap-2.5'>
-                      <div className='size-7 rounded-lg bg-[#141414] border border-[#222222] flex items-center justify-center text-[#FFFFFF]'>
-                        <Icon className='size-3.5' />
+              <p className='text-base sm:text-lg text-[#A9A9A9] mt-6 leading-relaxed'>
+                Every transaction contains information about how your business is performing. The long-term vision of Quirk is to turn raw payment logs into actionable infrastructure intelligence.
+              </p>
+
+              {/* 6 Vision Pillars Grid */}
+              <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-12 pt-10 border-t border-[#222222]'>
+                {VISION_PILLARS.map((item, idx) => {
+                  const Icon = item.icon
+                  return (
+                    <div
+                      key={idx}
+                      className='p-5 rounded-2xl bg-[#101010] border border-[#222222] space-y-2'
+                    >
+                      <div className='flex items-center gap-2.5 text-[#FFFFFF]'>
+                        <div className='size-6 rounded-lg bg-[#161616] border border-[#262626] flex items-center justify-center'>
+                          <Icon className='size-3.5' />
+                        </div>
+                        <h4 className='font-bold text-xs font-["Satoshi"]'>{item.title}</h4>
                       </div>
-                      <h3 className='text-sm font-semibold text-[#FFFFFF]'>{item.title}</h3>
+                      <p className='text-[11px] text-[#888888] leading-relaxed'>
+                        {item.desc}
+                      </p>
                     </div>
-                    <p className='text-xs text-[#A9A9A9] leading-relaxed pl-9.5'>
-                      {item.description}
-                    </p>
-                  </div>
-                )
-              })}
+                  )
+                })}
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 9. GET STARTED MINI-SECTION & CODE SNIPPET */}
-      <section id='get-started' className='py-20 md:py-28 border-b border-[#222222]'>
+      {/* 10. DEVELOPER SECTION (Clean Technical Environment) */}
+      <section id='developers' className='py-24 md:py-36 border-b border-[#E5E5E5] bg-[#FAFAFA]'>
         <div className='container max-w-5xl mx-auto px-4 sm:px-6'>
-          <div className='grid grid-cols-1 lg:grid-cols-12 gap-10 items-center'>
+          <div className='grid grid-cols-1 lg:grid-cols-12 gap-12 items-center'>
             {/* Left Info */}
             <div className='lg:col-span-5 space-y-6'>
               <div>
-                <div className='text-xs font-semibold text-[#A9A9A9] uppercase tracking-wider font-["JetBrains_Mono"] mb-2'>
-                  Developer Quickstart
+                <div className='text-xs font-semibold text-[#666666] uppercase tracking-wider font-["JetBrains_Mono"] mb-3'>
+                  Developer Platform
                 </div>
-                <h2 className='text-3xl sm:text-4xl font-bold tracking-tight text-[#FFFFFF] font-["Satoshi"]'>
-                  Integrate in 4 lines of code
+                <h2 className='text-3xl sm:text-4xl font-bold tracking-tight text-[#080808] font-["Satoshi"]'>
+                  Engineered for developers first.
                 </h2>
-                <p className='text-sm text-[#A9A9A9] mt-3 leading-relaxed'>
+                <p className='text-sm text-[#666666] mt-3 leading-relaxed'>
                   Install the SDK, initialize with your vaulted key, and execute unified payments with normalized responses across all payment rails.
                 </p>
               </div>
 
               {/* Install Snippet */}
-              <div className='p-3.5 rounded-xl bg-[#101010] border border-[#222222] flex items-center justify-between font-["JetBrains_Mono"] text-xs'>
-                <div className='flex items-center gap-2 text-[#FFFFFF]'>
-                  <Terminal className='size-3.5 text-[#A9A9A9]' />
+              <div className='p-3.5 rounded-2xl bg-[#FFFFFF] border border-[#E5E5E5] flex items-center justify-between font-["JetBrains_Mono"] text-xs shadow-2xs'>
+                <div className='flex items-center gap-2 text-[#080808]'>
+                  <Terminal className='size-3.5 text-[#666666]' />
                   <span>npm install @quirk/sdk</span>
                 </div>
                 <button
                   onClick={copyInstallCommand}
-                  className='p-1.5 rounded-md hover:bg-[#1C1C1C] text-[#A9A9A9] hover:text-[#FFFFFF] transition-colors'
+                  className='p-1.5 rounded-md hover:bg-[#F7F7F5] text-[#666666] hover:text-[#080808] transition-colors'
                   title='Copy install command'
                 >
-                  {copiedInstall ? <Check className='size-3.5 text-[#22C55E]' /> : <Copy className='size-3.5' />}
+                  {copiedInstall ? <Check className='size-3.5 text-[#080808]' /> : <Copy className='size-3.5' />}
                 </button>
               </div>
 
-              {/* Feature Checklist */}
-              <div className='space-y-2 text-xs text-[#A9A9A9] font-["JetBrains_Mono"]'>
+              {/* Checklist */}
+              <div className='space-y-2 text-xs text-[#666666] font-["JetBrains_Mono"]'>
                 <div className='flex items-center gap-2'>
-                  <Check className='size-3.5 text-[#22C55E]' />
+                  <Check className='size-3.5 text-[#080808]' />
                   <span>Zero vendor lock-in — bring your own keys</span>
                 </div>
                 <div className='flex items-center gap-2'>
-                  <Check className='size-3.5 text-[#22C55E]' />
+                  <Check className='size-3.5 text-[#080808]' />
                   <span>Full TypeScript type definitions included</span>
                 </div>
                 <div className='flex items-center gap-2'>
-                  <Check className='size-3.5 text-[#22C55E]' />
+                  <Check className='size-3.5 text-[#080808]' />
                   <span>Deterministic idempotency out of the box</span>
                 </div>
               </div>
             </div>
 
-            {/* Right Interactive Code Box */}
-            <div className='lg:col-span-7 rounded-2xl bg-[#0A0A0A] border border-[#222222] shadow-2xl overflow-hidden'>
-              {/* Header with Tabs */}
-              <div className='flex items-center justify-between px-4 py-3 border-b border-[#222222] bg-[#101010]'>
-                <div className='flex items-center gap-1'>
+            {/* Right Monochromatic Minimal Code Block (No Bright Green Syntax) */}
+            <div className='lg:col-span-7 rounded-3xl bg-[#080808] border border-[#222222] shadow-xl overflow-hidden text-[#FFFFFF]'>
+              {/* Header with Monochromatic Tabs */}
+              <div className='flex items-center justify-between px-5 py-3.5 border-b border-[#222222] bg-[#101010]'>
+                <div className='flex items-center gap-1.5'>
                   {(['typescript', 'python', 'curl'] as const).map((lang) => (
                     <button
                       key={lang}
                       onClick={() => setSelectedLang(lang)}
                       className={`px-3 py-1 rounded-lg text-xs font-["JetBrains_Mono"] transition-colors ${
                         selectedLang === lang
-                          ? 'bg-[#1C1C1C] text-[#FFFFFF] font-bold'
-                          : 'text-[#A9A9A9] hover:text-[#FFFFFF]'
+                          ? 'bg-[#222222] text-[#FFFFFF] font-bold'
+                          : 'text-[#888888] hover:text-[#FFFFFF]'
                       }`}
                     >
                       {lang === 'typescript' ? 'TypeScript' : lang === 'python' ? 'Python' : 'cURL'}
@@ -820,15 +861,15 @@ export function LandingPage() {
 
                 <button
                   onClick={copySnippet}
-                  className='inline-flex items-center gap-1.5 text-xs text-[#A9A9A9] hover:text-[#FFFFFF] px-2.5 py-1 rounded-md hover:bg-[#161616] transition-colors font-["JetBrains_Mono"]'
+                  className='inline-flex items-center gap-1.5 text-xs text-[#888888] hover:text-[#FFFFFF] px-2.5 py-1 rounded-md hover:bg-[#1A1A1A] transition-colors font-["JetBrains_Mono"]'
                 >
-                  {copiedCode ? <Check className='size-3 text-[#22C55E]' /> : <Copy className='size-3' />}
+                  {copiedCode ? <Check className='size-3 text-[#FFFFFF]' /> : <Copy className='size-3' />}
                   <span>{copiedCode ? 'Copied' : 'Copy'}</span>
                 </button>
               </div>
 
-              {/* Code Display */}
-              <div className='p-5 overflow-x-auto text-xs font-["JetBrains_Mono"] leading-relaxed text-[#E5E5E5] bg-[#080808]'>
+              {/* Monochromatic Code Text */}
+              <div className='p-6 overflow-x-auto text-xs font-["JetBrains_Mono"] leading-relaxed text-[#E5E5E5] bg-[#0A0A0A]'>
                 <pre>
                   <code>{CODE_SNIPPETS[selectedLang]}</code>
                 </pre>
@@ -838,69 +879,69 @@ export function LandingPage() {
         </div>
       </section>
 
-      {/* 10. EARLY PARTNER INVITATION SECTION */}
-      <section className='py-20 md:py-28 border-b border-[#222222] bg-[#050505]'>
+      {/* 11. EARLY ACCESS / DESIGN PARTNERS (Spacious Clean Invitation) */}
+      <section className='py-24 md:py-36 border-b border-[#E5E5E5] bg-[#FFFFFF]'>
         <div className='container max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-6'>
-          <div className='inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#101010] border border-[#222222] text-xs font-["JetBrains_Mono"] text-[#A9A9A9]'>
-            <span className='size-1.5 rounded-full bg-[#22C55E]' />
+          <div className='inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#F7F7F5] border border-[#E5E5E5] text-xs font-["JetBrains_Mono"] text-[#666666]'>
+            <span className='size-1.5 rounded-full bg-[#080808]' />
             <span>Design Partner Program</span>
           </div>
 
-          <h2 className='text-3xl sm:text-5xl font-bold tracking-tight text-[#FFFFFF] font-["Satoshi"] max-w-2xl mx-auto'>
-            Building for companies whose payments are getting complex
+          <h2 className='text-3xl sm:text-5xl md:text-6xl font-bold tracking-tight text-[#080808] font-["Satoshi"] max-w-2xl mx-auto leading-tight'>
+            Building a product where payments are becoming complicated?
           </h2>
 
-          <p className='text-base text-[#A9A9A9] max-w-xl mx-auto leading-relaxed'>
-            We’re working with a small group of early partners to shape Africa's payment infrastructure layer. If your payment stack is becoming difficult to manage, let’s talk.
+          <p className='text-base sm:text-lg text-[#666666] max-w-xl mx-auto leading-relaxed'>
+            We're working with early technology companies to build the infrastructure they actually need.
           </p>
 
           <div className='pt-4'>
             <a
               href='mailto:engineering@quirk.dev?subject=Quirk%20Design%20Partner%20Inquiry'
-              className='inline-flex items-center gap-2 bg-[#FFFFFF] hover:bg-[#E5E5E5] text-[#000000] font-semibold text-sm px-8 py-3.5 rounded-full transition-all active:scale-[0.98] shadow-lg'
+              className='inline-flex items-center gap-2 bg-[#080808] hover:bg-[#222222] text-[#FFFFFF] font-semibold text-sm px-8 py-4 rounded-full transition-all active:scale-[0.98] shadow-sm'
             >
-              <span>Become an Early Partner</span>
+              <span>Talk to us</span>
               <ArrowUpRight className='size-4' />
             </a>
           </div>
         </div>
       </section>
 
-      {/* 11. MINIMAL 3-COLUMN FOOTER */}
-      <footer className='py-16 bg-[#000000] text-xs text-[#A9A9A9]'>
+      {/* 12. CLEAN WHITE 3-COLUMN FOOTER */}
+      <footer className='py-16 bg-[#FFFFFF] text-xs text-[#666666]'>
         <div className='container max-w-6xl mx-auto px-4 sm:px-6'>
-          <div className='grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-[#222222]'>
+          <div className='grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-[#E5E5E5]'>
             {/* Brand column */}
             <div className='md:col-span-5 space-y-4'>
               <Link to='/' className='flex items-center gap-2'>
-                <QuirkLogo size={22} lightMode={false} />
+                <QuirkLogo size={22} lightMode={true} />
               </Link>
               <p className='text-xs text-[#888888] max-w-xs leading-relaxed'>
-                The control layer for African payment infrastructure. Connect, normalize, monitor, and route payments with one integration.
+                The payment infrastructure layer for African technology companies. Connect, manage, and scale with one integration.
               </p>
-              <div className='flex items-center gap-2 text-[11px] font-["JetBrains_Mono"] text-[#666666]'>
-                <span className='size-1.5 rounded-full bg-[#22C55E]' />
-                <span>All payment rails operational</span>
+              <div className='flex items-center gap-2 text-[11px] font-["JetBrains_Mono"] text-[#888888]'>
+                <span className='size-1.5 rounded-full bg-[#080808]' />
+                <span>One connection. Every payment system.</span>
               </div>
             </div>
 
             {/* Product Column */}
             <div className='md:col-span-2 space-y-3'>
-              <div className='font-semibold text-[#FFFFFF] font-["Satoshi"]'>Product</div>
+              <div className='font-semibold text-[#080808] font-["Satoshi"]'>Product</div>
               <ul className='space-y-2'>
                 <li>
-                  <a href='#solutions' className='hover:text-[#FFFFFF] transition-colors'>
-                    Architecture
+                  <a href='#product' className='hover:text-[#080808] transition-colors'>
+                    Quirk Layer
                   </a>
                 </li>
                 <li>
-                  <a href='#get-started' className='hover:text-[#FFFFFF] transition-colors'>
-                    API Explorer
+                  <a href='#developers' className='hover:text-[#080808] transition-colors'>
+                    API & SDK
                   </a>
                 </li>
                 <li>
-                  <a href='#roadmap' className='hover:text-[#FFFFFF] transition-colors'>
-                    Roadmap
+                  <a href='#vision' className='hover:text-[#080808] transition-colors'>
+                    Vision
                   </a>
                 </li>
                 <li>
@@ -908,37 +949,7 @@ export function LandingPage() {
                     href='https://github.com/T9ner/quirk'
                     target='_blank'
                     rel='noopener noreferrer'
-                    className='hover:text-[#FFFFFF] transition-colors'
-                  >
-                    SDK Reference
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            {/* Company Column */}
-            <div className='md:col-span-2 space-y-3'>
-              <div className='font-semibold text-[#FFFFFF] font-["Satoshi"]'>Company</div>
-              <ul className='space-y-2'>
-                <li>
-                  <Link to='/insights' className='hover:text-[#FFFFFF] transition-colors'>
-                    Research & Insights
-                  </Link>
-                </li>
-                <li>
-                  <a
-                    href='mailto:engineering@quirk.dev'
-                    className='hover:text-[#FFFFFF] transition-colors'
-                  >
-                    Contact Engineering
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href='https://github.com/T9ner/quirk'
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    className='hover:text-[#FFFFFF] transition-colors'
+                    className='hover:text-[#080808] transition-colors'
                   >
                     GitHub
                   </a>
@@ -946,34 +957,62 @@ export function LandingPage() {
               </ul>
             </div>
 
-            {/* Legal Column */}
-            <div className='md:col-span-3 space-y-3'>
-              <div className='font-semibold text-[#FFFFFF] font-["Satoshi"]'>Legal & Security</div>
+            {/* Company Column */}
+            <div className='md:col-span-2 space-y-3'>
+              <div className='font-semibold text-[#080808] font-["Satoshi"]'>Company</div>
               <ul className='space-y-2'>
                 <li>
-                  <Link to='/privacy' className='hover:text-[#FFFFFF] transition-colors'>
+                  <Link to='/insights' className='hover:text-[#080808] transition-colors'>
+                    Research & Insights
+                  </Link>
+                </li>
+                <li>
+                  <a
+                    href='mailto:engineering@quirk.dev'
+                    className='hover:text-[#080808] transition-colors'
+                  >
+                    Contact Engineering
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href='mailto:engineering@quirk.dev?subject=Quirk%20Design%20Partner%20Inquiry'
+                    className='hover:text-[#080808] transition-colors'
+                  >
+                    Design Partners
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            {/* Legal Column */}
+            <div className='md:col-span-3 space-y-3'>
+              <div className='font-semibold text-[#080808] font-["Satoshi"]'>Legal & Security</div>
+              <ul className='space-y-2'>
+                <li>
+                  <Link to='/privacy' className='hover:text-[#080808] transition-colors'>
                     Privacy Policy
                   </Link>
                 </li>
                 <li>
-                  <Link to='/terms' className='hover:text-[#FFFFFF] transition-colors'>
+                  <Link to='/terms' className='hover:text-[#080808] transition-colors'>
                     Terms of Service
                   </Link>
                 </li>
                 <li>
-                  <span className='text-[#666666]'>AES-256 Hardware Enclave Vault</span>
+                  <span className='text-[#888888]'>AES-256 Hardware Security Enclave</span>
                 </li>
               </ul>
             </div>
           </div>
 
           {/* Bottom Bar */}
-          <div className='pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[#666666]'>
+          <div className='pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[#888888]'>
             <div>
               &copy; {new Date().getFullYear()} Quirk Infrastructure Inc. All rights reserved.
             </div>
-            <div className='font-["JetBrains_Mono"] text-[11px]'>
-              One connection. Every payment system.
+            <div className='font-["JetBrains_Mono"] text-[11px] text-[#080808]'>
+              QUIRK
             </div>
           </div>
         </div>

@@ -19,36 +19,36 @@ export function InsightDetailPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#000000] text-[#FFFFFF] font-['Inter'] selection:bg-[#FFFFFF] selection:text-[#000000] antialiased">
+    <div className="min-h-screen bg-[#FFFFFF] text-[#080808] font-['Inter'] selection:bg-[#080808] selection:text-[#FFFFFF] antialiased">
       {/* Top Floating Navbar */}
-      <header className="sticky top-0 z-40 px-4 sm:px-6 py-4 bg-[#000000]/85 backdrop-blur-xl border-b border-[#222222]">
+      <header className="sticky top-0 z-40 px-4 sm:px-6 py-4 bg-[#FFFFFF]/90 backdrop-blur-xl border-b border-[#E5E5E5]">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <Link
             to="/"
-            className="inline-flex items-center gap-2 text-xs font-medium text-[#A9A9A9] hover:text-[#FFFFFF] transition-colors py-1 px-3 rounded-full hover:bg-[#101010] border border-transparent hover:border-[#222222]"
+            className="inline-flex items-center gap-2 text-xs font-medium text-[#666666] hover:text-[#080808] transition-colors py-1 px-3 rounded-full hover:bg-[#F7F7F5] border border-transparent hover:border-[#E5E5E5]"
           >
             <ArrowLeft className="size-3.5" />
             <span>Back to Quirk</span>
           </Link>
 
           <Link to="/" className="flex items-center gap-2">
-            <QuirkLogo size={22} lightMode={false} />
+            <QuirkLogo size={22} lightMode={true} />
           </Link>
 
           <div className="flex items-center gap-3">
             <button
               onClick={copyArticleLink}
-              className="inline-flex items-center gap-1.5 text-xs text-[#A9A9A9] hover:text-[#FFFFFF] px-3 py-1.5 rounded-full bg-[#101010] border border-[#222222] transition-colors"
+              className="inline-flex items-center gap-1.5 text-xs text-[#666666] hover:text-[#080808] px-3 py-1.5 rounded-full bg-[#FAFAFA] border border-[#E5E5E5] transition-colors"
               aria-label="Share article"
             >
-              {copied ? <Check className="size-3.5 text-[#FFFFFF]" /> : <Share2 className="size-3.5" />}
+              {copied ? <Check className="size-3.5 text-[#080808]" /> : <Share2 className="size-3.5" />}
               <span>{copied ? 'Link Copied' : 'Share'}</span>
             </button>
             <a
               href="https://github.com/T9ner/quirk"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1.5 bg-[#FFFFFF] hover:bg-[#E5E5E5] text-[#000000] font-semibold text-xs px-4 py-1.5 rounded-full transition-all active:scale-[0.97]"
+              className="inline-flex items-center gap-1.5 bg-[#080808] hover:bg-[#222222] text-[#FFFFFF] font-medium text-xs px-4 py-1.5 rounded-full transition-all active:scale-[0.97]"
             >
               <span>GitHub</span>
               <ExternalLink className="size-3" />
@@ -60,8 +60,8 @@ export function InsightDetailPage() {
       {/* Article Content Container */}
       <main className="max-w-3xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
         {/* Category & Meta */}
-        <div className="flex flex-wrap items-center gap-3 text-xs font-['JetBrains_Mono'] text-[#A9A9A9] mb-6">
-          <span className="px-3 py-1 rounded-full bg-[#141414] border border-[#222222] text-[#FFFFFF] font-semibold uppercase text-[10px]">
+        <div className="flex flex-wrap items-center gap-3 text-xs font-['JetBrains_Mono'] text-[#666666] mb-6">
+          <span className="px-3 py-1 rounded-full bg-[#F7F7F5] border border-[#E5E5E5] text-[#080808] font-semibold uppercase text-[10px]">
             {article.tag}
           </span>
           <span className="flex items-center gap-1">
@@ -76,107 +76,82 @@ export function InsightDetailPage() {
         </div>
 
         {/* Title */}
-        <h1 className="font-['Satoshi'] text-3xl sm:text-5xl font-bold tracking-tight text-[#FFFFFF] leading-[1.15] mb-6">
+        <h1 className="font-['Satoshi'] text-3xl sm:text-5xl font-bold tracking-tight text-[#080808] leading-[1.15] mb-6">
           {article.title}
         </h1>
 
-        {/* Author Bio Header */}
-        <div className="p-4 rounded-2xl bg-[#101010] border border-[#222222] flex items-center justify-between mb-12">
-          <div className="flex items-center gap-3">
-            <div className="size-10 rounded-full bg-[#161616] border border-[#222222] flex items-center justify-center font-bold text-xs text-[#FFFFFF]">
-              Q
-            </div>
-            <div>
-              <div className="text-xs font-semibold text-[#FFFFFF]">{article.author}</div>
-              <div className="text-[11px] text-[#A9A9A9]">{article.authorRole}</div>
-            </div>
-          </div>
-          <span className="text-[11px] font-['JetBrains_Mono'] text-[#A9A9A9] bg-[#161616] px-2.5 py-1 rounded-full border border-[#222222]">
-            Verified Research
-          </span>
+        {/* Excerpt */}
+        <p className="text-base sm:text-lg text-[#666666] leading-relaxed mb-12 pb-8 border-b border-[#E5E5E5]">
+          {article.excerpt}
+        </p>
+
+        {/* Content Paragraphs */}
+        <div className="space-y-6 text-sm sm:text-base text-[#333333] leading-relaxed">
+          {article.content.map((paragraph, idx) => (
+            <p key={idx}>{paragraph}</p>
+          ))}
         </div>
 
-        {/* Article Body */}
-        <article className="space-y-6 text-sm sm:text-base text-[#A9A9A9] leading-relaxed font-normal">
-          {article.content.map((paragraph, idx) => (
-            <p key={idx} className="text-[#FFFFFF]/90">
-              {paragraph}
-            </p>
-          ))}
-
-          {/* Technical Code Highlight */}
-          {article.codeSnippet && (
-            <div className="my-8 rounded-2xl bg-[#101010] border border-[#222222] overflow-hidden shadow-xl">
-              <div className="px-4 py-2.5 bg-[#141414] border-b border-[#222222] flex items-center justify-between text-xs font-['JetBrains_Mono'] text-[#A9A9A9]">
-                <div className="flex items-center gap-2">
-                  <div className="size-2 rounded-full bg-[#333333]" />
-                  <div className="size-2 rounded-full bg-[#333333]" />
-                  <div className="size-2 rounded-full bg-[#333333]" />
-                  <span className="ml-2 text-[#FFFFFF] font-medium uppercase text-[10px]">
-                    {article.codeSnippet.lang}
-                  </span>
-                </div>
-                <span>Architecture Implementation</span>
-              </div>
-              <pre className="p-5 font-['JetBrains_Mono'] text-xs text-[#FFFFFF] overflow-x-auto leading-relaxed">
-                <code>{article.codeSnippet.code}</code>
-              </pre>
+        {/* Code Block Example if present */}
+        {article.codeSnippet && (
+          <div className="my-10 rounded-2xl bg-[#080808] border border-[#222222] overflow-hidden text-[#FFFFFF]">
+            <div className="px-4 py-2.5 bg-[#141414] border-b border-[#222222] flex items-center justify-between text-xs font-['JetBrains_Mono'] text-[#888888]">
+              <span>architecture.ts</span>
+              <span>TypeScript</span>
             </div>
-          )}
-
-          <div className="p-6 rounded-2xl bg-[#101010] border border-[#222222] my-8 space-y-3">
-            <h3 className="font-['Satoshi'] text-base font-bold text-[#FFFFFF]">Key Architectural Takeaways</h3>
-            <ul className="space-y-2 text-xs text-[#A9A9A9]">
-              <li className="flex items-start gap-2.5">
-                <Check className="size-4 text-[#FFFFFF] shrink-0 mt-0.5" />
-                <span>Deterministic out-of-band health probing prevents customer dropouts.</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <Check className="size-4 text-[#FFFFFF] shrink-0 mt-0.5" />
-                <span>Single integration SDK (`@quirk/sdk`) handles all multi-rail routing internally.</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <Check className="size-4 text-[#FFFFFF] shrink-0 mt-0.5" />
-                <span>Zero vendor lock-in allows seamless vaulting of your own provider credentials.</span>
-              </li>
-            </ul>
+            <pre className="p-5 text-xs font-['JetBrains_Mono'] leading-relaxed overflow-x-auto text-[#E5E5E5]">
+              <code>{article.codeSnippet}</code>
+            </pre>
           </div>
-        </article>
+        )}
 
-        {/* Read Next Section */}
-        <section className="mt-20 pt-12 border-t border-[#222222]">
-          <h2 className="font-['Satoshi'] text-xl font-bold text-[#FFFFFF] mb-6">Read More Engineering Insights</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {otherArticles.map((other, idx) => (
-              <Link
-                key={idx}
-                to={`/insights/${other.slug}`}
-                className="p-6 rounded-2xl bg-[#101010] border border-[#222222] hover:border-[#333333] transition-all flex flex-col justify-between group"
-              >
-                <div>
-                  <div className="text-[10px] font-['JetBrains_Mono'] text-[#A9A9A9] uppercase mb-2">
-                    {other.tag} · {other.readTime}
-                  </div>
-                  <h3 className="font-['Satoshi'] text-sm font-bold text-[#FFFFFF] group-hover:text-[#FFFFFF] transition-colors mb-2">
+        {/* Author / Footer Sign-off */}
+        <div className="mt-16 pt-8 border-t border-[#E5E5E5] flex items-center justify-between">
+          <div>
+            <p className="text-xs text-[#888888] font-['JetBrains_Mono']">WRITTEN BY</p>
+            <p className="text-sm font-semibold text-[#080808] mt-0.5">{article.author}</p>
+          </div>
+          <Link
+            to="/"
+            className="inline-flex items-center gap-1 text-xs font-medium text-[#080808] hover:underline"
+          >
+            <span>Explore Quirk Platform</span>
+            <ArrowRight className="size-3.5" />
+          </Link>
+        </div>
+
+        {/* Other Insights */}
+        {otherArticles.length > 0 && (
+          <div className="mt-24 pt-12 border-t border-[#E5E5E5]">
+            <h3 className="font-['Satoshi'] text-xl font-bold text-[#080808] mb-6">
+              More Architecture Insights
+            </h3>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {otherArticles.map((other) => (
+                <div
+                  key={other.slug}
+                  onClick={() => navigate({ to: '/insights/$slug', params: { slug: other.slug } })}
+                  className="p-5 rounded-2xl bg-[#FAFAFA] border border-[#E5E5E5] hover:border-[#CCCCCC] cursor-pointer transition-all space-y-2 group"
+                >
+                  <span className="text-[10px] font-['JetBrains_Mono'] uppercase tracking-wider text-[#666666] px-2 py-0.5 rounded bg-[#FFFFFF] border border-[#E5E5E5]">
+                    {other.tag}
+                  </span>
+                  <h4 className="font-bold text-sm text-[#080808] group-hover:text-[#444444] transition-colors leading-snug">
                     {other.title}
-                  </h3>
-                  <p className="text-xs text-[#A9A9A9] line-clamp-2">{other.summary}</p>
+                  </h4>
+                  <p className="text-xs text-[#666666] line-clamp-2">{other.excerpt}</p>
                 </div>
-                <div className="pt-4 mt-4 border-t border-[#222222] flex items-center justify-between text-xs text-[#A9A9A9] group-hover:text-[#FFFFFF]">
-                  <span>Read article</span>
-                  <ArrowRight className="size-3.5 group-hover:translate-x-1 transition-transform" />
-                </div>
-              </Link>
-            ))}
+              ))}
+            </div>
           </div>
-        </section>
+        )}
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-[#222222] py-12 text-center text-xs text-[#A9A9A9]">
-        <div className="max-w-4xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div>© {new Date().getFullYear()} Quirk Infrastructure Inc.</div>
-          <Link to="/" className="text-[#FFFFFF] hover:underline">
+      <footer className="border-t border-[#E5E5E5] py-12 text-xs text-[#888888] bg-[#FAFAFA]">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p>&copy; {new Date().getFullYear()} Quirk Infrastructure Inc. All rights reserved.</p>
+          <Link to="/" className="text-[#080808] hover:underline font-medium">
             Back to Home
           </Link>
         </div>
