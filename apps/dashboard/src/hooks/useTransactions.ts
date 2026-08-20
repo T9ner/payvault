@@ -1,172 +1,88 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
-import { payments, dashboard } from "@/lib/api";
-import { toast } from "sonner";
-import type { Transaction, ChargeRequest } from "@/lib/types";
+import { useEffect, useMemo, useState } from 'react'
+import { useMerchantEngine } from '@/stores/merchant-engine'
+import type { ChargeRequest, Transaction } from '@/lib/types'
 
+/**
+ * Facade hook over deep MerchantEngine for transaction ledger and operations.
+ */
 export function useTransactions() {
-  const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState("all");
-  const [searchQuery, setSearchQuery] = useState("");
-  const [page, setPage] = useState(1);
-  const [total, setTotal] = useState(0);
-  const [copied, setCopied] = useState("");
-  const [selected, setSelected] = useState<Transaction | null>(null);
-  
-  const [refunding, setRefunding] = useState(false);
-  const [confirmRefundOpen, setConfirmRefundOpen] = useState(false);
-  
-  const [createModalOpen, setCreateModalOpen] = useState(false);
-  const [creating, setCreating] = useState(false);
-  const [createdTx, setCreatedTx] = useState<{ reference: string; authorization_url: string } | null>(null);
-  
-  const [filterSheetOpen, setFilterSheetOpen] = useState(false);
-  const [advFilters, setAdvFilters] = useState({
-    provider: "all",
-    currency: "all",
-    minAmount: "",
-    maxAmount: "",
-  });
+  const transactions = useMerchantEngine(s => s.transactions)
+  const loading = useMerchantEngine(s => s.transactionsLoading)
+  const filter = useMerchantEngine(s => s.transactionFilter)
+  const searchQuery = useMerchantEngine(s => s.searchQuery)
+  const page = useMerchantEngine(s => s.currentPage)
+  const total = useMerchantEngine(s => s.totalTransactions)
+  const perPage = useMerchantEngine(s => s.perPage)
+  const selected = useMerchantEngine(s => s.selectedTransaction)
+  const stats = useMerchantEngine(s => s.overviewStats)
 
-  
-  const [stats, setStats] = useState<{ total_volume: Record<string, number>; total_count: number; failure_rate: number } | null>(null);
-  const perPage = 20;
+  // Modal State Machines
+  const refunding = useMerchantEngine(s => s.isRefunding)
+  const confirmRefundOpen = useMerchantEngine(s => s.isRefundModalOpen)
+  const createModalOpen = useMerchantEngine(s => s.isCreateTxModalOpen)
+  const creating = useMerchantEngine(s => s.isCreatingTx)
+  const createdTx = useMerchantEngine(s => s.createdTxResult)
+  const filterSheetOpen = useMerchantEngine(s => s.isFilterSheetOpen)
+  const advFilters = useMerchantEngine(s => s.advFilters)
 
+  const actions = useMerchantEngine(s => s.transactionsActions)
+
+  // Local transient state for copy badge and new charge form
+  const [copied, setCopied] = useState('')
   const [form, setForm] = useState<ChargeRequest>({
     amount: 0,
-    currency: "NGN",
-    email: "",
-    provider: "paystack",
-  });
-
-  const loadTransactions = useCallback(async () => {
-    setLoading(true);
-    try {
-      const params: any = { page, limit: perPage };
-      if (filter !== "all") params.status = filter;
-      if (advFilters.provider !== "all") params.provider = advFilters.provider;
-      if (advFilters.currency !== "all") params.currency = advFilters.currency;
-      
-      // Fetch both transactions and stats
-      const [data, overviewStats] = await Promise.all([
-        payments.listTransactions(params),
-        dashboard.getOverviewStats()
-      ]);
-      
-      let txs = data?.items || [];
-      if (advFilters.minAmount) {
-        txs = txs.filter((t: any) => (t.amount / 100) >= parseFloat(advFilters.minAmount));
-      }
-      if (advFilters.maxAmount) {
-        txs = txs.filter((t: any) => (t.amount / 100) <= parseFloat(advFilters.maxAmount));
-      }
-
-      setTransactions(txs);
-      setTotal(data?.total || 0);
-      setStats(overviewStats);
-    } catch (err: any) {
-      console.error("Failed to load transactions:", err);
-      setTransactions([]);
-      setTotal(0);
-      toast.error("Failed to load transactions. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  }, [page, filter, advFilters]);
+    currency: 'NGN',
+    email: '',
+    provider: 'paystack',
+  })
 
   useEffect(() => {
-    loadTransactions();
-  }, [loadTransactions]);
+    actions.fetch()
+  }, [])
 
   const filteredTransactions = useMemo(() => {
-    if (!searchQuery) return transactions;
-    const q = searchQuery.toLowerCase();
-    return transactions.filter(t => 
-      t.reference.toLowerCase().includes(q) || 
-      t.email?.toLowerCase().includes(q)
-    );
-  }, [transactions, searchQuery]);
-
-  const handleRefund = async () => {
-    if (!selected) return;
-    setRefunding(true);
-    try {
-      await payments.refund({ reference: selected.reference });
-      toast.success("Refund processed successfully.");
-      setConfirmRefundOpen(false);
-      setSelected(null);
-      await loadTransactions();
-    } catch (err: any) {
-      console.error("Refund failed:", err);
-      toast.error("Refund request failed. Please try again.");
-    } finally {
-      setRefunding(false);
-    }
-  };
-
-  const handleCreateTransaction = async () => {
-    if (!form.email || form.amount <= 0) {
-      toast.error("Please provide a valid email and amount.");
-      return;
-    }
-    setCreating(true);
-    try {
-      const response = await payments.charge({
-        ...form,
-        amount: Math.round(form.amount * 100),
-      });
-      setCreatedTx({
-        reference: response.reference,
-        authorization_url: response.authorization_url,
-      });
-      toast.success("Payment initialized successfully.");
-      await loadTransactions();
-    } catch (err: any) {
-      console.error("Payment initialization failed:", err);
-      toast.error("Failed to initialize payment. Please try again.");
-    } finally {
-      setCreating(false);
-    }
-  };
-
-  const resetCreateForm = () => {
-    setForm({ amount: 0, currency: "NGN", email: "", provider: "paystack" });
-    setCreatedTx(null);
-    setCreateModalOpen(false);
-  };
+    if (!searchQuery) return transactions
+    const q = searchQuery.toLowerCase()
+    return transactions.filter(
+      t => t.reference.toLowerCase().includes(q) || t.email?.toLowerCase().includes(q)
+    )
+  }, [transactions, searchQuery])
 
   return {
-      transactions,
-      loading,
-      filter,
-      setFilter,
-      searchQuery,
-      setSearchQuery,
-      page,
-      setPage,
-      total,
-      perPage,
-      copied,
-      setCopied,
-      selected,
-      setSelected,
-      refunding,
-      confirmRefundOpen,
-      setConfirmRefundOpen,
-      createModalOpen,
-      setCreateModalOpen,
-      creating,
-      createdTx,
-      filterSheetOpen,
-      setFilterSheetOpen,
-      advFilters,
-      setAdvFilters,
-      form,
-      setForm,
-      filteredTransactions,
-      handleRefund,
-      handleCreateTransaction,
-      resetCreateForm,
-      stats
-  };
+    transactions,
+    loading,
+    filter,
+    setFilter: actions.setFilter,
+    searchQuery,
+    setSearchQuery: actions.setSearch,
+    page,
+    setPage: actions.setPage,
+    total,
+    perPage,
+    copied,
+    setCopied,
+    selected,
+    setSelected: actions.selectTransaction,
+    refunding,
+    confirmRefundOpen,
+    setConfirmRefundOpen: (open: boolean) => (open ? actions.openRefundModal() : actions.closeRefundModal()),
+    createModalOpen,
+    setCreateModalOpen: (open: boolean) => (open ? actions.openCreateModal() : actions.closeCreateModal()),
+    creating,
+    createdTx,
+    filterSheetOpen,
+    setFilterSheetOpen: (open: boolean) => (open ? actions.openFilterSheet() : actions.closeFilterSheet()),
+    advFilters,
+    setAdvFilters: actions.setAdvFilters,
+    form,
+    setForm,
+    filteredTransactions,
+    handleRefund: () => actions.executeRefund(),
+    handleCreateTransaction: () => actions.executeCharge(form),
+    resetCreateForm: () => {
+      setForm({ amount: 0, currency: 'NGN', email: '', provider: 'paystack' })
+      actions.closeCreateModal()
+    },
+    stats,
+  }
 }
