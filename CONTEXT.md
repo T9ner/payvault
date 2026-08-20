@@ -40,6 +40,14 @@ _Avoid_: Fallback, retry loop, error handler
 The real-time availability classification of a payment rail (`closed` for healthy, `open` for tripped/degraded, `half-open` for probationary probing).
 _Avoid_: Health status, ping score, status dot
 
+**Rail Engine**:
+The deep multi-rail transport core in `@quirk/sdk` responsible for circuit-breaker health tracking, request dispatch, and autonomous dynamic failover across payment rails.
+_Avoid_: Client transport, HTTP wrapper, fallback runner
+
+**Merchant Engine**:
+The deep client-side state machine and query cache in `apps/dashboard` managing transaction pipelines, payment links, and telemetry aggregation behind intention methods.
+_Avoid_: State hook, data manager, API context
+
 ### Accounting & Settlements
 
 **Ledger Entry**:

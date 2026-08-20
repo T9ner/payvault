@@ -1,4 +1,6 @@
 export { Quirk } from './client';
+export { RailEngine } from './transport/rail-engine';
+export type { CircuitStatus, CircuitBreakerState, RailExecutionOptions } from './transport/rail-engine';
 export { PaystackProvider } from './providers/paystack';
 export { FlutterwaveProvider } from './providers/flutterwave';
 export { MonnifyProvider } from './providers/monnify';
