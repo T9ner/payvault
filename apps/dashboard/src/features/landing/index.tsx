@@ -31,6 +31,7 @@ import {
   Sparkles,
 } from 'lucide-react'
 import { QuirkLogo } from '@/components/quirk-logo'
+import { IconGithub } from '@/assets/brand-icons/icon-github'
 
 // Supported payment rails for the infinite marquee
 const ECOSYSTEM_RAILS = [
@@ -272,10 +273,11 @@ export function LandingPage() {
               href='https://github.com/T9ner/quirk'
               target='_blank'
               rel='noopener noreferrer'
-              className='transition-colors hover:text-[#080808] inline-flex items-center gap-1'
+              className='transition-colors text-[#666666] hover:text-[#080808] flex items-center'
+              title='GitHub'
+              aria-label='GitHub'
             >
-              <span>Company</span>
-              <ExternalLink className='size-3 opacity-50' />
+              <IconGithub className='size-4' />
             </a>
           </nav>
 
@@ -330,6 +332,16 @@ export function LandingPage() {
             >
               Insights
             </Link>
+            <a
+              href='https://github.com/T9ner/quirk'
+              target='_blank'
+              rel='noopener noreferrer'
+              onClick={() => setMobileMenuOpen(false)}
+              className='flex items-center gap-2 text-[#666666] hover:text-[#080808]'
+            >
+              <IconGithub className='size-4' />
+              <span>GitHub</span>
+            </a>
             <div className='pt-4 border-t border-[#E5E5E5]'>
               <a
                 href='mailto:dbosshonour@gmail.com?subject=Quirk%20Inquiry'
