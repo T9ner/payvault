@@ -283,9 +283,9 @@ export interface SplitRecipient {
 }
 
 export interface MultiSplitConfig {
-  name: string;
-  type: 'percentage' | 'flat';
-  currency: Currency;
+  name?: string;
+  type?: 'percentage' | 'flat';
+  currency?: Currency;
   recipients: SplitRecipient[];
   bearer?: 'all' | 'account' | 'subaccount';
   bearerType?: 'all' | 'account' | 'subaccount';
