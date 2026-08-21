@@ -10,29 +10,18 @@ import {
 import { Header } from '@/components/layout/header'
 import { Main } from '@/components/layout/main'
 import { ProfileDropdown } from '@/components/profile-dropdown'
-import { ThemeSwitch } from '@/components/theme-switch'
 import { useDashboard } from '@/hooks/useDashboard'
 import { formatCurrency } from '@/lib/formatters'
 import { toast } from 'sonner'
 import {
-  DollarSign,
   Activity,
   ArrowUpRight,
   ShieldCheck,
   Plus,
-  Route,
-  Terminal,
   Check,
   Copy,
-  Layers,
-  Sparkles,
-  ArrowRightLeft,
-  SlidersHorizontal,
-  ExternalLink,
-  Zap,
-  Radio,
-  CheckCircle2,
   RefreshCw,
+  Search,
 } from 'lucide-react'
 import {
   ResponsiveContainer,
@@ -92,14 +81,33 @@ export function Dashboard() {
 
   return (
     <div className='min-h-screen bg-[#F7F7F5] text-[#080808]'>
-      {/* ── 1. TASKBAR (HEADER) ── */}
+      {/* ── 1. TASKBAR (ASTRYX-INSPIRED NAVBAR) ── */}
       <Header className='bg-[#FFFFFF]/95 border-b border-[#E5E5E5]'>
-        <div className='flex items-center gap-3 font-["Satoshi"] font-semibold text-sm text-[#080808]'>
-          <span>Overview</span>
+        <div className='flex items-center gap-3'>
+          <div className='flex items-center gap-2'>
+            <span className='font-["Satoshi"] font-bold text-sm text-[#080808] tracking-tight'>
+              Overview
+            </span>
+            <span className='hidden md:inline-flex text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#F7F7F5] border border-[#E5E5E5] text-[#666666]'>
+              Multi-Rail Control Plane
+            </span>
+          </div>
+
+          {/* Astryx-Style Cmd+K Search Bar */}
+          <Link
+            to='/transactions'
+            className='hidden lg:inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#F7F7F5] hover:bg-[#EBEBEA] border border-[#E5E5E5] text-xs text-[#666666] hover:text-[#080808] transition-colors duration-150 ml-4'
+          >
+            <Search className='size-3.5 text-[#666666]' />
+            <span className='font-mono text-[11px]'>Search ledger, rails, or docs...</span>
+            <kbd className='text-[10px] font-mono px-1.5 py-0.2 rounded bg-[#FFFFFF] border border-[#E5E5E5] text-[#666666]'>
+              ⌘K
+            </kbd>
+          </Link>
         </div>
 
         <div className='flex items-center gap-3 ms-auto'>
-          {/* Live Rails Status Dot */}
+          {/* Live Rails Status Pill */}
           <div
             role='status'
             className='hidden sm:inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FAFAFA] border border-[#E5E5E5] text-xs font-mono text-[#080808]'
@@ -116,7 +124,6 @@ export function Dashboard() {
             <span>Create charge</span>
           </Link>
 
-          <ThemeSwitch />
           <ProfileDropdown />
         </div>
       </Header>
