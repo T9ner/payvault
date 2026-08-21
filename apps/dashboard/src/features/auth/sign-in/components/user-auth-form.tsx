@@ -3,7 +3,7 @@ import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigate } from '@tanstack/react-router'
-import { Loader2 } from 'lucide-react'
+import { Loader2, Sparkles, ArrowRight } from 'lucide-react'
 import { toast } from 'sonner'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
@@ -42,6 +42,23 @@ export function UserAuthForm({ className, redirectTo, ...props }: UserAuthFormPr
     },
   })
 
+  const enterSandbox = (businessName: string = 'Quirk Demo Merchant', email: string = 'demo@quirk.dev') => {
+    const demoMerchant = {
+      id: 'mch_sandbox_demo_01',
+      business_name: businessName,
+      email: email,
+      avatar_url: '',
+    }
+    const demoToken = 'pv_sandbox_token_' + Date.now()
+    auth.setUser(demoMerchant)
+    auth.setAccessToken(demoToken)
+    apiAuth.setToken(demoToken)
+
+    toast.success('Connected to Quirk Sandbox Control Plane')
+    const targetPath = redirectTo || '/dashboard'
+    navigate({ to: targetPath, replace: true })
+  }
+
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     setIsLoading(true)
     try {
@@ -54,11 +71,19 @@ export function UserAuthForm({ className, redirectTo, ...props }: UserAuthFormPr
 
       toast.success(`Welcome back, ${response.merchant.business_name || response.merchant.email}!`)
 
-      // Redirect to target or dashboard
       const targetPath = redirectTo || '/dashboard'
       navigate({ to: targetPath, replace: true })
     } catch (err: any) {
-      console.error('Login Error:', err)
+      console.warn('Backend Login Notice:', err)
+      
+      // If backend is not deployed or unreachable, seamlessly activate Sandbox Mode
+      const isNetworkError = !err.response || err.code === 'ERR_NETWORK' || err.message?.includes('Network Error')
+      if (isNetworkError) {
+        toast.info('Backend server is currently offline. Loaded Sandbox Control Plane.')
+        enterSandbox('Quirk Merchant', data.email)
+        return
+      }
+
       const errorMessage = err.response?.data?.error || err.message || 'Invalid email or password.'
       toast.error(errorMessage)
     } finally {
@@ -67,7 +92,32 @@ export function UserAuthForm({ className, redirectTo, ...props }: UserAuthFormPr
   }
 
   return (
-    <div className={cn('grid gap-4', className)} {...props}>
+    <div className={cn('grid gap-5', className)} {...props}>
+      {/* 1-Click Interactive Sandbox Button */}
+      <Button
+        type='button'
+        variant='outline'
+        onClick={() => enterSandbox()}
+        className='h-12 w-full border-[#22303A] bg-[#11161D] hover:bg-[#171D26] text-[#F5F7FA] font-medium flex items-center justify-between px-4 transition-all group'
+      >
+        <div className='flex items-center gap-2.5 text-xs font-mono'>
+          <span className='size-2 rounded-full bg-[#ABFF2A] animate-pulse'></span>
+          <span>Explore Live Sandbox Mode</span>
+        </div>
+        <ArrowRight className='size-3.5 text-[#A9B0BB] group-hover:translate-x-0.5 group-hover:text-[#ABFF2A] transition-all' />
+      </Button>
+
+      <div className='relative'>
+        <div className='absolute inset-0 flex items-center'>
+          <span className='w-full border-t border-[#22303A]' />
+        </div>
+        <div className='relative flex justify-center text-xs uppercase'>
+          <span className='bg-card px-2 text-[#A9B0BB] font-mono text-[11px]'>
+            Or sign in with credentials
+          </span>
+        </div>
+      </div>
+
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className='grid gap-4'>
           <FormField
@@ -75,7 +125,7 @@ export function UserAuthForm({ className, redirectTo, ...props }: UserAuthFormPr
             name='email'
             render={({ field }) => (
               <FormItem>
-                <FormLabel className='text-xs font-medium'>Email address</FormLabel>
+                <FormLabel className='text-xs font-medium text-[#A9B0BB]'>Email address</FormLabel>
                 <FormControl>
                   <Input
                     placeholder='merchant@company.com'
@@ -84,6 +134,7 @@ export function UserAuthForm({ className, redirectTo, ...props }: UserAuthFormPr
                     autoComplete='email'
                     autoCorrect='off'
                     disabled={isLoading}
+                    className='bg-[#11161D] border-[#22303A] text-[#F5F7FA]'
                     {...field}
                   />
                 </FormControl>
@@ -98,13 +149,14 @@ export function UserAuthForm({ className, redirectTo, ...props }: UserAuthFormPr
             render={({ field }) => (
               <FormItem>
                 <div className='flex items-center justify-between'>
-                  <FormLabel className='text-xs font-medium'>Password</FormLabel>
+                  <FormLabel className='text-xs font-medium text-[#A9B0BB]'>Password</FormLabel>
                 </div>
                 <FormControl>
                   <PasswordInput
                     placeholder='••••••••'
                     autoComplete='current-password'
                     disabled={isLoading}
+                    className='bg-[#11161D] border-[#22303A] text-[#F5F7FA]'
                     {...field}
                   />
                 </FormControl>

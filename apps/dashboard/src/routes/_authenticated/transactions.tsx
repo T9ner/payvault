@@ -2,7 +2,6 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Header } from '@/components/layout/header'
 import { Main } from '@/components/layout/main'
 import { ProfileDropdown } from '@/components/profile-dropdown'
-import { ThemeSwitch } from '@/components/theme-switch'
 import {
   Card,
   CardContent,
@@ -20,21 +19,22 @@ import { transactionStatusTabs } from '@/data/mockData'
 import { cn } from '@/lib/utils'
 import type { TransactionStatus } from '@/lib/types'
 import { 
-    Loader2, Search, Filter, Copy, 
-    ArrowUpRight, CreditCard, Banknote, RefreshCcw, 
-    XCircle, Clock, CheckCircle2 
+  Loader2, Search, Filter, Copy, 
+  ArrowUpRight, CreditCard, Banknote, RefreshCcw, 
+  XCircle, Clock, CheckCircle2, Plus, Check 
 } from 'lucide-react'
 import { toast } from 'sonner'
+import { useState } from 'react'
 
 export const Route = createFileRoute('/_authenticated/transactions')({
   component: Transactions,
 })
 
 const statusStyles: Record<TransactionStatus, { bg: string; text: string; icon: any }> = {
-  pending: { bg: 'bg-amber-500/10 border border-amber-500/20', text: 'text-amber-400', icon: Clock },
-  success: { bg: 'bg-emerald-500/10 border border-emerald-500/20', text: 'text-emerald-400', icon: CheckCircle2 },
-  failed: { bg: 'bg-rose-500/10 border border-rose-500/20', text: 'text-rose-400', icon: XCircle },
-  refunded: { bg: 'bg-blue-500/10 border border-blue-500/20', text: 'text-blue-400', icon: RefreshCcw },
+  pending: { bg: 'bg-amber-50 border border-amber-200', text: 'text-amber-700', icon: Clock },
+  success: { bg: 'bg-emerald-50 border border-emerald-200', text: 'text-emerald-700', icon: CheckCircle2 },
+  failed: { bg: 'bg-rose-50 border border-rose-200', text: 'text-rose-700', icon: XCircle },
+  refunded: { bg: 'bg-sky-50 border border-sky-200', text: 'text-sky-700', icon: RefreshCcw },
 }
 
 function Transactions() {
@@ -44,436 +44,309 @@ function Transactions() {
     stats, selected, setSelected, refunding, confirmRefundOpen, setConfirmRefundOpen, handleRefund
   } = useTransactions()
 
+  const [copiedKey, setCopiedKey] = useState<string | null>(null)
+
   const copyToClipboard = (text: string, label: string) => {
     navigator.clipboard.writeText(text)
-    toast.success(`${label} copied to clipboard`)
+    setCopiedKey(text)
+    toast.success(`${label} copied`)
+    setTimeout(() => setCopiedKey(null), 2000)
   }
 
   return (
-    <>
-      <Header>
-        <div className='ms-auto flex items-center gap-3'>
-          <div className="hidden sm:flex items-center gap-2 px-3 py-1 rounded-full bg-[#101010] border border-[#222222] text-xs font-['JetBrains_Mono']">
-            <span className="size-1.5 rounded-full bg-[#22C55E]" />
-            <span className="text-[#A9A9A9]">All Rails Operational</span>
+    <div className='min-h-screen bg-[#F7F7F5] text-[#080808]'>
+      <Header className='bg-[#FFFFFF]/95 border-b border-[#E5E5E5]'>
+        <div className='flex items-center gap-3 font-["Satoshi"] font-semibold text-sm text-[#080808]'>
+          <span>Transactions</span>
+        </div>
+
+        <div className='flex items-center gap-3 ms-auto'>
+          <div
+            role='status'
+            className='hidden sm:inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FAFAFA] border border-[#E5E5E5] text-xs font-mono text-[#080808]'
+          >
+            <span className='size-2 rounded-full bg-[#22C55E] animate-pulse' />
+            <span className='text-[11px] font-medium'>All Rails Operational (99.98%)</span>
           </div>
-          <ThemeSwitch />
+
+          <Button
+            onClick={() => setCreateModalOpen(true)}
+            className='inline-flex items-center justify-center gap-1.5 bg-[#080808] hover:bg-[#222222] text-[#FFFFFF] font-medium text-xs px-3.5 py-1.5 rounded-lg active:scale-[0.98] transition-transform duration-150 ease-out shadow-xs'
+          >
+            <Plus className='size-3.5' />
+            <span>Create charge</span>
+          </Button>
+
           <ProfileDropdown />
         </div>
       </Header>
 
-      <Main className="bg-[#000000] text-[#FFFFFF]">
-        <div className='mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between'>
-          <div>
-            <h1 className='text-2xl sm:text-3xl font-bold tracking-tight font-["Satoshi"] text-[#FFFFFF]'>Transactions</h1>
-            <p className='text-xs sm:text-sm text-[#A9A9A9] mt-1'>Real-time ledger monitor across all vaulted payment switches.</p>
-          </div>
-          <div className="flex items-center gap-2">
-            <Button onClick={() => setCreateModalOpen(true)} className="rounded-full px-5 bg-[#FFFFFF] hover:bg-[#E5E5E5] text-[#000000] font-semibold text-xs transition-all active:scale-[0.97]">
-                <ArrowUpRight className="mr-1.5 size-3.5" /> Initialize Payment
-            </Button>
+      <Main className='px-4 sm:px-8 py-8 max-w-7xl mx-auto space-y-6'>
+        {/* Page Header */}
+        <div className='flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-[#E5E5E5]'>
+          <div className='space-y-1'>
+            <h1 className='font-["Satoshi"] text-2xl sm:text-3xl font-bold tracking-tight text-[#080808] [text-wrap:balance]'>
+              Transaction Ledger
+            </h1>
+            <p className='text-xs sm:text-sm text-[#666666] [text-wrap:pretty]'>
+              Real-time multi-rail authorization stream, settlement states, and payment telemetry.
+            </p>
           </div>
         </div>
 
-        {/* Summary Stats */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-8">
-            <Card className="bg-[#101010] border-[#222222] shadow-sm rounded-2xl">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-xs font-medium text-[#A9A9A9]">Total Volume (30d)</CardTitle>
-                    <Banknote className="size-4 text-[#FFFFFF]" />
-                </CardHeader>
-                <CardContent>
-                    <div className="font-['JetBrains_Mono'] text-2xl font-bold text-[#FFFFFF]">
-                        {stats ? formatCurrency(stats.total_volume["NGN"] || 0, "NGN") : <Skeleton className="h-8 w-24" />}
-                    </div>
-                    <p className="text-[11px] text-[#A9A9A9] mt-1">Unified multi-currency settlement</p>
-                </CardContent>
-            </Card>
-            <Card className="bg-[#101010] border-[#222222] shadow-sm rounded-2xl">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-xs font-medium text-[#A9A9A9]">Success Rate</CardTitle>
-                    <CheckCircle2 className="size-4 text-[#22C55E]" />
-                </CardHeader>
-                <CardContent>
-                    <div className="font-['JetBrains_Mono'] text-2xl font-bold text-[#FFFFFF]">
-                        {stats ? `${stats.failure_rate ? (100 - stats.failure_rate).toFixed(1) : "100"}%` : <Skeleton className="h-8 w-20" />}
-                    </div>
-                    <p className="text-[11px] text-[#A9A9A9] mt-1">Autonomous multi-rail failover active</p>
-                </CardContent>
-            </Card>
-            <Card className="bg-[#101010] border-[#222222] shadow-sm rounded-2xl">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-xs font-medium text-[#A9A9A9]">Captured Charges</CardTitle>
-                    <ArrowUpRight className="size-4 text-[#FFFFFF]" />
-                </CardHeader>
-                <CardContent>
-                    <div className="font-['JetBrains_Mono'] text-2xl font-bold text-[#FFFFFF]">
-                         {stats ? stats.total_count : <Skeleton className="h-8 w-16" />}
-                    </div>
-                    <p className="text-[11px] text-[#A9A9A9] mt-1">Confirmed transactions</p>
-                </CardContent>
-            </Card>
-            <Card className="bg-[#101010] border-[#222222] shadow-sm rounded-2xl">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-xs font-medium text-[#A9A9A9]">Pending Clearing</CardTitle>
-                    <Clock className="size-4 text-amber-400" />
-                </CardHeader>
-                <CardContent>
-                    <div className="font-['JetBrains_Mono'] text-2xl font-bold text-amber-400">
-                        {stats ? (stats as any).pending_count || 0 : <Skeleton className="h-8 w-16" />}
-                    </div>
-                    <p className="text-[11px] text-[#A9A9A9] mt-1">Awaiting bank verification</p>
-                </CardContent>
-            </Card>
+        {/* 4 Summary Stats */}
+        <div className='grid grid-cols-2 lg:grid-cols-4 gap-4'>
+          <Card className='rounded-2xl border-[#E5E5E5] bg-[#FFFFFF] p-5 shadow-[0_1px_3px_rgba(0,0,0,0.03)]'>
+            <p className='text-[10px] font-mono text-[#666666] uppercase tracking-wider font-semibold'>Total Volume (NGN)</p>
+            <p className='text-xl sm:text-2xl font-bold font-mono text-[#080808] mt-1 tabular-nums'>
+              {formatCurrency(stats.totalVolume, 'NGN')}
+            </p>
+          </Card>
+          <Card className='rounded-2xl border-[#E5E5E5] bg-[#FFFFFF] p-5 shadow-[0_1px_3px_rgba(0,0,0,0.03)]'>
+            <p className='text-[10px] font-mono text-[#666666] uppercase tracking-wider font-semibold'>Success Rate</p>
+            <p className='text-xl sm:text-2xl font-bold font-mono text-[#22C55E] mt-1 tabular-nums'>
+              {stats.successRate.toFixed(1)}%
+            </p>
+          </Card>
+          <Card className='rounded-2xl border-[#E5E5E5] bg-[#FFFFFF] p-5 shadow-[0_1px_3px_rgba(0,0,0,0.03)]'>
+            <p className='text-[10px] font-mono text-[#666666] uppercase tracking-wider font-semibold'>Authorized Count</p>
+            <p className='text-xl sm:text-2xl font-bold font-mono text-[#080808] mt-1 tabular-nums'>
+              {stats.successCount}
+            </p>
+          </Card>
+          <Card className='rounded-2xl border-[#E5E5E5] bg-[#FFFFFF] p-5 shadow-[0_1px_3px_rgba(0,0,0,0.03)]'>
+            <p className='text-[10px] font-mono text-[#666666] uppercase tracking-wider font-semibold'>Failed / Retried</p>
+            <p className='text-xl sm:text-2xl font-bold font-mono text-rose-600 mt-1 tabular-nums'>
+              {stats.failedCount}
+            </p>
+          </Card>
         </div>
 
-        <Card className="bg-[#101010] border-[#222222] shadow-sm overflow-hidden rounded-2xl">
-          <CardHeader className="border-b border-[#222222] bg-[#141414] pb-4">
-            <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                <div className="flex bg-[#0A0A0A] p-1 rounded-xl border border-[#222222] w-fit">
-                    {transactionStatusTabs.map((tab) => (
-                        <button
-                            key={tab.value}
-                            onClick={() => { setFilter(tab.value); setPage(1); }}
-                            className={cn(
-                                "px-3.5 py-1.5 transition-all rounded-lg text-xs font-medium whitespace-nowrap",
-                                filter === tab.value 
-                                    ? "bg-[#1C1C1C] text-[#FFFFFF] font-semibold" 
-                                    : "text-[#A9A9A9] hover:text-[#FFFFFF]"
-                            )}
-                        >
-                            {tab.label}
-                        </button>
-                    ))}
+        {/* Filter Controls (Astryx Pill Segmented Controls) */}
+        <div className='flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3'>
+          <div className='flex items-center gap-1 p-1 bg-[#EBEBEA] border border-[#E0E0DE] rounded-xl overflow-x-auto no-scrollbar'>
+            {transactionStatusTabs.map((tab) => (
+              <button
+                key={tab.value}
+                onClick={() => {
+                  setFilter(tab.value as any)
+                  setPage(1)
+                }}
+                className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors duration-150 whitespace-nowrap ${
+                  filter === tab.value
+                    ? 'bg-[#FFFFFF] text-[#080808] font-semibold shadow-2xs'
+                    : 'text-[#666666] hover:text-[#080808]'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+
+          <div className='relative w-full sm:w-72'>
+            <Search className='absolute left-3 top-1/2 -translate-y-1/2 size-3.5 text-[#666666]' />
+            <Input
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder='Search reference, customer, or rail...'
+              className='pl-9 bg-[#FFFFFF] border-[#E5E5E5] rounded-xl text-xs text-[#080808] h-9 focus-visible:ring-[#080808]'
+            />
+          </div>
+        </div>
+
+        {/* Transactions Table */}
+        <Card className='rounded-2xl border-[#E5E5E5] bg-[#FFFFFF] shadow-[0_1px_3px_rgba(0,0,0,0.03)] overflow-hidden'>
+          {loading ? (
+            <div className='p-6 space-y-4'>
+              {[...Array(5)].map((_, i) => (
+                <div key={i} className='flex items-center justify-between py-2 border-b border-[#E5E5E5]'>
+                  <Skeleton className='h-4 w-32' />
+                  <Skeleton className='h-4 w-28' />
+                  <Skeleton className='h-4 w-20' />
+                  <Skeleton className='h-4 w-16' />
                 </div>
-                <div className="relative flex-1 max-w-md">
-                    <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 size-3.5 text-[#A9A9A9]" />
-                    <Input 
-                        placeholder="Search by reference or customer email..." 
-                        className="pl-9 rounded-full bg-[#0A0A0A] border-[#222222] text-xs text-[#FFFFFF] placeholder:text-[#A9A9A9]/60 focus:border-[#444444]"
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                    />
-                </div>
+              ))}
             </div>
-          </CardHeader>
-          <CardContent className="p-0">
-             {/* Desktop Table View */}
-             <div className="hidden md:block overflow-x-auto">
-                <table className="w-full text-xs font-['Inter']">
-                    <thead>
-                        <tr className="border-b border-[#222222] bg-[#121212] text-[#A9A9A9] font-['JetBrains_Mono']">
-                            <th className="h-9 px-4 text-left align-middle font-medium uppercase text-[10px] tracking-wider">Reference</th>
-                            <th className="h-9 px-4 text-left align-middle font-medium uppercase text-[10px] tracking-wider">Customer</th>
-                            <th className="h-9 px-4 text-right align-middle font-medium uppercase text-[10px] tracking-wider">Amount</th>
-                            <th className="h-9 px-4 text-center align-middle font-medium uppercase text-[10px] tracking-wider">Status</th>
-                            <th className="h-9 px-4 text-left align-middle font-medium uppercase text-[10px] tracking-wider">Gateway</th>
-                            <th className="h-9 px-4 text-left align-middle font-medium uppercase text-[10px] tracking-wider">Timestamp</th>
-                        </tr>
-                    </thead>
-                    <tbody className="divide-y divide-[#222222]">
-                        {loading ? (
-                            [...Array(6)].map((_, i) => (
-                                <tr key={i} className="group">
-                                    <td className="p-4"><Skeleton className="h-4 w-28" /></td>
-                                    <td className="p-4"><Skeleton className="h-4 w-40" /></td>
-                                    <td className="p-4 text-right"><Skeleton className="h-4 w-20 ml-auto" /></td>
-                                    <td className="p-4 text-center"><Skeleton className="h-6 w-20 mx-auto rounded-full" /></td>
-                                    <td className="p-4"><Skeleton className="h-4 w-16" /></td>
-                                    <td className="p-4"><Skeleton className="h-4 w-32" /></td>
-                                </tr>
-                            ))
-                        ) : filteredTransactions.length === 0 ? (
-                            <tr>
-                                <td colSpan={6} className="p-12 text-center">
-                                    <div className="flex flex-col items-center justify-center gap-2">
-                                        <Filter className="size-8 text-[#A9A9A9]/40" />
-                                        <p className="text-[#FFFFFF] font-medium text-sm">No transactions found</p>
-                                        <p className="text-xs text-[#A9A9A9] text-center max-w-[240px]">
-                                            Adjust your filters or query to inspect matching ledger entries.
-                                        </p>
-                                        {filter !== 'all' || searchQuery !== '' ? (
-                                            <Button variant="link" size="sm" onClick={() => {setFilter('all'); setSearchQuery('')}} className="text-[#FFFFFF] mt-2 text-xs">
-                                                Clear all filters
-                                            </Button>
-                                        ) : null}
-                                    </div>
-                                </td>
-                            </tr>
-                        ) : (
-                            filteredTransactions.map(tx => {
-                                const style = statusStyles[tx.status as TransactionStatus] || { bg: 'bg-[#161616] border border-[#222222]', text: 'text-[#A9A9A9]', icon: Clock }
-                                const StatusIcon = style.icon
-                                return (
-                                    <tr 
-                                        key={tx.id} 
-                                        className="group cursor-pointer transition-colors hover:bg-[#161616]/50"
-                                        onClick={() => setSelected(tx)}
-                                    >
-                                        <td className="p-4 align-middle">
-                                            <div className="flex items-center gap-2">
-                                                <span className="font-['JetBrains_Mono'] text-[11px] font-medium text-[#FFFFFF]">
-                                                    {tx.reference.slice(0, 12)}...
-                                                </span>
-                                                <button 
-                                                    onClick={(e) => { e.stopPropagation(); copyToClipboard(tx.reference, "Reference") }}
-                                                    className="opacity-0 group-hover:opacity-100 p-1 hover:bg-[#222222] rounded transition-opacity"
-                                                    title="Copy reference"
-                                                >
-                                                    <Copy className="size-3 text-[#A9A9A9]" />
-                                                </button>
-                                            </div>
-                                        </td>
-                                        <td className="p-4 align-middle text-[#FFFFFF] font-medium">{tx.email}</td>
-                                        <td className="p-4 align-middle text-right font-['JetBrains_Mono'] font-bold text-[#FFFFFF] tabular-nums">
-                                            {formatCurrency(tx.amount, tx.currency)}
-                                        </td>
-                                        <td className="p-4 align-middle text-center">
-                                            <div className={cn(
-                                                "inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider font-['JetBrains_Mono']",
-                                                style.bg, style.text
-                                            )}>
-                                                <StatusIcon className="size-2.5" />
-                                                {tx.status}
-                                            </div>
-                                        </td>
-                                        <td className="p-4 align-middle">
-                                            <div className="flex items-center gap-2">
-                                                <CreditCard className="size-3 text-[#A9A9A9]" />
-                                                <span className="capitalize text-[#A9A9A9]">{tx.provider}</span>
-                                            </div>
-                                        </td>
-                                        <td className="p-4 align-middle text-[#A9A9A9] text-xs font-['JetBrains_Mono']">{formatDate(tx.created_at)}</td>
-                                    </tr>
-                                )
-                            })
-                        )}
-                    </tbody>
-                </table>
-             </div>
+          ) : filteredTransactions.length === 0 ? (
+            <div className='p-12 text-center text-[#666666] space-y-2'>
+              <p className='text-sm font-semibold text-[#080808] font-["Satoshi"]'>No transactions matching criteria</p>
+              <p className='text-xs'>Try refining your filter parameters or search query.</p>
+            </div>
+          ) : (
+            <div className='overflow-x-auto'>
+              <table className='w-full text-left text-xs'>
+                <thead>
+                  <tr className='border-b border-[#E5E5E5] bg-[#FAFAFA] text-[#666666] font-mono text-[11px]'>
+                    <th className='py-3.5 px-4 font-medium'>Reference</th>
+                    <th className='py-3.5 px-4 font-medium'>Customer</th>
+                    <th className='py-3.5 px-4 font-medium'>Active rail</th>
+                    <th className='py-3.5 px-4 font-medium'>Amount</th>
+                    <th className='py-3.5 px-4 font-medium'>Date</th>
+                    <th className='py-3.5 px-4 font-medium text-right'>Status</th>
+                  </tr>
+                </thead>
+                <tbody className='divide-y divide-[#E5E5E5]'>
+                  {filteredTransactions.map((tx) => {
+                    const statusConfig = statusStyles[tx.status] || statusStyles.pending
+                    const StatusIcon = statusConfig.icon
 
-             {/* Mobile Card Stream (Optimized for one-thumb lookup) */}
-             <div className="md:hidden divide-y divide-[#222222]">
-                {loading ? (
-                    [...Array(4)].map((_, i) => (
-                        <div key={i} className="p-4 space-y-2.5">
-                            <div className="flex justify-between items-center">
-                                <Skeleton className="h-4 w-28" />
-                                <Skeleton className="h-5 w-16 rounded-full" />
-                            </div>
-                            <Skeleton className="h-3 w-44" />
-                            <div className="flex justify-between items-center pt-1">
-                                <Skeleton className="h-5 w-24" />
-                                <Skeleton className="h-3 w-20" />
-                            </div>
-                        </div>
-                    ))
-                ) : filteredTransactions.length === 0 ? (
-                    <div className="p-8 text-center">
-                        <Filter className="size-8 text-[#A9A9A9]/40 mx-auto mb-2" />
-                        <p className="text-[#FFFFFF] font-medium text-sm">No transactions found</p>
-                        <p className="text-xs text-[#A9A9A9] mt-1">Adjust search or filter parameters.</p>
-                    </div>
-                ) : (
-                    filteredTransactions.map(tx => {
-                        const style = statusStyles[tx.status as TransactionStatus] || { bg: 'bg-[#161616] border border-[#222222]', text: 'text-[#A9A9A9]', icon: Clock }
-                        const StatusIcon = style.icon
-                        return (
-                            <div
-                                key={tx.id}
-                                onClick={() => setSelected(tx)}
-                                className="p-4 active:bg-[#181818] transition-colors cursor-pointer space-y-2.5"
-                            >
-                                <div className="flex items-center justify-between gap-2">
-                                    <div className="flex items-center gap-1.5 min-w-0">
-                                        <span className="font-['JetBrains_Mono'] text-xs font-bold text-[#FFFFFF] truncate">
-                                            {tx.reference.slice(0, 14)}...
-                                        </span>
-                                        <button
-                                            onClick={(e) => { e.stopPropagation(); copyToClipboard(tx.reference, "Reference") }}
-                                            className="p-1 hover:bg-[#222222] rounded shrink-0 min-h-[32px] min-w-[32px] flex items-center justify-center"
-                                            title="Copy reference"
-                                        >
-                                            <Copy className="size-3 text-[#A9A9A9]" />
-                                        </button>
-                                    </div>
-                                    <div className={cn(
-                                        "inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider font-['JetBrains_Mono'] shrink-0",
-                                        style.bg, style.text
-                                    )}>
-                                        <StatusIcon className="size-2.5" />
-                                        {tx.status}
-                                    </div>
-                                </div>
-
-                                <div className="text-xs text-[#A9A9A9] flex items-center justify-between">
-                                    <span className="truncate max-w-[200px]">{tx.email}</span>
-                                    <span className="font-['JetBrains_Mono'] text-[10px] px-1.5 py-0.5 rounded bg-[#181818] border border-[#262626] text-[#CCCCCC] capitalize">
-                                        {tx.provider}
-                                    </span>
-                                </div>
-
-                                <div className="flex items-center justify-between pt-1 border-t border-[#1C1C1C]">
-                                    <div className="font-['JetBrains_Mono'] font-bold text-sm text-[#FFFFFF] tabular-nums">
-                                        {formatCurrency(tx.amount, tx.currency)}
-                                    </div>
-                                    <div className="text-[10px] text-[#777777] font-['JetBrains_Mono']">
-                                        {formatDate(tx.created_at)}
-                                    </div>
-                                </div>
-                            </div>
-                        )
-                    })
-                )}
-             </div>
-          </CardContent>
+                    return (
+                      <tr
+                        key={tx.id}
+                        onClick={() => setSelected(tx)}
+                        className='hover:bg-[#F7F7F5] transition-colors duration-100 cursor-pointer'
+                      >
+                        <td className='py-3.5 px-4 font-mono font-medium text-[#080808]'>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              copyToClipboard(tx.reference || tx.id, 'Transaction ID')
+                            }}
+                            className='hover:text-[#666666] transition-colors duration-150 inline-flex items-center gap-1.5'
+                            title='Copy reference'
+                            aria-label={`Copy reference ${tx.reference || tx.id}`}
+                          >
+                            <span className='truncate max-w-[120px]'>{tx.reference || tx.id}</span>
+                            {copiedKey === (tx.reference || tx.id) ? (
+                              <Check className='size-3 text-[#22C55E]' />
+                            ) : (
+                              <Copy className='size-3 text-[#999999] opacity-40 hover:opacity-100' />
+                            )}
+                          </button>
+                        </td>
+                        <td className='py-3.5 px-4'>
+                          <div className='font-medium text-[#080808]'>{tx.customer_email || 'Customer'}</div>
+                          <div className='text-[10px] text-[#666666] font-mono'>via {tx.channel || 'card'}</div>
+                        </td>
+                        <td className='py-3.5 px-4'>
+                          <span className='inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full border border-[#E5E5E5] bg-[#FAFAFA] font-mono text-[10px] text-[#080808] whitespace-nowrap'>
+                            <span className='size-1 rounded-full bg-[#22C55E]' />
+                            {tx.provider || 'Paystack'}
+                          </span>
+                        </td>
+                        <td className='py-3.5 px-4 font-mono font-semibold text-[#080808] tabular-nums'>
+                          {formatCurrency(tx.amount, tx.currency)}
+                        </td>
+                        <td className='py-3.5 px-4 text-[#666666] font-mono text-[11px] tabular-nums'>
+                          {formatDate(tx.created_at)}
+                        </td>
+                        <td className='py-3.5 px-4 text-right'>
+                          <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-mono ${statusConfig.bg} ${statusConfig.text}`}>
+                            <StatusIcon className='size-3' />
+                            <span>{tx.status}</span>
+                          </span>
+                        </td>
+                      </tr>
+                    )
+                  })}
+                </tbody>
+              </table>
+            </div>
+          )}
         </Card>
       </Main>
 
-      {/* Transaction Details Sheet */}
+      {/* Transaction Detail Drawer */}
       <Sheet open={!!selected} onOpenChange={(open) => !open && setSelected(null)}>
-        <SheetContent className="sm:max-w-md bg-[#101010] border-[#222222] text-[#FFFFFF]">
-            <SheetHeader className="mb-6 border-b border-[#222222] pb-4">
-                <SheetTitle className="text-lg font-['Satoshi'] text-[#FFFFFF]">Transaction Details</SheetTitle>
-                <SheetDescription className="text-xs text-[#A9A9A9]">Full ledger breakdown of #{selected?.reference.slice(0, 10)}</SheetDescription>
-            </SheetHeader>
-            {selected && (
-                <div className="space-y-6">
-                    <div className="flex items-center justify-between p-4 rounded-xl bg-[#141414] border border-[#222222]">
-                        <div className="space-y-1">
-                            <p className="text-[10px] text-[#A9A9A9] uppercase tracking-widest font-['JetBrains_Mono']">Settled Amount</p>
-                            <p className="text-2xl font-bold font-['JetBrains_Mono'] text-[#FFFFFF]">{formatCurrency(selected.amount, selected.currency)}</p>
-                        </div>
-                        <div className={cn(
-                            "flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider font-['JetBrains_Mono']",
-                            statusStyles[selected.status as TransactionStatus]?.bg,
-                            statusStyles[selected.status as TransactionStatus]?.text
-                        )}>
-                            {selected.status}
-                        </div>
-                    </div>
+        <SheetContent className='bg-[#FFFFFF] border-l border-[#E5E5E5] text-[#080808] w-full sm:max-w-md p-6 overflow-y-auto'>
+          {selected && (
+            <div className='space-y-6'>
+              <SheetHeader className='pb-4 border-b border-[#E5E5E5]'>
+                <SheetTitle className='font-["Satoshi"] text-lg text-[#080808] font-bold'>
+                  Transaction Details
+                </SheetTitle>
+                <SheetDescription className='text-xs text-[#666666] font-mono break-all'>
+                  {selected.reference || selected.id}
+                </SheetDescription>
+              </SheetHeader>
 
-                    <div className="space-y-4">
-                        <section>
-                            <h4 className="text-[10px] font-semibold text-[#A9A9A9] uppercase tracking-widest font-['JetBrains_Mono'] mb-2">Basic Information</h4>
-                            <div className="grid grid-cols-2 gap-4">
-                                <div className="space-y-1">
-                                    <p className="text-[11px] text-[#A9A9A9]">Reference</p>
-                                    <div className="flex items-center gap-1 text-xs font-['JetBrains_Mono'] font-medium text-[#FFFFFF]">
-                                        {selected.reference.slice(0, 16)}...
-                                        <Copy className="size-3 cursor-pointer text-[#A9A9A9] hover:text-[#FFFFFF]" onClick={() => copyToClipboard(selected.reference, "Reference")} />
-                                    </div>
-                                </div>
-                                <div className="space-y-1">
-                                    <p className="text-[11px] text-[#A9A9A9]">Date</p>
-                                    <p className="text-xs font-['JetBrains_Mono'] text-[#FFFFFF]">{formatDate(selected.created_at)}</p>
-                                </div>
-                            </div>
-                        </section>
-
-                        <section>
-                            <h4 className="text-[10px] font-semibold text-[#A9A9A9] uppercase tracking-widest font-['JetBrains_Mono'] mb-2">Customer Details</h4>
-                            <div className="p-3 border border-[#222222] rounded-xl bg-[#141414] flex flex-col gap-1">
-                                <p className="text-[11px] text-[#A9A9A9]">Email Address</p>
-                                <p className="text-xs font-medium text-[#FFFFFF]">{selected.email}</p>
-                            </div>
-                        </section>
-
-                        <section>
-                            <h4 className="text-[10px] font-semibold text-[#A9A9A9] uppercase tracking-widest font-['JetBrains_Mono'] mb-2">Payment Rail</h4>
-                            <div className="grid grid-cols-2 gap-4 border border-[#222222] rounded-xl p-3 bg-[#141414]">
-                                <div className="space-y-1">
-                                    <p className="text-[11px] text-[#A9A9A9]">Provider</p>
-                                    <p className="text-xs font-medium text-[#FFFFFF] capitalize">{selected.provider}</p>
-                                </div>
-                                <div className="space-y-1">
-                                    <p className="text-[11px] text-[#A9A9A9]">Channel</p>
-                                    <p className="text-xs font-medium text-[#FFFFFF] capitalize">{selected.channel || "Auto Route"}</p>
-                                </div>
-                            </div>
-                        </section>
-                    </div>
-
-                    <div className="pt-6 space-y-3">
-                        {selected.status === 'success' && (
-                            <Button 
-                                variant="outline" 
-                                className="w-full text-rose-400 hover:text-rose-300 hover:bg-rose-950/20 border-rose-900/30 text-xs"
-                                onClick={() => setConfirmRefundOpen(true)}
-                            >
-                                <RefreshCcw className="mr-2 size-3.5" /> Refund Transaction
-                            </Button>
-                        )}
-                        <Button variant="secondary" className="w-full bg-[#161616] hover:bg-[#202020] border border-[#222222] text-[#FFFFFF] text-xs" onClick={() => setSelected(null)}>
-                            Close Details
-                        </Button>
-                    </div>
+              <div className='space-y-4 text-xs font-mono'>
+                <div className='flex justify-between py-2 border-b border-[#E5E5E5]'>
+                  <span className='text-[#666666]'>Settlement amount</span>
+                  <span className='font-bold text-[#080808] text-sm tabular-nums'>
+                    {formatCurrency(selected.amount, selected.currency)}
+                  </span>
                 </div>
-            )}
+
+                <div className='flex justify-between py-2 border-b border-[#E5E5E5]'>
+                  <span className='text-[#666666]'>Authorization status</span>
+                  <span className='font-semibold text-emerald-700 capitalize'>{selected.status}</span>
+                </div>
+
+                <div className='flex justify-between py-2 border-b border-[#E5E5E5]'>
+                  <span className='text-[#666666]'>Selected switch rail</span>
+                  <span className='font-semibold text-[#080808]'>{selected.provider || 'Paystack'}</span>
+                </div>
+
+                <div className='flex justify-between py-2 border-b border-[#E5E5E5]'>
+                  <span className='text-[#666666]'>Customer identifier</span>
+                  <span className='text-[#080808] font-sans font-medium'>{selected.customer_email}</span>
+                </div>
+
+                <div className='flex justify-between py-2 border-b border-[#E5E5E5]'>
+                  <span className='text-[#666666]'>Authorization channel</span>
+                  <span className='text-[#080808] capitalize'>{selected.channel || 'Card'}</span>
+                </div>
+
+                <div className='flex justify-between py-2 border-b border-[#E5E5E5]'>
+                  <span className='text-[#666666]'>Creation timestamp</span>
+                  <span className='text-[#080808] tabular-nums'>{formatDate(selected.created_at)}</span>
+                </div>
+              </div>
+
+              {selected.status === 'success' && (
+                <div className='pt-4'>
+                  <Button
+                    variant='outline'
+                    onClick={() => setConfirmRefundOpen(true)}
+                    className='w-full border-[#E5E5E5] hover:bg-rose-50 hover:text-rose-600 hover:border-rose-200 text-xs font-medium rounded-xl h-10'
+                  >
+                    Initiate refund
+                  </Button>
+                </div>
+              )}
+            </div>
+          )}
         </SheetContent>
       </Sheet>
 
-      {/* Manual Charge Dialog */}
+      {/* Create Charge Modal */}
       <Dialog open={createModalOpen} onOpenChange={setCreateModalOpen}>
-          <DialogContent className="sm:max-w-[400px] bg-[#101010] border-[#222222] text-[#FFFFFF]">
-              <DialogHeader>
-                  <DialogTitle className="font-['Satoshi'] text-lg text-[#FFFFFF]">Initialize Payment</DialogTitle>
-                  <DialogDescription className="text-xs text-[#A9A9A9]">Execute a normalized charge request via the internal routing worker.</DialogDescription>
-              </DialogHeader>
-              <div className="grid gap-4 py-4">
-                  <div className="grid gap-2">
-                      <label htmlFor="email" className="text-[10px] font-semibold uppercase tracking-wider text-[#A9A9A9] font-['JetBrains_Mono']">Customer Email</label>
-                      <Input
-                          id="email"
-                          type="email"
-                          value={form.email}
-                          onChange={(e) => setForm(prev => ({ ...prev, email: e.target.value }))}
-                          placeholder="customer@example.com"
-                          className="rounded-xl bg-[#0A0A0A] border-[#222222] text-xs text-[#FFFFFF]"
-                      />
-                  </div>
-                  <div className="grid gap-2">
-                      <label htmlFor="amount" className="text-[10px] font-semibold uppercase tracking-wider text-[#A9A9A9] font-['JetBrains_Mono']">Amount (NGN)</label>
-                      <div className="relative">
-                        <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#A9A9A9] text-xs font-bold font-['JetBrains_Mono']">₦</span>
-                        <Input
-                            id="amount"
-                            type="number"
-                            value={form.amount || ''}
-                            onChange={(e) => setForm(prev => ({ ...prev, amount: Number(e.target.value) }))}
-                            placeholder="0.00"
-                            className="pl-8 rounded-xl bg-[#0A0A0A] border-[#222222] text-xs font-['JetBrains_Mono'] font-bold text-[#FFFFFF]"
-                        />
-                      </div>
-                  </div>
-              </div>
-              <DialogFooter>
-                  <Button variant="ghost" onClick={() => setCreateModalOpen(false)} className="text-xs text-[#A9A9A9] hover:text-[#FFFFFF]">Cancel</Button>
-                  <Button onClick={handleCreateTransaction} disabled={creating} className="rounded-full px-6 bg-[#FFFFFF] hover:bg-[#E5E5E5] text-[#000000] font-semibold text-xs">
-                      {creating ? <><Loader2 className="size-3.5 mr-2 animate-spin" /> Processing...</> : 'Execute Charge'}
-                  </Button>
-              </DialogFooter>
-          </DialogContent>
+        <DialogContent className='bg-[#FFFFFF] border-[#E5E5E5] text-[#080808] rounded-2xl shadow-xl'>
+          <DialogHeader>
+            <DialogTitle className='font-["Satoshi"] text-lg text-[#080808] font-bold'>Initiate Multi-Rail Charge</DialogTitle>
+            <DialogDescription className='text-xs text-[#666666]'>Test real-time routing and simulated settlement.</DialogDescription>
+          </DialogHeader>
+          <div className='grid gap-4 py-4'>
+            <div className='grid gap-2'>
+              <label htmlFor='tx-email' className='text-[10px] font-semibold uppercase tracking-wider text-[#666666] font-mono'>Customer email</label>
+              <Input
+                id='tx-email'
+                value={form.customer_email}
+                onChange={(e) => setForm(prev => ({ ...prev, customer_email: e.target.value }))}
+                placeholder='customer@company.com'
+                className='rounded-xl bg-[#FFFFFF] border-[#E5E5E5] text-xs text-[#080808]'
+              />
+            </div>
+            <div className='grid gap-2'>
+              <label htmlFor='tx-amount' className='text-[10px] font-semibold uppercase tracking-wider text-[#666666] font-mono'>Amount (NGN)</label>
+              <Input
+                id='tx-amount'
+                type='number'
+                value={form.amount}
+                onChange={(e) => setForm(prev => ({ ...prev, amount: Number(e.target.value) }))}
+                className='rounded-xl bg-[#FFFFFF] border-[#E5E5E5] text-xs text-[#080808] font-mono font-bold'
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant='ghost' onClick={() => setCreateModalOpen(false)} className='text-xs text-[#666666] hover:text-[#080808] rounded-lg'>Cancel</Button>
+            <Button onClick={handleCreateTransaction} disabled={creating} className='rounded-lg px-5 bg-[#080808] hover:bg-[#222222] text-[#FFFFFF] font-semibold text-xs'>
+              {creating ? <><Loader2 className='size-3.5 mr-2 animate-spin' /> Processing...</> : 'Execute charge'}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
       </Dialog>
-
-      {/* Confirmation Dialogs */}
-      <Dialog open={confirmRefundOpen} onOpenChange={setConfirmRefundOpen}>
-          <DialogContent className="bg-[#101010] border-[#222222] text-[#FFFFFF]">
-              <DialogHeader>
-                  <DialogTitle className="font-['Satoshi'] text-lg text-[#FFFFFF]">Confirm Refund</DialogTitle>
-                  <DialogDescription className="text-xs text-[#A9A9A9]">
-                      Are you sure you want to refund this transaction? This action will reverse the ledger entry across the payment rail.
-                  </DialogDescription>
-              </DialogHeader>
-              <DialogFooter>
-                  <Button variant="ghost" onClick={() => setConfirmRefundOpen(false)} className="text-xs text-[#A9A9A9] hover:text-[#FFFFFF]">Cancel</Button>
-                  <Button variant="destructive" onClick={handleRefund} disabled={refunding} className="text-xs">
-                      {refunding ? <Loader2 className="size-3.5 animate-spin mr-2" /> : null}
-                      Confirm Refund
-                  </Button>
-              </DialogFooter>
-          </DialogContent>
-      </Dialog>
-    </>
+    </div>
   )
 }
