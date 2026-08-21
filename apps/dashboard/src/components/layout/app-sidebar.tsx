@@ -18,24 +18,31 @@ export function AppSidebar() {
   const user = auth.user
 
   const userData = {
-    name: user?.business_name || 'Merchant',
-    email: user?.email || '',
-    avatar: user?.avatar_url || '',
+    name: user?.business_name || 'Quirk Merchant',
+    email: user?.email || 'merchant@quirk.dev',
+    avatar: '',
   }
 
   return (
-    <Sidebar collapsible={collapsible} variant={variant}>
-      <SidebarHeader>
-        <TeamSwitcher teams={sidebarData.teams} />
+    <Sidebar
+      collapsible={collapsible}
+      variant={variant}
+      className='bg-[#FFFFFF] border-r border-[#E5E5E5] text-[#080808]'
+    >
+      <SidebarHeader className='p-3 border-b border-[#E5E5E5] bg-[#FFFFFF]'>
+        <TeamSwitcher />
       </SidebarHeader>
-      <SidebarContent>
+
+      <SidebarContent className='p-2 space-y-1 bg-[#FFFFFF]'>
         {sidebarData.navGroups.map((props) => (
           <NavGroup key={props.title} {...props} />
         ))}
       </SidebarContent>
-      <SidebarFooter>
+
+      <SidebarFooter className='p-3 border-t border-[#E5E5E5] bg-[#FAFAFA]'>
         <NavUser user={userData} />
       </SidebarFooter>
+
       <SidebarRail />
     </Sidebar>
   )
